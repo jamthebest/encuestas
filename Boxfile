@@ -4,12 +4,12 @@ global:
 web1:
   name: laravel-pagoda
   shared_writable_dirs:
-    - /storage/cache
-    - /storage/database
-    - /storage/logs
-    - /storage/sessions
-    - /storage/views
-    - /storage/work
+    - app//storage/cache
+    - app//storage/database
+    - app//storage/logs
+    - app//storage/sessions
+    - app//storage/views
+    - app//storage/work
   document_root: /public
   php_version: 5.3.8
   php_extensions:
@@ -24,5 +24,5 @@ web1:
     - "php artisan migrate:install"
     - "php artisan migrate"
   after_deploy:
-    - "rm -f storage/cache/*"
-    - "rm -f storage/views/*"
+    - "rm -f app/storage/cache/*"
+    - "rm -f app/storage/views/*"
