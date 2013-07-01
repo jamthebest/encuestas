@@ -4,12 +4,11 @@ global:
 web1:
   name: laravel-pagoda
   shared_writable_dirs:
-    - app//storage/cache
-    - app//storage/database
-    - app//storage/logs
-    - app//storage/sessions
-    - app//storage/views
-    - app//storage/work
+    - app/storage/cache
+    - app/storage/logs
+    - app/storage/meta
+    - app/storage/sessions
+    - app/storage/views
   document_root: /public
   php_version: 5.3.8
   php_extensions:
