@@ -9,9 +9,10 @@ web1:
     - app/storage/meta
     - app/storage/sessions
     - app/storage/views
-  document_root: /public
-  php_version: 5.3.8
+  document_root: public
+  php_version: 5.4.14
   php_extensions:
+    - mbstring
     - pdo_mysql
     - mysqli 
     - mysql
@@ -22,6 +23,8 @@ web1:
   before_deploy:
     - "php artisan migrate:install"
     - "php artisan migrate"
+  after_build:
+    - "if [ ! -f composer.phar ]; then curl -s http://getcomposer.org/installer | php; fi; php composer.phar install 
   after_deploy:
     - "rm -f app/storage/cache/*"
     - "rm -f app/storage/views/*"
