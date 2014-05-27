@@ -20,3 +20,6 @@ Route::post('/Login', ['uses' => 'AuthController@doLogin', 'before' => 'guest'])
 //Desconecta al usuario
 Route::get('/Logout', ['uses' => 'AuthController@doLogout', 'before' => 'auth']);
 
+Route::get('Registro', array('as' => 'Registro', 'uses' =>'UsuariosController@create', 'before' => 'guest'));
+
+Route::post('Registro', array('as' => 'Registrar', 'uses' =>'UsuariosController@store', 'before' => 'guest'));

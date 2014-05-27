@@ -4,7 +4,7 @@ class Usuario extends Eloquent{
 	protected $guarded = array();
 
 	protected $table = 'usuarios';
-	protected $fillable = array('username', 'correo', 'password', 'activo');
+	protected $fillable = array('username', 'correo', 'password', 'activo', 'tipo');
 
 	public static $rules = array(
 		'id' => '',
@@ -12,6 +12,7 @@ class Usuario extends Eloquent{
 		'correo' => 'required|email|unique:usuarios',
 		'password' => 'required',
 		'tipo' => 'require',
-		'activo' => ''
+		'activo' => '',
+		'tipo' => 'required'
 	);
 }

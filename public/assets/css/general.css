@@ -1,0 +1,89 @@
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
+body {
+	margin-top: 50px
+}
+div.btn-agregar {
+	padding-bottom: 10px;
+}
+
+.control-label {
+	font-weight: bold;
+}
+
+td,th {
+	text-align: center;
+}
+
+.venta-info {
+	float: right;
+	width: 16em;
+}
+
+.venta-info hr {
+	margin: 0;
+	padding-bottom: 3px;
+	padding-top: 3px;
+}
+
+.bold-span {
+	font-weight: bold;
+}
+
+.ventas-valores {
+	float: right;
+}
+
+.opciones-cajas {
+    text-align: center;
+}
+
+.opciones-cajas button {
+    display: block;
+    margin: 1em auto;
+    min-width: 180px;
+    height: 3em;
+}
+
+.highlight { 
+    background: orange;
+}
+
+.edit-cant{
+	max-width: 4em;
+}
+
+.busqueda-cliente button {
+	margin-left: 10px;
+}
+
+.busqueda-cliente input {
+	padding-right: 35%;
+}
+
+.busqueda-cliente {
+	margin-bottom: 4%;
+	margin-top: 4%;	
+}
+
+.factura-info {
+	margin-bottom: 4%;
+	margin-top: 4%;
+}
+.factura-info label {
+	margin-right: 2%;
+}
+
+.factura-info input {
+	padding: 4px 0px 4px 0px;
+}
+
+.bono-compra label {
+	margin-right: 2%;
+}
