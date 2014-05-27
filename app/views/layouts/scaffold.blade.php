@@ -15,7 +15,7 @@
 <body style="margin-top: 25px">
   <header>
       <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-        <a class="navbar-brand" href="Inicio"> {{HTML::image('/images/icon.png');}} Info Factory</a>
+        <a class="navbar-brand" href="Inicio"><div style="margin-top:-9%;">{{HTML::image('/images/logo.png');}}</div></a>
         <ul class="nav navbar-nav navbar-left">
           <li class="dropdown">
             {{link_to('Inicio', 'Inicio', $attributes = array(), $secure = null)}}
@@ -26,9 +26,30 @@
           </li>
 
           @if (Auth::user())
+            @if (Auth::user()->tipo == 'cliente' )
           	<li class="dropdown">
             	{{link_to('#', 'Mis Encuestas', $attributes = array(), $secure = null)}}
           	</li>
+            <li class="dropdown">
+              {{link_to('#', 'Resultados', $attributes = array(), $secure = null)}}
+            </li>
+            @else
+              @if (Auth::user()->tipo == 'panelista' )
+                <li class="dropdown">
+                  {{link_to('#', 'Contestar Encuestas', $attributes = array(), $secure = null)}}
+                </li>
+              @else
+                <li class="dropdown">
+                  {{link_to('#', 'Usuarios', $attributes = array(), $secure = null)}}
+                </li>
+                <li class="dropdown">
+                  {{link_to('#', 'Encuestas', $attributes = array(), $secure = null)}}
+                </li>
+                <li class="dropdown">
+                  {{link_to('#', 'Resultados', $attributes = array(), $secure = null)}}
+                </li>
+              @endif
+            @endif
           @endif
         </ul>
         @if (Auth::user())

@@ -1,15 +1,7 @@
 @extends('layouts.scaffold')
 
-@section('title')
-	Identificación
-@stop
-
 @section('main')
 	
-	<div class="row">
-    	<div class="col-md-3"><h2>Ingreso > <small></small></h2></div>
-	</div>
-
 	@if(Session::has('message'))
 		<div class="alert alert-danger fade in">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -18,7 +10,7 @@
 	@endif
 
 	{{ Form::open(array('url' => '/Login', 'method' => 'POST')) }}
-		<div class="col-md-5 col-md-offset-3" style="margin-top:8%">
+		<div class="col-md-5 col-md-offset-3" style="margin-top:15%">
 			<label for="username">Usuario:</label>
 			{{ Form::text('username',null, array('style' => 'margin-bottom:5%;', 'class' => 'form-control', 'id' => 'username', 'placeholder' => 'Usuario', 'autofocus')) }}
 			<label for="password">Contraseña:</label>
