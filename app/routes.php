@@ -23,3 +23,6 @@ Route::get('/Logout', ['uses' => 'AuthController@doLogout', 'before' => 'auth'])
 Route::get('Registro', array('as' => 'Registro', 'uses' =>'UsuariosController@create', 'before' => 'guest'));
 
 Route::post('Registro', array('as' => 'Registrar', 'uses' =>'UsuariosController@store', 'before' => 'guest'));
+
+
+Route::resource('Encuestas', 'EncuestasController');
