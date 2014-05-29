@@ -24,5 +24,14 @@ Route::get('Registro', array('as' => 'Registro', 'uses' =>'UsuariosController@cr
 
 Route::post('Registro', array('as' => 'Registrar', 'uses' =>'UsuariosController@store', 'before' => 'guest'));
 
+Route::group(array('prefix' => 'Encuestas'), function(){
+	Route::group(array('prefix' => 'Preguntas'), function(){
+		Route::resource('Tipos', 'TiposController');
+		Route::resource('Opciones', 'OpcionesController');
+	});
+	Route::resource('Preguntas', 'PreguntasController');
+	Route::resource('Respuestas', 'RespuestasController');
+	Route::resource('Pagos', 'PagosController');
+});
 
 Route::resource('Encuestas', 'EncuestasController');
