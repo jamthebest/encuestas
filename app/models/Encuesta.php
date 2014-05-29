@@ -10,7 +10,7 @@ class Encuesta extends Eloquent {
 		'nombre' => 'required',
 		'descripcion' => '',
 		'despedida' => '',
-		'promopuntos' => 'required',
+		'promopuntos' => '',
 		'usuario' => 'required'
 	);
 }

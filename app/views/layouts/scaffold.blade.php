@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Info Factory</title>
-  <script type="text/javascript" src="/assets/javascript/script.js"></script>
-  <script type="text/javascript" src="/assets/javascript/datetimepicker.js"></script>
-  <script type="text/javascript" src="js/jquery.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  {{HTML::script('/assets/javascript/script.js');}}
+  {{HTML::script('/assets/javascript/datetimepicker.js');}}
+  {{HTML::script('js/jquery.min.js');}}
+  {{HTML::script('js/bootstrap.min.js');}}
   {{HTML::style('/bootstrap/css/bootstrap.min.css');}}
   {{HTML::style('/assets/css/general.css');}}
   {{HTML::style('/bootstrap/css/css/bootstrap.min.css');}}

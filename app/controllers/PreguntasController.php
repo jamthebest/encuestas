@@ -19,11 +19,13 @@ class PreguntasController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($id)
 	{
-		$preguntas = $this->pregunta->all();
-
-		return View::make('preguntas.index', compact('preguntas'));
+		$preguntas = Pregunta::where('encuesta', $id)->get();
+		$tipos = Tipo::all();
+		$encuestas = Encuesta::all();
+		$cont = 1;
+		return View::make('preguntas.index', compact('preguntas', 'tipos', 'encuestas', 'cont', 'id'));
 	}
 
 	/**
@@ -49,11 +51,19 @@ class PreguntasController extends BaseController {
 		if ($validation->passes())
 		{
 			$this->pregunta->create($input);
+			$pregunta = Pregunta::where('id', '<>', '0')->orderBy('id', 'DESC')->get();
+			$id = $pregunta[0]->id;
 
-			return Redirect::route('Encuestas/Preguntas.index');
+			if ($input['tipo'] == 1) {
+				$opcion['descripcion'] = 'Texto';
+				$opcion['pregunta'] = $id;
+				Opcion::create($opcion);
+				return Redirect::route('Encuestas.Preguntas.Index', $input['encuesta']);
+			}
+			return Redirect::route('Encuestas.Preguntas.Opciones', $id);
 		}
 
-		return Redirect::route('Encuestas/Preguntas.create')
+		return Redirect::route('Encuestas.Preguntas.Agregar', $input['encuesta'])
 			->withInput()
 			->withErrors($validation)
 			->with('message', 'There were validation errors.');
@@ -84,7 +94,7 @@ class PreguntasController extends BaseController {
 
 		if (is_null($pregunta))
 		{
-			return Redirect::route('Encuestas/Preguntas.index');
+			return Redirect::route('Encuestas.Preguntas.index');
 		}
 
 		return View::make('preguntas.edit', compact('pregunta'));
@@ -106,10 +116,10 @@ class PreguntasController extends BaseController {
 			$pregunta = $this->pregunta->find($id);
 			$pregunta->update($input);
 
-			return Redirect::route('Encuestas/Preguntas.show', $id);
+			return Redirect::route('Encuestas.Preguntas.show', $id);
 		}
 
-		return Redirect::route('Encuestas/Preguntas.edit', $id)
+		return Redirect::route('Encuestas.Preguntas.edit', $id)
 			->withInput()
 			->withErrors($validation)
 			->with('message', 'There were validation errors.');
@@ -125,7 +135,15 @@ class PreguntasController extends BaseController {
 	{
 		$this->pregunta->find($id)->delete();
 
-		return Redirect::route('Encuestas/Preguntas.index');
+		return Redirect::route('Encuestas.Preguntas.index');
+	}
+
+
+	public function Agregar($id)
+	{
+		$Encuesta = Encuesta::find($id);
+		$tipos = Tipo::all()->lists('nombre', 'id', 'descripcion');
+		return View::make('preguntas.create', compact('Encuesta', 'tipos'));
 	}
 
 }

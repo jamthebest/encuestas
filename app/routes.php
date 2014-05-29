@@ -26,6 +26,8 @@ Route::post('Registro', array('as' => 'Registrar', 'uses' =>'UsuariosController@
 
 Route::group(array('prefix' => 'Encuestas'), function(){
 	Route::group(array('prefix' => 'Preguntas'), function(){
+		Route::get('Agregar/{id}', array('as' => 'Encuestas.Preguntas.Agregar', 'uses' =>'PreguntasController@Agregar'));
+		Route::get('Index/{id}', array('as' => 'Encuestas.Preguntas.Index', 'uses' =>'PreguntasController@index'));
 		Route::resource('Tipos', 'TiposController');
 		Route::resource('Opciones', 'OpcionesController');
 	});
