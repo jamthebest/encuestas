@@ -30,6 +30,8 @@ Route::group(array('prefix' => 'Encuestas'), function(){
 		Route::get('Index/{id}', array('as' => 'Encuestas.Preguntas.Index', 'uses' =>'PreguntasController@index'));
 		Route::resource('Tipos', 'TiposController');
 		Route::resource('Opciones', 'OpcionesController');
+		Route::get('Opciones/Agregar/{id}', array('as' => 'Encuestas.Preguntas.Opciones.Agregar', 'uses' =>'OpcionesController@Agregar'));
+		Route::get('Opciones/Index/{id}', array('as' => 'Encuestas.Preguntas.Opciones.Index', 'uses' =>'OpcionesController@index'));
 	});
 	Route::resource('Preguntas', 'PreguntasController');
 	Route::resource('Respuestas', 'RespuestasController');

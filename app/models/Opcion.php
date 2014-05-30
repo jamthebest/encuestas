@@ -1,10 +1,12 @@
 <?php
 
-class Opcione extends Eloquent {
+class Opcion extends Eloquent {
 	protected $guarded = array();
 
+	protected $table = 'opciones';
+
 	public static $rules = array(
-		'id' => 'required',
+		'id' => '',
 		'descripcion' => 'required',
 		'pregunta' => 'required'
 	);

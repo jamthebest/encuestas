@@ -42,9 +42,8 @@
             {{ Form::submit('Aceptar', array('class' => 'btn btn-primary')) }}
         </div>
         <div class="col-md-3">
-            <a type="button" href="{{ URL::route('Encuestas.index') }}" class="btn btn-danger">
-                Cancelar
-            </a>
+          {{ link_to_route('Encuestas.Preguntas.Index', 'Cancelar', $Encuesta->id, array('class' => 'btn btn-danger')) }}
+            
         </div>
     </div>
 {{ Form::close() }}

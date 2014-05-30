@@ -23,9 +23,9 @@ class PreguntasController extends BaseController {
 	{
 		$preguntas = Pregunta::where('encuesta', $id)->get();
 		$tipos = Tipo::all();
-		$encuestas = Encuesta::all();
+		$encuesta = Encuesta::find($id)->nombre;
 		$cont = 1;
-		return View::make('preguntas.index', compact('preguntas', 'tipos', 'encuestas', 'cont', 'id'));
+		return View::make('preguntas.index', compact('preguntas', 'tipos', 'encuesta', 'cont', 'id'));
 	}
 
 	/**
@@ -60,7 +60,7 @@ class PreguntasController extends BaseController {
 				Opcion::create($opcion);
 				return Redirect::route('Encuestas.Preguntas.Index', $input['encuesta']);
 			}
-			return Redirect::route('Encuestas.Preguntas.Opciones', $id);
+			return Redirect::route('Encuestas.Preguntas.Opciones.Agregar', $id);
 		}
 
 		return Redirect::route('Encuestas.Preguntas.Agregar', $input['encuesta'])
@@ -91,13 +91,15 @@ class PreguntasController extends BaseController {
 	public function edit($id)
 	{
 		$pregunta = $this->pregunta->find($id);
-
+		$tipos = Tipo::all()->lists('nombre', 'id', 'descripcion');
 		if (is_null($pregunta))
 		{
-			return Redirect::route('Encuestas.Preguntas.index');
+			return Redirect::route('Encuestas.index')
+				->withErrors('No se encontró esa pregunta!');
 		}
 
-		return View::make('preguntas.edit', compact('pregunta'));
+		$Encuesta = Encuesta::find($pregunta->encuesta);
+		return View::make('preguntas.edit', compact('pregunta', 'Encuesta', 'tipos'));
 	}
 
 	/**
@@ -116,7 +118,7 @@ class PreguntasController extends BaseController {
 			$pregunta = $this->pregunta->find($id);
 			$pregunta->update($input);
 
-			return Redirect::route('Encuestas.Preguntas.show', $id);
+			return Redirect::route('Encuestas.Preguntas.Index', $id);
 		}
 
 		return Redirect::route('Encuestas.Preguntas.edit', $id)

@@ -3,15 +3,15 @@
 class OpcionesController extends BaseController {
 
 	/**
-	 * Opcione Repository
+	 * Opcion Repository
 	 *
-	 * @var Opcione
+	 * @var Opcion
 	 */
-	protected $opcione;
+	protected $opcion;
 
-	public function __construct(Opcione $opcione)
+	public function __construct(Opcion $opcion)
 	{
-		$this->opcione = $opcione;
+		$this->opcion = $opcion;
 	}
 
 	/**
@@ -19,11 +19,14 @@ class OpcionesController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($id)
 	{
-		$opciones = $this->opcione->all();
-
-		return View::make('opciones.index', compact('opciones'));
+		$opciones = Opcion::where('pregunta', $id)->get();
+		$pregunta = Pregunta::find($id);
+		$encuesta = Encuesta::find($pregunta->encuesta);
+		$tipos = Tipo::all();
+		$cont = 1;
+		return View::make('opciones.index', compact('opciones', 'pregunta', 'encuesta', 'tipos', 'cont', 'id'));
 	}
 
 	/**
@@ -44,16 +47,18 @@ class OpcionesController extends BaseController {
 	public function store()
 	{
 		$input = Input::all();
-		$validation = Validator::make($input, Opcione::$rules);
+		$validation = Validator::make($input, Opcion::$rules);
 
 		if ($validation->passes())
 		{
-			$this->opcione->create($input);
-
-			return Redirect::route('Encuestas/Preguntas/Opciones.index');
+			$this->opcion->create($input);
+			$opcion = Opcion::where('id', '<>', '0')->orderBy('id', 'DESC')->get();
+			$id = $opcion[0]->pregunta;
+			
+			return Redirect::route('Encuestas.Preguntas.Opciones.Index', $id);
 		}
 
-		return Redirect::route('Encuestas/Preguntas/Opciones.create')
+		return Redirect::route('Encuestas.Preguntas.Opciones.Agregar', $input['pregunta'])
 			->withInput()
 			->withErrors($validation)
 			->with('message', 'There were validation errors.');
@@ -67,9 +72,9 @@ class OpcionesController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$opcione = $this->opcione->findOrFail($id);
+		$opcion = $this->opcion->findOrFail($id);
 
-		return View::make('opciones.show', compact('opcione'));
+		return View::make('opciones.show', compact('opcion'));
 	}
 
 	/**
@@ -80,14 +85,14 @@ class OpcionesController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		$opcione = $this->opcione->find($id);
+		$opcion = $this->opcion->find($id);
 
-		if (is_null($opcione))
+		if (is_null($opcion))
 		{
-			return Redirect::route('Encuestas/Preguntas/Opciones.index');
+			return Redirect::route('Encuestas.Preguntas.Opciones.index');
 		}
 
-		return View::make('opciones.edit', compact('opcione'));
+		return View::make('opciones.edit', compact('opcion'));
 	}
 
 	/**
@@ -99,17 +104,17 @@ class OpcionesController extends BaseController {
 	public function update($id)
 	{
 		$input = array_except(Input::all(), '_method');
-		$validation = Validator::make($input, Opcione::$rules);
+		$validation = Validator::make($input, Opcion::$rules);
 
 		if ($validation->passes())
 		{
-			$opcione = $this->opcione->find($id);
-			$opcione->update($input);
+			$opcion = $this->opcion->find($id);
+			$opcion->update($input);
 
-			return Redirect::route('Encuestas/Preguntas/Opciones.show', $id);
+			return Redirect::route('Encuestas.Preguntas.Opciones.show', $id);
 		}
 
-		return Redirect::route('Encuestas/Preguntas/Opciones.edit', $id)
+		return Redirect::route('Encuestas.Preguntas.Opciones.edit', $id)
 			->withInput()
 			->withErrors($validation)
 			->with('message', 'There were validation errors.');
@@ -123,9 +128,18 @@ class OpcionesController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		$this->opcione->find($id)->delete();
+		$this->opcion->find($id)->delete();
 
-		return Redirect::route('Encuestas/Preguntas/Opciones.index');
+		return Redirect::route('Encuestas.Preguntas.Opciones.index');
+	}
+
+
+	public function Agregar($id)
+	{
+		$Pregunta = Pregunta::find($id);
+		$Encuesta = Encuesta::find($Pregunta->encuesta);
+		
+		return View::make('opciones.create', compact('Pregunta', 'Encuesta'));
 	}
 
 }

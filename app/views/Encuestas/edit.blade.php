@@ -2,50 +2,57 @@
 
 @section('main')
 
-<h1>Edit Encuesta</h1>
-{{ Form::model($encuesta, array('method' => 'PATCH', 'route' => array('Encuestas.update', $encuesta->id))) }}
-	<ul>
-        <li>
-            {{ Form::label('id', 'Id:') }}
-            {{ Form::input('number', 'id') }}
-        </li>
-
-        <li>
-            {{ Form::label('nombre', 'Nombre:') }}
-            {{ Form::text('nombre') }}
-        </li>
-
-        <li>
-            {{ Form::label('descripcion', 'Descripcion:') }}
-            {{ Form::textarea('descripcion') }}
-        </li>
-
-        <li>
-            {{ Form::label('despedida', 'Despedida:') }}
-            {{ Form::textarea('despedida') }}
-        </li>
-
-        <li>
-            {{ Form::label('promopuntos', 'Promopuntos:') }}
-            {{ Form::text('promopuntos') }}
-        </li>
-
-        <li>
-            {{ Form::label('usuario', 'Usuario:') }}
-            {{ Form::text('usuario') }}
-        </li>
-
-		<li>
-			{{ Form::submit('Update', array('class' => 'btn btn-info')) }}
-			{{ link_to_route('Encuestas.show', 'Cancel', $encuesta->id, array('class' => 'btn')) }}
-		</li>
-	</ul>
-{{ Form::close() }}
+<div class="page-header clearfix">
+    <h3 class="pull-left">Encuesta <small> &gt; Editar Encuesta</small></h3>
+    <div class="pull-right">
+        <a href="{{{ URL::route('Encuestas.index') }}}" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
+    </div>
+</div>
 
 @if ($errors->any())
-	<ul>
-		{{ implode('', $errors->all('<li class="error">:message</li>')) }}
-	</ul>
+  <div class="alert alert-danger fade in">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    @if($errors->count() > 1)
+      <h4>Oh no! Se encontraron errores!</h4>
+    @else
+      <h4>Oh no! Se encontró un error!</h4>
+    @endif
+    <ul>
+      {{ implode('', $errors->all('<li class="error">:message</li>')) }}
+    </ul>  
+  </div>
 @endif
+
+{{ Form::model($encuesta, array('method' => 'PATCH', 'route' => array('Encuestas.update', $encuesta->id), 'class' => 'form-horizontal', 'role' => 'form')) }}
+	<div class="form-group">
+    {{ Form::label('nombre', 'Nombre: *', array('class' => 'col-md-2 control-label')) }}
+      <div class="col-md-4">
+          {{ Form::text('nombre', $encuesta->nombre, array('class' => 'form-control', 'id' => 'nombre', 'placeholder'=>'Nombre de la Encuesta', 'maxlength'=>'128')) }}
+      </div>
+    </div>
+    <div class="form-group">
+      {{ Form::label('descripcion', 'Descripción:', array('class' => 'col-md-2 control-label')) }}
+      <div class="col-md-5">
+        {{ Form::textarea('descripcion',$encuesta->descripcion, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder' => 'Descripción que se mostrará al inicio de la Encuesta', 'rows' => '3', 'maxlength'=>'256')) }}
+      </div>
+    </div>
+    <div class="form-group">
+      {{ Form::label('despedida', 'Despedida:', array('class' => 'col-md-2 control-label')) }}
+      <div class="col-md-5">
+        {{ Form::textarea('despedida',$encuesta->despedida, array('class' => 'form-control', 'id' => 'despedida', 'placeholder' => 'Despedida que se mostrará al finalizar de la Encuesta', 'rows' => '3', 'maxlength'=>'256')) }}
+      </div>
+    </div>
+    {{ Form::hidden('usuario', '1') }}
+    <div class="form-group" style="margin-top:5%;">
+        <div class="col-md-3 col-md-offset-2">
+            {{ Form::submit('Aceptar', array('class' => 'btn btn-primary')) }}
+        </div>
+        <div class="col-md-3">
+            <a type="button" href="{{ URL::route('Encuestas.index') }}" class="btn btn-danger">
+                Cancelar
+            </a>
+        </div>
+    </div>
+{{ Form::close() }}
 
 @stop

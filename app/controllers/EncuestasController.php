@@ -48,7 +48,7 @@ class EncuestasController extends BaseController {
 		
 		if ($validation->passes())
 		{
-			//$this->encuesta->create($input);
+			$this->encuesta->create($input);
 			$encuesta = Encuesta::where('id', '<>', '0')->orderBy('id', 'DESC')->get();
 			$id = $encuesta[0]->id;
 			return Redirect::route('Encuestas.Preguntas.Agregar', $id);
@@ -107,7 +107,7 @@ class EncuestasController extends BaseController {
 			$encuesta = $this->encuesta->find($id);
 			$encuesta->update($input);
 
-			return Redirect::route('Encuestas.show', $id);
+			return Redirect::route('Encuestas.index');
 		}
 
 		return Redirect::route('Encuestas.edit', $id)

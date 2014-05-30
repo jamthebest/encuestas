@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Info Factory</title>
-  {{HTML::script('/assets/javascript/script.js');}}
   {{HTML::script('/assets/javascript/datetimepicker.js');}}
   {{HTML::script('js/jquery.min.js');}}
   {{HTML::script('js/bootstrap.min.js');}}
   {{HTML::style('/bootstrap/css/bootstrap.min.css');}}
   {{HTML::style('/assets/css/general.css');}}
-  {{HTML::style('/bootstrap/css/css/bootstrap.min.css');}}
   {{HTML::style('/css/main.css');}}
 </head>
 <body style="margin-top: 25px">
@@ -64,5 +62,9 @@
   <div class="container col-md-8 col-md-offset-2">
     @yield('main')
   </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    {{HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js');}}
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    {{HTML::script('js/bootstrap.min.js');}}
 </body>
 </html>
