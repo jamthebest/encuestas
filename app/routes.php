@@ -24,6 +24,16 @@ Route::get('Registro', array('as' => 'Registro', 'uses' =>'UsuariosController@cr
 
 Route::post('Registro', array('as' => 'Registrar', 'uses' =>'UsuariosController@store', 'before' => 'guest'));
 
+Route::get('Encuestas/Preguntas', function()
+{
+	return Redirect::route('Encuestas.index');
+});
+
+Route::get('Encuestas/Preguntas/Opciones', function()
+{
+	return Redirect::route('Encuestas.index');
+});
+
 Route::group(array('prefix' => 'Encuestas'), function(){
 	Route::group(array('prefix' => 'Preguntas'), function(){
 		Route::get('Agregar/{id}', array('as' => 'Encuestas.Preguntas.Agregar', 'uses' =>'PreguntasController@Agregar'));

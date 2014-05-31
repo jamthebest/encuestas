@@ -2,7 +2,7 @@
 
 @section('main')
 
-<h1>Show Opcione</h1>
+<h1>Show Opcion</h1>
 
 <p>{{ link_to_route('Encuestas.Preguntas.Opciones.index', 'Return to all opciones') }}</p>
 
@@ -17,12 +17,12 @@
 
 	<tbody>
 		<tr>
-			<td>{{{ $opcione->id }}}</td>
-					<td>{{{ $opcione->descripcion }}}</td>
-					<td>{{{ $opcione->pregunta }}}</td>
-                    <td>{{ link_to_route('Encuestas.Preguntas.Opciones.edit', 'Edit', array($opcione->id), array('class' => 'btn btn-info')) }}</td>
+			<td>{{{ $opcion->id }}}</td>
+					<td>{{{ $opcion->descripcion }}}</td>
+					<td>{{{ $opcion->pregunta }}}</td>
+                    <td>{{ link_to_route('Encuestas.Preguntas.Opciones.edit', 'Edit', array($opcion->id), array('class' => 'btn btn-info')) }}</td>
                     <td>
-                        {{ Form::open(array('method' => 'DELETE', 'route' => array('Encuestas.Preguntas.Opciones.destroy', $opcione->id))) }}
+                        {{ Form::open(array('method' => 'DELETE', 'route' => array('Encuestas.Preguntas.Opciones.destroy', $opcion->id))) }}
                             {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
                         {{ Form::close() }}
                     </td>

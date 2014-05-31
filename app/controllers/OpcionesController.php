@@ -23,6 +23,9 @@ class OpcionesController extends BaseController {
 	{
 		$opciones = Opcion::where('pregunta', $id)->get();
 		$pregunta = Pregunta::find($id);
+		if (!$pregunta) {
+			return Redirect::route('Encuestas.index');
+		}
 		$encuesta = Encuesta::find($pregunta->encuesta);
 		$tipos = Tipo::all();
 		$cont = 1;
@@ -89,7 +92,8 @@ class OpcionesController extends BaseController {
 
 		if (is_null($opcion))
 		{
-			return Redirect::route('Encuestas.Preguntas.Opciones.index');
+			return Redirect::route('Encuestas.index')
+				->withErrors('No se encontró esa opción!');
 		}
 
 		return View::make('opciones.edit', compact('opcion'));
@@ -111,7 +115,7 @@ class OpcionesController extends BaseController {
 			$opcion = $this->opcion->find($id);
 			$opcion->update($input);
 
-			return Redirect::route('Encuestas.Preguntas.Opciones.show', $id);
+			return Redirect::route('Encuestas.Preguntas.Opciones.Index', $input['pregunta']);
 		}
 
 		return Redirect::route('Encuestas.Preguntas.Opciones.edit', $id)

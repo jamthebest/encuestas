@@ -23,6 +23,9 @@ class PreguntasController extends BaseController {
 	{
 		$preguntas = Pregunta::where('encuesta', $id)->get();
 		$tipos = Tipo::all();
+		if (!$preguntas->count()) {
+			return Redirect::route('Encuestas.index');
+		}
 		$encuesta = Encuesta::find($id)->nombre;
 		$cont = 1;
 		return View::make('preguntas.index', compact('preguntas', 'tipos', 'encuesta', 'cont', 'id'));
@@ -118,7 +121,7 @@ class PreguntasController extends BaseController {
 			$pregunta = $this->pregunta->find($id);
 			$pregunta->update($input);
 
-			return Redirect::route('Encuestas.Preguntas.Index', $id);
+			return Redirect::route('Encuestas.Preguntas.Index', $input['encuesta']);
 		}
 
 		return Redirect::route('Encuestas.Preguntas.edit', $id)

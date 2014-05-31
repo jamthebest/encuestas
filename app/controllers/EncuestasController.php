@@ -85,7 +85,8 @@ class EncuestasController extends BaseController {
 
 		if (is_null($encuesta))
 		{
-			return Redirect::route('Encuestas.index');
+			return Redirect::route('Encuestas.index')
+					->withErrors('No se encontró esa encuesta');
 		}
 
 		return View::make('Encuestas.edit', compact('encuesta'));
