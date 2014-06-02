@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Info Factory</title>
-  {{HTML::script('/assets/javascript/datetimepicker.js');}}
+  {{HTML::script('/assets/javascript/script.js');}}
   {{HTML::script('js/jquery.min.js');}}
   {{HTML::script('js/bootstrap.min.js');}}
   {{HTML::style('/bootstrap/css/bootstrap.min.css');}}
@@ -26,7 +26,7 @@
           @if (Auth::user())
             @if (Auth::user()->tipo == 'cliente' )
           	<li class="dropdown">
-            	{{link_to('#', 'Mis Encuestas', $attributes = array(), $secure = null)}}
+            	{{link_to('Encuestas', 'Mis Encuestas', $attributes = array(), $secure = null)}}
           	</li>
             <li class="dropdown">
               {{link_to('#', 'Resultados', $attributes = array(), $secure = null)}}
