@@ -42,13 +42,22 @@
                 {{link_to('#', 'Resultados', $attributes = array(), $secure = null)}}
               </li>
             @endif
+          @else
+            @if (Session::get('activa'))
+              <li class="dropdown">
+                {{link_to('Encuestas', 'Contestar Encuestas', $attributes = array(), $secure = null)}}
+              </li>
+            @endif
           @endif
         </ul>
         @if (Auth::user() || Session::get('activa'))
-          
+          @if(Session::get('activa'))
+            <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Salir', 'Salir', $attributes = array(), $secure = null)}}</p>
+            <p class="navbar-text navbar-right" style="margin-right: 1em;">{{ Session::get('username') }}</p>
+          @else
             <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Logout', 'Salir', $attributes = array(), $secure = null)}}</p>
             <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Usuarios/'.Auth::user()->id, Auth::user()->username, $attributes = array(), $secure = null)}}</p>
-          
+          @endif
         @else
             <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Registro', 'Registrarse', $attributes = array(), $secure = null)}}</p>
             <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Login', 'Ingresar', $attributes = array(), $secure = null)}}</p>
