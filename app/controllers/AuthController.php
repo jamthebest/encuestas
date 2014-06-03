@@ -21,6 +21,22 @@ class AuthController extends BaseController {
 			//$user = Auth::user()->user;
 			return Redirect::to('Inicio')->with('message', 'Bienvenido '. Auth::user()->username . '!');
 		}
+		$panel = DB::connection('info')->select("select clave from panel where usuario = ?", array($user));
+		if ($panel) {
+			$clave = $panel[0]->clave;
+			if ($clave == $password) {
+				$user = DB::connection('info')->table('panel')->where('usuario', $user)->first();
+	      Session::put('id', $user->id_panel);
+	      Session::put('username', $user->primer_nombre . ' ' . $user->primer_apellido);
+	      Session::put('tipo', 'panelista');
+	      Session::put('activa', '1');
+	      
+	      Response::json(array(
+	          'success'         =>     true
+	      ));
+	      return Redirect::to('Inicio')->with('message', 'Bienvenido '. Session::get('username') . '!');
+			}
+		}
 		// La autenticación ha fallado re-direccionamos
 		// a la página anterior con los datos enviados
 		// y con un mensaje de error
@@ -30,10 +46,18 @@ class AuthController extends BaseController {
 	public function doLogout()
 	{
 		//Desconctamos al usuario
-		Auth::logout();
+		if (Auth::user()) {
+			Auth::logout();
+		}
+		
 
 		//Redireccionamos al inicio de la app con un mensaje
 		return Redirect::to('Inicio')->with('message', 'Gracias por visitarnos!.');
+	}
+
+	public function salir(){
+		Session::flush();
+		return Redirect::to('Inicio')->with('message', 'Hasta Pronto!.');
 	}
 
 }

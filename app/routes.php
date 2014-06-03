@@ -17,6 +17,8 @@ Route::get('/Login', ['before' => 'guest', function(){
 //Procesa el formulario e identifica al usuario
 Route::post('/Login', ['uses' => 'AuthController@doLogin', 'before' => 'guest']);
 
+Route::get('/Salir', array('uses' => 'AuthController@salir'));
+
 //Desconecta al usuario
 Route::get('/Logout', ['uses' => 'AuthController@doLogout', 'before' => 'auth']);
 
@@ -49,3 +51,4 @@ Route::group(array('prefix' => 'Encuestas'), function(){
 });
 
 Route::resource('Encuestas', 'EncuestasController');
+Route::resource('Usuarios', 'UsuariosController');

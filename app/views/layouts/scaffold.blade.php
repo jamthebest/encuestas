@@ -32,27 +32,23 @@
               {{link_to('#', 'Resultados', $attributes = array(), $secure = null)}}
             </li>
             @else
-              @if (Auth::user()->tipo == 'panelista' )
-                <li class="dropdown">
-                  {{link_to('#', 'Contestar Encuestas', $attributes = array(), $secure = null)}}
-                </li>
-              @else
-                <li class="dropdown">
-                  {{link_to('#', 'Usuarios', $attributes = array(), $secure = null)}}
-                </li>
-                <li class="dropdown">
-                  {{link_to('#', 'Encuestas', $attributes = array(), $secure = null)}}
-                </li>
-                <li class="dropdown">
-                  {{link_to('#', 'Resultados', $attributes = array(), $secure = null)}}
-                </li>
-              @endif
+              <li class="dropdown">
+                {{link_to('#', 'Usuarios', $attributes = array(), $secure = null)}}
+              </li>
+              <li class="dropdown">
+                {{link_to('#', 'Encuestas', $attributes = array(), $secure = null)}}
+              </li>
+              <li class="dropdown">
+                {{link_to('#', 'Resultados', $attributes = array(), $secure = null)}}
+              </li>
             @endif
           @endif
         </ul>
-        @if (Auth::user())
+        @if (Auth::user() || Session::get('activa'))
+          
             <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Logout', 'Salir', $attributes = array(), $secure = null)}}</p>
             <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Usuarios/'.Auth::user()->id, Auth::user()->username, $attributes = array(), $secure = null)}}</p>
+          
         @else
             <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Registro', 'Registrarse', $attributes = array(), $secure = null)}}</p>
             <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Login', 'Ingresar', $attributes = array(), $secure = null)}}</p>

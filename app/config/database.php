@@ -63,6 +63,17 @@ return array(
 			'prefix'    => '',
 		),
 
+		'info' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'infofact_encuestatv',
+			'username'  => 'infofact_dbuser',
+			'password'  => 'iso44Biso#',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),
+
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',
