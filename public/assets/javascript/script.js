@@ -3,16 +3,16 @@
     if (sel.value=="1"){
       ocultar();
       $(".text-example").show();
-    }else if (sel.value=="2") {
-      ocultar();
-      $(".select-example").show();
     }else if (sel.value=="3") {
       ocultar();
-      $(".option-example").show();
+      $(".select-example").show();
     }else if (sel.value=="4") {
       ocultar();
+      $(".option-example").show();
+    }else if (sel.value=="5") {
+      ocultar();
       $(".check-example").show();
-    }else{
+    }else if (sel.value=="2") {
       ocultar();
       $(".sino-example").show();
     }

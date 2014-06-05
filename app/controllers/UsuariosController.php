@@ -25,6 +25,7 @@ class UsuariosController extends BaseController {
 		$validation = Validator::make($input, $val3);
 		
 		if ($validation->passes())
+		//if (true)
 		{
 			$user['username'] = $input['username'];
 			$user['correo'] = $input['correo'];

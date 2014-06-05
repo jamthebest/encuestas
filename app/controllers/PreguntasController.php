@@ -23,10 +23,10 @@ class PreguntasController extends BaseController {
 	{
 		$preguntas = Pregunta::where('encuesta', $id)->get();
 		$tipos = Tipo::all();
+		$encuesta = '';
 		if (!$preguntas->count()) {
-			return Redirect::route('Encuestas.index');
+			$encuesta = Encuesta::find($id)->nombre;
 		}
-		$encuesta = Encuesta::find($id)->nombre;
 		$cont = 1;
 		return View::make('preguntas.index', compact('preguntas', 'tipos', 'encuesta', 'cont', 'id'));
 	}
@@ -50,7 +50,7 @@ class PreguntasController extends BaseController {
 	{
 		$input = Input::all();
 		$validation = Validator::make($input, Pregunta::$rules);
-
+		
 		if ($validation->passes())
 		{
 			$this->pregunta->create($input);
@@ -59,6 +59,14 @@ class PreguntasController extends BaseController {
 
 			if ($input['tipo'] == 1) {
 				$opcion['descripcion'] = 'Texto';
+				$opcion['pregunta'] = $id;
+				Opcion::create($opcion);
+				return Redirect::route('Encuestas.Preguntas.Index', $input['encuesta']);
+			}elseif ($input['tipo'] == 2) {
+				$opcion['descripcion'] = 'Si';
+				$opcion['pregunta'] = $id;
+				Opcion::create($opcion);
+				$opcion['descripcion'] = 'No';
 				$opcion['pregunta'] = $id;
 				Opcion::create($opcion);
 				return Redirect::route('Encuestas.Preguntas.Index', $input['encuesta']);

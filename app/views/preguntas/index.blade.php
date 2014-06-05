@@ -45,8 +45,16 @@
 		</tbody>
 	</table>
 @else
+	<h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span> {{$encuesta}} </h2>
 	<div class="alert alert-danger">
     <strong>Oh no!</strong> No hay Preguntas En Esta Encuesta
+  </div>
+  
+	<div class="btn-agregar pull-left">
+		{{ link_to_route('Encuestas.Preguntas.Agregar', 'Agregar Pregunta', array($id), array('class' => 'btn btn-primary')) }}
+	</div>
+	<div class="pull-right">
+    <a href="{{{ URL::to('Encuestas') }}}" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-arrow-left"></span> Terminar</a>
   </div>
 @endif
 

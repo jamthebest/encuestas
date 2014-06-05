@@ -24,7 +24,7 @@
           </li>
 
           @if (Auth::user())
-            @if (Auth::user()->tipo == 'cliente' )
+            @if (Auth::user()->tipo == 'cliente')
           	<li class="dropdown">
             	{{link_to('Encuestas', 'Mis Encuestas', $attributes = array(), $secure = null)}}
           	</li>
@@ -32,35 +32,30 @@
               {{link_to('#', 'Resultados', $attributes = array(), $secure = null)}}
             </li>
             @else
-              <li class="dropdown">
-                {{link_to('#', 'Usuarios', $attributes = array(), $secure = null)}}
-              </li>
-              <li class="dropdown">
-                {{link_to('#', 'Encuestas', $attributes = array(), $secure = null)}}
-              </li>
-              <li class="dropdown">
-                {{link_to('#', 'Resultados', $attributes = array(), $secure = null)}}
-              </li>
-            @endif
-          @else
-            @if (Session::get('activa'))
-              <li class="dropdown">
-                {{link_to('Encuestas', 'Contestar Encuestas', $attributes = array(), $secure = null)}}
-              </li>
+              @if (Auth::user()->tipo == 'panelista')
+                <li class="dropdown">
+                  {{link_to('MisEncuestas', 'Contestar Encuestas', $attributes = array(), $secure = null)}}
+                </li>
+              @else
+                <li class="dropdown">
+                  {{link_to('#', 'Usuarios', $attributes = array(), $secure = null)}}
+                </li>
+                <li class="dropdown">
+                  {{link_to_route('Encuestas.todas', 'Encuestas', $attributes = array(), $secure = null)}}
+                </li>
+                <li class="dropdown">
+                  {{link_to('#', 'Resultados', $attributes = array(), $secure = null)}}
+                </li>
+              @endif
             @endif
           @endif
         </ul>
-        @if (Auth::user() || Session::get('activa'))
-          @if(Session::get('activa'))
-            <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Salir', 'Salir', $attributes = array(), $secure = null)}}</p>
-            <p class="navbar-text navbar-right" style="margin-right: 1em;">{{ Session::get('username') }}</p>
-          @else
-            <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Logout', 'Salir', $attributes = array(), $secure = null)}}</p>
-            <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Usuarios/'.Auth::user()->id, Auth::user()->username, $attributes = array(), $secure = null)}}</p>
-          @endif
+        @if (Auth::user())
+          <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Logout', 'Salir', $attributes = array(), $secure = null)}}</p>
+          <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Usuarios/'.Auth::user()->id, Auth::user()->username, $attributes = array(), $secure = null)}}</p>
         @else
-            <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Registro', 'Registrarse', $attributes = array(), $secure = null)}}</p>
-            <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Login', 'Ingresar', $attributes = array(), $secure = null)}}</p>
+          <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Registro', 'Registrarse', $attributes = array(), $secure = null)}}</p>
+          <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Login', 'Ingresar', $attributes = array(), $secure = null)}}</p>
         @endif
       </nav>
     </header>
