@@ -8,7 +8,6 @@ class EncuestaPanelista extends Eloquent {
 	public static $rules = array(
 		'encuesta' => 'required',
 		'panelista' => 'required',
-		'contestada' => 'required',
-		'updated_at' => ''
+		'contestada' => 'required'
 	);
 }

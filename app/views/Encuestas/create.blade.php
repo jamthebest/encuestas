@@ -42,7 +42,7 @@
         {{ Form::textarea('despedida',null, array('class' => 'form-control', 'id' => 'despedida', 'placeholder' => 'Despedida que se mostrará al finalizar de la Encuesta', 'rows' => '3', 'maxlength'=>'256')) }}
       </div>
     </div>
-    {{ Form::hidden('usuario', '1') }}
+    {{ Form::hidden('usuario', Auth()::user()->id) }}
     <div class="form-group" style="margin-top:5%;">
         <div class="col-md-3 col-md-offset-2">
             {{ Form::submit('Aceptar', array('class' => 'btn btn-primary')) }}

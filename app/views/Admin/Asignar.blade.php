@@ -21,11 +21,15 @@
 @if ($Panelistas->count())
 {{ Form::open(array('route' => 'AgregarPanelistas.store', 'class' => "form-horizontal", 'role' => 'form')) }}
 	{{ Form::hidden('Encuesta', $Encuesta->id) }}
-	<table class="table table-striped table-bordered">
+	<table class="table table-striped table-bordered" style="margin-left:-10%;">
 		<thead>
 			<tr>
 				<th>Agregar</th>
 				<th>Usuario</th>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Celular</th>
+				<th>Tel. Casa</th>
 				<th>Correo</th>
 				<th>Estado</th>
 			</tr>
@@ -34,16 +38,27 @@
 		<tbody>
 			@foreach ($Panelistas as $panel)
 				<tr>
-					<td>{{ Form::checkbox('A' . $panel->id) }}</td>
+					@if ($panel->check == 1)
+						<td>{{ Form::checkbox('A' . $panel->id, 1, array('checked'=>'checked')) }}</td>
+					@else
+						<td>{{ Form::checkbox('A' . $panel->id, 1) }}</td>
+					@endif
 					<td>{{{ $panel->username }}}</td>
+					<td>{{ $Nombres[$panel->id - 3]->nombre }}</td>
+					<td>{{ $Nombres[$panel->id - 3]->apellido }}</td>
+					<td>{{ $Nombres[$panel->id - 3]->celular }}</td>
+					<td>{{ $Nombres[$panel->id - 3]->casa }}</td>
 					<td>{{{ $panel->correo }}}</td>
 					<td>{{{ $panel->activo == 1 ? 'Activo' : 'Inactivo' }}}</td>
 				</tr>
 			@endforeach
 		</tbody>
 	</table>
-	<div class="form-group col-md-2">
-    {{ Form::submit('Terminar', array('class' => 'btn btn-info')) }}
+	<div class="form-group col-md-2 col-md-push-5">
+    {{ Form::submit('Terminar', array('class' => 'btn btn-primary')) }}
+  </div>
+  <div class="form-group col-md-2 col-md-push-5">
+    {{ link_to_route('Encuestas.todas', 'Cancelar', null, array('class' => 'btn btn-danger')) }}
   </div>
 {{ Form::close() }}
 @else
