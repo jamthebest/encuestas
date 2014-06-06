@@ -62,4 +62,11 @@ class UsuariosController extends BaseController {
 			->with('message', 'There were validation errors.');
 	}
 
+	public function index()
+	{
+		$Usuarios = Usuario::all();
+
+		return View::make('Usuarios.index', compact('Usuarios'));
+	}
+
 }

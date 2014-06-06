@@ -38,7 +38,7 @@
                 </li>
               @else
                 <li class="dropdown">
-                  {{link_to('#', 'Usuarios', $attributes = array(), $secure = null)}}
+                  {{link_to_route('Usuarios.index', 'Usuarios', $attributes = array(), $secure = null)}}
                 </li>
                 <li class="dropdown">
                   {{link_to_route('Encuestas.todas', 'Encuestas', $attributes = array(), $secure = null)}}
