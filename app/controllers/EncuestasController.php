@@ -21,9 +21,12 @@ class EncuestasController extends BaseController {
 	 */
 	public function index()
 	{
-		$encuestas = $this->encuesta->all();
-
-		return View::make('Encuestas.index', compact('encuestas'));
+		if (Auth::user()) {
+			$encuestas = $this->encuesta->where('usuario', Auth::user()->id)->get();
+			
+			return View::make('Encuestas.index', compact('encuestas'));
+		}
+		return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
 	}
 
 	/**

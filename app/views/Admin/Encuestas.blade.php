@@ -38,7 +38,7 @@
 			@foreach ($Encuestas as $encuesta)
 				<tr>
 					<td>{{{ $encuesta->nombre }}}</td>
-					<td>{{{ $Usuarios[$encuesta->usuario]->username }}}</td>
+					<td>{{{ $Usuarios[$encuesta->usuario - 1]->username }}}</td>
 					<td>{{ link_to_route('VerPanelistas', 'Ver Panelistas', array($encuesta->id), array('class' => 'btn btn-warning')) }}</td>
 					<td>{{ link_to_route('AsignarPanelistas', 'Asignar Panelistas', array($encuesta->id), array('class' => 'btn btn-primary')) }}</td>
 					<td>{{ link_to_route('Encuestas.Preguntas.Index', 'Ver Preguntas', array($encuesta->id), array('class' => 'btn btn-success')) }}</td>

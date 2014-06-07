@@ -22,6 +22,17 @@ class AuthController extends BaseController {
 			return Redirect::to('Inicio')->with('message', 'Bienvenido '. Auth::user()->username . '!');
 		}
 		if ($user != null && $user != '') {
+			$usuario = Usuario::where('username', $user)->first();
+			$panel = DB::connection('info')->table('panel')->where('usuario', $user)->orWhere('email', $user)->first();
+
+			if ($usuario) {
+				if ($usuario->password == $password) {
+					$us = User::find($usuario->id);
+					Auth::login($us);
+					return Redirect::to('Inicio')->with('message', 'Bienvenido/a '. $panel->primer_nombre . ' ' . $panel->primer_apellido . '!');
+				}
+			}
+		}
 			/*$panel = DB::connection('info')->select("select clave from panel where usuario = ? or email = ?", array($user, $user));
 			if ($panel) {
 				$clave = $panel[0]->clave;
@@ -34,13 +45,13 @@ class AuthController extends BaseController {
 					$userAuth->password = $tmp->clave;
 					$userAuth->tipo = 'panelista';
 					$userAuth->activo = '1';//*/
-					$panel = DB::connection('info')->table('panel')->where('usuario', $user)->orWhere('email', $user)->first();
+					/*$panel = DB::connection('info')->table('panel')->where('usuario', $user)->orWhere('email', $user)->first();
 					$x = User::where('username', $user)->orWhere('correo', $user)->first();
 					if ($x) {
 						$userAuth = User::find($x->id);
 						Auth::login($userAuth);
 						return Redirect::to('Inicio')->with('message', 'Bienvenido/a '. $panel->primer_nombre . ' ' . $panel->primer_apellido . '!');//*/	
-					}
+					/*}
 					/*$tmp = DB::connection('info')->table('panel')->where('usuario', $user)->first();
 					Session::put('id', $tmp->id_panel);
 		      Session::put('username', $tmp->primer_nombre . ' ' . $tmp->primer_apellido);
@@ -53,11 +64,13 @@ class AuthController extends BaseController {
 		      return Redirect::to('Inicio')->with('message', 'Bienvenido '. Session::get('username') . '!');//*/
 				//}
 			//}
-		}
+		/*}//*/
 		// La autenticación ha fallado re-direccionamos
 		// a la página anterior con los datos enviados
 		// y con un mensaje de error
-		return Redirect::back()->with('message', 'Datos incorrectos, vuelve a intentarlo.');
+		return Redirect::back()
+				->with('message', 'Datos incorrectos, vuelve a intentarlo.')
+				->withInput();
 	}
 
 	public function doLogout()

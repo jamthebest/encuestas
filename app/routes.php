@@ -34,7 +34,7 @@ Route::get('Encuestas/Preguntas/Opciones', function()
 	return Redirect::route('Encuestas.index');
 });
 
-Route::group(array('prefix' => 'Encuestas'), function(){
+Route::group(array('prefix' => 'Encuestas', 'before' => 'auth'), function(){
 	Route::group(array('prefix' => 'Preguntas'), function(){
 		Route::get('Agregar/{id}', array('as' => 'Encuestas.Preguntas.Agregar', 'uses' =>'PreguntasController@Agregar'));
 		Route::get('Index/{id}', array('as' => 'Encuestas.Preguntas.Index', 'uses' =>'PreguntasController@index'));

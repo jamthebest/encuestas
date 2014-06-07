@@ -26,7 +26,7 @@
 {{ Form::open(array('route' => 'Registrar')) }}
 <div class="row">    
     <h2 class="form-signin-heading text-center">Ingrese Sus Datos</h2>
-    <div class="row col-md-6 col-md-push-1">
+    <div class="row col-md-7 col-md-push-1" style="margin-left:-8%;">
         <h3 class="form-signin-heading text-center">Datos</h3>
             <div class="form-group">
                 {{ Form::label('empresa', 'Empresa:', array('class' => 'col-md-4 control-label')) }}
