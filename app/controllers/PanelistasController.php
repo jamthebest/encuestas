@@ -22,7 +22,19 @@ class PanelistasController extends BaseController {
 	}
 
 	public function show($id){
+		$Encuesta = Encuesta::find($id);
+		$Preguntas = Pregunta::where('encuesta', $Encuesta->id)->get();
+		$preg = Pregunta::select('id')->where('encuesta', $Encuesta->id)->lists('id');
+		$Opciones = Opcion::whereIn('pregunta', $preg)->get();
+		$cont = 0;
+		$opc = array();
+		
+		return View::make('Panelistas.contestar', compact('Encuesta', 'Preguntas', 'Opciones', 'cont', 'opc'));
+	}
 
+	public function store($id)
+	{
+		return Input::all();
 	}
 
 }
