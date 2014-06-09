@@ -44,6 +44,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	<div style="margin-left:-8%">{{$preguntas->links()}}</div>
 @else
 	<h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span> {{$encuesta}} </h2>
 	<div class="alert alert-danger">

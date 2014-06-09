@@ -25,6 +25,7 @@
 @endif
 
 @if ($Usuarios->count())
+	<div class="table-responsive">
 	<table class="table table-striped" style="margin-left:-10%;">
 		<thead>
 			<tr>
@@ -58,6 +59,8 @@
 			@endforeach
 		</tbody>
 	</table>
+	</div>
+	<div style="margin-left:-12%">{{$Usuarios->links()}}</div>
 @else
 	<div class="alert alert-danger">
     <strong>Oh no!</strong> No hay Usuarios Disponibles

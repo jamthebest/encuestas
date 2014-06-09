@@ -54,6 +54,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	<div style="margin-left:-12%">{{$Panelistas->links()}}</div>
 	<div class="form-group col-md-2 col-md-push-5">
     {{ Form::submit('Terminar', array('class' => 'btn btn-primary')) }}
   </div>

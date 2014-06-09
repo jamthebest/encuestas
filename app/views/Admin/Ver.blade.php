@@ -46,6 +46,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	<div style="margin-left:-8%">{{$Nombres->links()}}</div>
 	<div class="form-group col-md-3">
 		{{ link_to_route('AsignarPanelistas', 'Asignar Panelistas', array($Encuesta->id), array('class' => 'btn btn-primary')) }}
   </div>

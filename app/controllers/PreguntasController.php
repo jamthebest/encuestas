@@ -21,7 +21,7 @@ class PreguntasController extends BaseController {
 	 */
 	public function index($id)
 	{
-		$preguntas = Pregunta::where('encuesta', $id)->get();
+		$preguntas = Pregunta::where('encuesta', $id)->paginate(10);
 		$tipos = Tipo::all();
 		$encuesta = '';
 		if (!$preguntas->count()) {

@@ -64,7 +64,7 @@ class UsuariosController extends BaseController {
 
 	public function index()
 	{
-		$Usuarios = Usuario::all();
+		$Usuarios = Usuario::paginate(10);
 
 		return View::make('Usuarios.index', compact('Usuarios'));
 	}

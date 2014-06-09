@@ -21,7 +21,7 @@ class OpcionesController extends BaseController {
 	 */
 	public function index($id)
 	{
-		$opciones = Opcion::where('pregunta', $id)->get();
+		$opciones = Opcion::where('pregunta', $id)->paginate(10);
 		$pregunta = Pregunta::find($id);
 		if (!$pregunta) {
 			return Redirect::route('Encuestas.index');

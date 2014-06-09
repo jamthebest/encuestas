@@ -13,7 +13,7 @@ class AdminController extends BaseController {
 
 	public function Encuestas()
 	{
-		$Encuestas = Encuesta::all();
+		$Encuestas = Encuesta::paginate(10);
 		$Usuarios = Usuario::all();
 		return View::make('Admin.Encuestas', compact('Encuestas', 'Usuarios'));
 	}
@@ -21,7 +21,7 @@ class AdminController extends BaseController {
 	public function Asignar($id)
 	{
 		$Encuesta = Encuesta::find($id);
-		$Panelistas = Usuario::where('tipo', 'panelista')->get();
+		$Panelistas = Usuario::where('tipo', 'panelista')->paginate(10);
 		$Usuarios = Usuario::select('username')->where('tipo', 'panelista')->get();
 		$Asignados = EncuestaPanelista::where('encuesta', $Encuesta->id)->get();
 		$usuario = array();
@@ -68,7 +68,7 @@ class AdminController extends BaseController {
 			$Nombres = DB::connection('info')->table('panel')
 				->select('primer_nombre as nombre', 'primer_apellido as apellido', 'telefono_celular as celular', 'telefono_casa as casa', 'ciudad', 'email', 'usuario')
 				->whereIn('usuario', $usuario)->orWhereIn('email', $usuario)
-				->get();
+				->paginate(10);
 			//return $Nombres;
 			return View::make('Admin.Ver', compact('Encuesta', 'Nombres'));
 		}

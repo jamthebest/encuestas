@@ -17,7 +17,7 @@ class PanelistasController extends BaseController {
 								->select('encuestas.id', 'encuestas.nombre', 'encuestas.descripcion', 'encuestas.despedida', 'encuestas.promopuntos')
 								->where('activa', '1')->where('pagada', '1')->where('encuesta_panelista.panelista', Auth::user()->id)
 								->where('encuesta_panelista.contestada', '0')
-								->get();
+								->paginate(10);
 		return View::make('Panelistas.index', compact('Encuestas'));
 	}
 

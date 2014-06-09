@@ -35,6 +35,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	<div style="margin-left:-8%">{{$opciones->links()}}</div>
 @else
 	<div class="alert alert-danger">
     <strong>Oh no!</strong> No hay Opciones En Esta Pregunta

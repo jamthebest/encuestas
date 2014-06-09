@@ -22,7 +22,7 @@ class EncuestasController extends BaseController {
 	public function index()
 	{
 		if (Auth::user()) {
-			$encuestas = $this->encuesta->where('usuario', Auth::user()->id)->get();
+			$encuestas = $this->encuesta->where('usuario', Auth::user()->id)->paginate(10);
 			
 			return View::make('Encuestas.index', compact('encuestas'));
 		}
