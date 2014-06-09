@@ -44,6 +44,7 @@ Route::group(array('prefix' => 'Encuestas', 'before' => 'auth'), function(){
 		Route::get('Opciones/Index/{id}', array('as' => 'Encuestas.Preguntas.Opciones.Index', 'uses' =>'OpcionesController@index'));
 	});
 	Route::get('Mostrar', ['as' => 'Encuestas.todas', 'uses' =>'AdminController@Encuestas', 'before' => 'auth']);
+	Route::get('Configurar/{id}', ['as' => 'Configurar', 'uses' =>'AdminController@Configurar', 'before' => 'auth']);
 	Route::get('AsignarPanelistas/{id}', ['as' => 'AsignarPanelistas', 'uses' =>'AdminController@asignar', 'before' => 'auth']);
 	Route::get('VerPanelistas/{id}', ['as' => 'VerPanelistas', 'uses' =>'AdminController@Ver', 'before' => 'auth']);
 	Route::post('AsignarPanelistas', ['as' => 'AgregarPanelistas.store', 'uses' =>'AdminController@store', 'before' => 'auth']);

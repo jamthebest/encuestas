@@ -51,7 +51,7 @@
 		{{ link_to_route('AsignarPanelistas', 'Asignar Panelistas', array($Encuesta->id), array('class' => 'btn btn-primary')) }}
   </div>
   <div class="form-group col-md-3 col-md-offset-1">
-		{{ link_to_route('Encuestas.todas', 'Atrás', null, array('class' => 'btn btn-success')) }}
+		{{ link_to_route('Configurar', 'Atrás', array($Encuesta->id), array('class' => 'btn btn-success')) }}
   </div>
 @else
 	<div class="alert alert-danger">

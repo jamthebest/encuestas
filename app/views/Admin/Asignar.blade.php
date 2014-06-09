@@ -59,7 +59,7 @@
     {{ Form::submit('Terminar', array('class' => 'btn btn-primary')) }}
   </div>
   <div class="form-group col-md-2 col-md-push-5">
-    {{ link_to_route('Encuestas.todas', 'Cancelar', null, array('class' => 'btn btn-danger')) }}
+    {{ link_to_route('Configurar', 'Cancelar', array($Encuesta->id), array('class' => 'btn btn-danger')) }}
   </div>
 {{ Form::close() }}
 @else

@@ -114,4 +114,11 @@ class AdminController extends BaseController {
 		return Redirect::route('Encuestas.todas')->with('message', 'Panelistas Asignados Correctamente');
 	}
 
+	public function Configurar($id)
+	{
+		$Encuesta = Encuesta::find($id);
+
+		return View::make('Admin.Configurar', compact('Encuesta'));
+	}
+
 }
