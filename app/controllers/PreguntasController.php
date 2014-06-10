@@ -23,9 +23,11 @@ class PreguntasController extends BaseController {
 	{
 		$preguntas = Pregunta::where('encuesta', $id)->paginate(10);
 		$tipos = Tipo::all();
-		$encuesta = '';
-		if (!$preguntas->count()) {
-			$encuesta = Encuesta::find($id)->nombre;
+		$encuesta = Encuesta::find($id);
+		if ($encuesta) {
+			if ($encuesta->activa == 0) {
+				return Redirect::route('Encuestas.index');
+			}
 		}
 		$cont = 1;
 		return View::make('preguntas.index', compact('preguntas', 'tipos', 'encuesta', 'cont', 'id'));

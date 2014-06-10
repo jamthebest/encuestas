@@ -27,6 +27,11 @@ class OpcionesController extends BaseController {
 			return Redirect::route('Encuestas.index');
 		}
 		$encuesta = Encuesta::find($pregunta->encuesta);
+		if ($encuesta) {
+			if ($encuesta->activa == 0) {
+				return Redirect::route('Encuestas.index');
+			}
+		}
 		$tipos = Tipo::all();
 		$cont = 1;
 		return View::make('opciones.index', compact('opciones', 'pregunta', 'encuesta', 'tipos', 'cont', 'id'));

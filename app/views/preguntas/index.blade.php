@@ -2,8 +2,8 @@
 
 @section('main')
 
-@if ($preguntas->count())
-	<h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span> {{$encuesta}} </h2>
+@if ($preguntas)
+	<h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span> {{$encuesta->nombre}} </h2>
 	<div class="btn-agregar pull-left">
 		{{ link_to_route('Encuestas.Preguntas.Agregar', 'Agregar Pregunta', array($id), array('class' => 'btn btn-primary')) }}
 	</div>
@@ -46,7 +46,7 @@
 	</table>
 	<div style="margin-left:-8%">{{$preguntas->links()}}</div>
 @else
-	<h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span> {{$encuesta}} </h2>
+	<h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span> {{$encuesta->nombre}} </h2>
 	<div class="alert alert-danger">
     <strong>Oh no!</strong> No hay Preguntas En Esta Encuesta
   </div>

@@ -44,11 +44,6 @@
 					<td>{{ link_to_route('Configurar', 'Configuración', array($encuesta->id), array('class' => 'btn btn-warning')) }}</td>
 					<td>{{ link_to_route('Encuestas.Preguntas.Index', 'Ver Preguntas', array($encuesta->id), array('class' => 'btn btn-success')) }}</td>
           <td>{{ link_to_route('Encuestas.edit', 'Editar', array($encuesta->id), array('class' => 'btn btn-info')) }}</td>
-          <td>
-              {{ Form::open(array('method' => 'DELETE', 'route' => array('Encuestas.destroy', $encuesta->id))) }}
-                  {{ Form::submit('Eliminar', array('class' => 'btn btn-danger')) }}
-              {{ Form::close() }}
-          </td>
 				</tr>
 			@endforeach
 		</tbody>
