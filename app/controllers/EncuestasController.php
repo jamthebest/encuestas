@@ -128,9 +128,29 @@ class EncuestasController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		$this->encuesta->find($id)->delete();
+		$encuesta = $this->encuesta->find($id);
+		$encuesta->activa = 0;
+		$encuesta->save();
 
-		return Redirect::route('Encuestas.index');
+		return Redirect::route('Encuestas.index')->with('message', 'Encuesta Eliminada!');
+	}
+
+	public function activar($id)
+	{
+		$encuesta = $this->encuesta->find($id);
+		$encuesta->activa = 1;
+		$encuesta->save();
+
+		return Redirect::route('Configurar', $id)->with('message', 'Encuesta Activada!');
+	}
+
+	public function desactivar($id)
+	{
+		$encuesta = $this->encuesta->find($id);
+		$encuesta->activa = 0;
+		$encuesta->save();
+
+		return Redirect::route('Configurar', $id)->with('message', 'Encuesta Desactivada!');
 	}
 
 }
