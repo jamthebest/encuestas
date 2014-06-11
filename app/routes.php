@@ -60,4 +60,4 @@ Route::resource('Usuarios', 'UsuariosController');
 
 Route::get('Contestar/{id}', ['as' => 'Contestar', 'uses' =>'PanelistasController@show', 'before' => 'auth']);
 Route::get('MisEncuestas', ['as' => 'MisEncuestas', 'uses' =>'PanelistasController@index', 'before' => 'auth']);
-Route::post('Contestar/{id}', ['as' => 'Panelistas.store', 'uses' =>'PanelistasController@store', 'before' => 'auth']);
+Route::post('Contestar/{id}', ['as' => 'Respuestas.store', 'uses' =>'RespuestasController@store', 'before' => 'auth']);

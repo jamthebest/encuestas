@@ -41,22 +41,111 @@ class RespuestasController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store($id)
 	{
 		$input = Input::all();
-		$validation = Validator::make($input, Respuesta::$rules);
+		//$opciones = Opcion::select('opciones.id', 'opciones.descripcion', 'pregunta')
+			//		->join('preguntas', 'opciones.pregunta', '=', 'preguntas.id')
+				//	->where('preguntas.encuesta', $id)
+					//->get();
+		//return $input;
+		$preguntas = Pregunta::where('encuesta', $id)->get();
+		$pasan = array();
+		foreach ($preguntas as $pregunta) {
+			$opciones = Opcion::select('opciones.id', 'opciones.descripcion', 'pregunta')
+										->where('pregunta', $pregunta->id)
+										->get();
+			$pasa = false;
+			//return $preguntas;
+			if ($pregunta->tipo != 5)
+				$x = 'opcion' . $pregunta->id;
+			foreach ($opciones as $opcion) {
+				//return $input;
+				if ($pregunta->tipo == 5){
+					$x = 'opcion' . $pregunta->id . '_' . $opcion->id;
+				}
 
-		if ($validation->passes())
-		{
-			$this->respuesta->create($input);
-
-			return Redirect::route('Encuestas/Respuestas.index');
+				if ( array_key_exists($x, $input)) {
+					$op = $input[$x];
+					if ($op != NULL && $op != "") {
+						$pasa = true;
+					}
+				}
+			}
+			$pasan[$pregunta->id] = $pasa;
 		}
 
-		return Redirect::route('Encuestas/Respuestas.create')
-			->withInput()
-			->withErrors($validation)
-			->with('message', 'There were validation errors.');
+		foreach ($pasan as $pass) {
+			if (!$pass){
+				return Redirect::route('Contestar', $id)
+								->withErrors('Debe Contestar todas las preguntas!')
+								->withInput();
+			}
+		}
+
+		$all = array();
+		//return $input;
+		for (reset($input); $i = key($input); next($input)) {
+			if ($i != '_token') {
+				$x = substr($i, 6);
+				$y = substr($input[$i], 0);
+				$z = substr($i, -(strlen($y)+1));
+				$w = '_' . $y;
+				if ($z == $w){
+					$x = substr($x, 0, strlen($i) - (strlen($w)+6));
+				}
+				$preguntas = Pregunta::where('id', $x)->get();
+				foreach ($preguntas as $pregunta) {
+					if ($pregunta->tipo == 5){
+						$opciones = Opcion::select('opciones.id', 'opciones.descripcion', 'pregunta')
+											->where('pregunta', $pregunta->id)
+											->get();
+						foreach ($opciones as $opcion) {
+							$respuesta = array();
+							//return $x . $z;
+							if ($pregunta->id . '_' . $opcion->id == $x . $z) {
+								$respuesta['descripcion'] = $opcion->descripcion;
+							}else{
+								if (!(array_key_exists($opcion->id, $all) && $all[$opcion->id]['descripcion'] != 'NULL')){
+									$respuesta['descripcion'] = 'NULL';
+								}else
+								$respuesta['descripcion'] = $all[$opcion->id]['descripcion'];
+							}
+							$respuesta['opcion'] = $opcion->id;
+							$all[$opcion->id] = $respuesta;
+						}
+					}else{
+						if ($pregunta->id == $x) {
+							$opciones = Opcion::select('opciones.id', 'opciones.descripcion', 'pregunta')
+											->where('pregunta', $pregunta->id)
+											->get();
+							$cont = 0;
+							foreach ($opciones as $opcion) {
+								$respuesta = array();
+								if ($pregunta->tipo == 1)
+									$respuesta['descripcion'] = $input[$i];
+								else {
+									if ($pregunta->tipo == 3 && $cont == $input[$i]){
+										$respuesta['descripcion'] = $opcion->descripcion;
+									}else{
+										if ($opcion->id == $input[$i])
+											$respuesta['descripcion'] = $opcion->descripcion;
+										else
+											$respuesta['descripcion'] = 'NULL';
+									}
+								}
+								$respuesta['opcion'] = $opcion->id;
+								$all[$opcion->id] = $respuesta;
+								$cont += 1;
+							}
+						}
+					}
+				}
+			}//$x = substr($i, 6);
+		}
+		return $all;
+
+		return Redirect::route('MisEncuestas')->with('message', 'Respuestas Enviadas!');
 	}
 
 	/**

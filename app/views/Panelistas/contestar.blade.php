@@ -19,11 +19,12 @@
 @endif
 
 @if ($Encuesta)
-{{ Form::open(array('route' => array('Panelistas.store', $Encuesta->id), 'class' => "form-horizontal" , 'role' => 'form')) }}
+{{ Form::open(array('route' => array('Respuestas.store', $Encuesta->id), 'class' => "form-horizontal" , 'role' => 'form')) }}
   @foreach ($Preguntas as $pregunta)
     <div class="form-group">
-    {{ Form::label('opcion', '¿' . $pregunta->descripcion . '?' , array('class' => 'col-md-2 control-label')) }}
-      <div class="col-md-4">
+    <h2>{{ Form::label('opcion', '¿' . $pregunta->descripcion . '?' , array('class' => 'col-md-12 text-center', 'style' => 'margin-bottom:3%')) }}</h2>
+      <div class="col-md-3"></div>
+      <div class="col-md-6 text-center">
         @if ($pregunta->tipo == 1)
           {{ Form::text('opcion' . $pregunta->id, null, array('class' => 'form-control', 'id' => 'nombre', 'placeholder'=>'Respuesta', 'maxlength'=>'128')) }}
         @else 
@@ -63,7 +64,9 @@
       </div>
     </div>
   @endforeach
-  {{ Form::submit('Enviar Respuestas', array('class' => 'btn btn-primary')) }}
+  <div class="text-center">
+    {{ Form::submit('Enviar Respuestas', array('class' => 'btn btn-primary', 'style' => 'margin-top:3%; margin-bottom: 5%')) }}
+  </div>
 {{ Form::close() }}
 @else
   <div class="alert alert-danger">
