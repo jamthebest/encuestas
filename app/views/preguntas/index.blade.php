@@ -11,6 +11,27 @@
     <a href="{{{ URL::to('Encuestas') }}}" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-arrow-left"></span> Terminar</a>
   </div>
 
+  @if ($errors->any())
+  <div class="alert alert-danger fade in">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    @if($errors->count() > 1)
+      <h4>Oh no! Se encontraron errores!</h4>
+    @else
+      <h4>Oh no! Se encontró un error!</h4>
+    @endif
+    <ul>
+      {{ implode('', $errors->all('<li class="error">:message</li>')) }}
+    </ul>  
+  </div>
+@else
+	@if (Session::has('message'))
+		<div class="alert alert-success fade in">
+  		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  		{{ Session::get('message') }}
+		</div>
+	@endif
+@endif
+
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>

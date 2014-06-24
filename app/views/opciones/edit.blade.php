@@ -21,6 +21,13 @@
       {{ implode('', $errors->all('<li class="error">:message</li>')) }}
     </ul>  
   </div>
+@else
+  @if (Session::has('message'))
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      {{ Session::get('message') }}
+    </div>
+  @endif
 @endif
 
 {{ Form::model($opcion, array('method' => 'PATCH', 'route' => array('Encuestas.Preguntas.Opciones.update', $opcion->id), 'class' => "form-horizontal" , 'role' => 'form')) }}

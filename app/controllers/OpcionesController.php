@@ -21,20 +21,26 @@ class OpcionesController extends BaseController {
 	 */
 	public function index($id)
 	{
-		$opciones = Opcion::where('pregunta', $id)->paginate(10);
-		$pregunta = Pregunta::find($id);
-		if (!$pregunta) {
-			return Redirect::route('Encuestas.index');
-		}
-		$encuesta = Encuesta::find($pregunta->encuesta);
-		if ($encuesta) {
-			if ($encuesta->activa == 0) {
-				return Redirect::route('Encuestas.index');
+		if (Auth::check()) {
+			if (Auth::user()->tipo != 'panelista') {
+				$opciones = Opcion::where('pregunta', $id)->paginate(10);
+				$pregunta = Pregunta::find($id);
+				if (!$pregunta) {
+					return Redirect::route('Encuestas.index')->with('message','Permiso Denegado!');
+				}
+				$encuesta = Encuesta::find($pregunta->encuesta);
+				if ($encuesta) {
+					if ($encuesta->activa == 0) {
+						return Redirect::route('Encuestas.index')->with('message','Encuesta Desactivada!');
+					}
+				}
+				$tipos = Tipo::all();
+				$cont = 1;
+				return View::make('opciones.index', compact('opciones', 'pregunta', 'encuesta', 'tipos', 'cont', 'id'));
 			}
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
 		}
-		$tipos = Tipo::all();
-		$cont = 1;
-		return View::make('opciones.index', compact('opciones', 'pregunta', 'encuesta', 'tipos', 'cont', 'id'));
+		return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
 	}
 
 	/**
@@ -93,6 +99,12 @@ class OpcionesController extends BaseController {
 	 */
 	public function edit($id)
 	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
 		$opcion = $this->opcion->find($id);
 
 		if (is_null($opcion))
@@ -137,6 +149,12 @@ class OpcionesController extends BaseController {
 	 */
 	public function destroy($id)
 	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
 		$this->opcion->find($id)->delete();
 
 		return Redirect::route('Encuestas.Preguntas.Opciones.index');
@@ -145,6 +163,12 @@ class OpcionesController extends BaseController {
 
 	public function Agregar($id)
 	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+		
 		$Pregunta = Pregunta::find($id);
 		$Encuesta = Encuesta::find($Pregunta->encuesta);
 		

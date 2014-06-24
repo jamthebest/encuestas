@@ -94,7 +94,7 @@ return array(
 	|
 	*/
 
-	'cookie' => 'laravel_session_4',
+	'cookie' => 'laravel_4_session',
 
 	/*
 	|--------------------------------------------------------------------------

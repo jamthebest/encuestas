@@ -10,13 +10,10 @@
 @endif
 
 <div class="row" style="margin-top:5%;">
-	<div class="col-md-6"><img src="images/resultados.png" height="400"></div>
-	<div class="col-md-6" style="margin-top:2%;">
+	<div class="col-md-12 text-center"><img src="images/logo.png" width="400"></div>
+	<div class="col-md-12 text-center" style="margin-top:2%;">
 		
-		<h2>Esta es una página con la cual puede realizar encuastas a un público específico y obtener
-		estadísticas para su negocio<br><br>
-		Info Factory le brinda la oportunidad de poder efectuar sus investigaciones de mercado a través
-		de una red de panelisatas que contestarán sus preguntas.</h2>
+		<h2>El poder instantaneo del conocimiento del consumidor</h2>
 	</div>
 </div>
 

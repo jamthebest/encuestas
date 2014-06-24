@@ -10,6 +10,11 @@ Route::get('Inicio', function()
 	return View::make('Inicio');
 });
 
+Route::get('Informacion', function()
+{
+	return View::make('Informacion');
+});
+
 Route::get('/Login', ['before' => 'guest', function(){
 	return View::make('Login');
 }]);
@@ -61,3 +66,8 @@ Route::resource('Usuarios', 'UsuariosController');
 Route::get('Contestar/{id}', ['as' => 'Contestar', 'uses' =>'PanelistasController@show', 'before' => 'auth']);
 Route::get('MisEncuestas', ['as' => 'MisEncuestas', 'uses' =>'PanelistasController@index', 'before' => 'auth']);
 Route::post('Contestar/{id}', ['as' => 'Respuestas.store', 'uses' =>'RespuestasController@store', 'before' => 'auth']);
+
+Route::get('Resultados', ['as' => 'Resultados', 'uses' =>'EncuestasController@resultados', 'before' => 'auth']);
+Route::get('VerResultados', ['as' => 'Resultados.todos', 'uses' =>'AdminController@resultados', 'before' => 'auth']);
+Route::get('Resultados/{id}', ['as' => 'Encuestas.Resultado', 'uses' =>'EncuestasController@resultado', 'before' => 'auth']);
+Route::get('VerResultados/{id}', ['as' => 'Admin.Resultado', 'uses' =>'AdminController@resultado', 'before' => 'auth']);

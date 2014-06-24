@@ -21,13 +21,21 @@ class PreguntasController extends BaseController {
 	 */
 	public function index($id)
 	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
 		$preguntas = Pregunta::where('encuesta', $id)->paginate(10);
 		$tipos = Tipo::all();
 		$encuesta = Encuesta::find($id);
 		if ($encuesta) {
 			if ($encuesta->activa == 0) {
-				return Redirect::route('Encuestas.index');
+				return Redirect::route('Encuestas.index')->with('message', 'Encuesta Desactivada!');
 			}
+		}else{
+			return Redirect::route('Encuestas.index')->with('message','Permiso Denegado!');
 		}
 		$cont = 1;
 		return View::make('preguntas.index', compact('preguntas', 'tipos', 'encuesta', 'cont', 'id'));
@@ -90,6 +98,12 @@ class PreguntasController extends BaseController {
 	 */
 	public function show($id)
 	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
 		$pregunta = $this->pregunta->findOrFail($id);
 
 		return View::make('preguntas.show', compact('pregunta'));
@@ -103,6 +117,12 @@ class PreguntasController extends BaseController {
 	 */
 	public function edit($id)
 	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
 		$pregunta = $this->pregunta->find($id);
 		$tipos = Tipo::all()->lists('nombre', 'id', 'descripcion');
 		if (is_null($pregunta))
@@ -156,6 +176,12 @@ class PreguntasController extends BaseController {
 
 	public function Agregar($id)
 	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+		
 		$Encuesta = Encuesta::find($id);
 		$tipos = Tipo::all()->lists('nombre', 'id', 'descripcion');
 		return View::make('preguntas.create', compact('Encuesta', 'tipos'));

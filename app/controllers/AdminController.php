@@ -121,4 +121,52 @@ class AdminController extends BaseController {
 		return View::make('Admin.Configurar', compact('Encuesta'));
 	}
 
+	public function resultados()
+	{
+		if (Auth::user()) {
+			$encuestas = Encuesta::paginate(10);
+			
+			return View::make('Admin.resultados', compact('encuestas'));
+		}
+		return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+	}
+
+	public function resultado($id)
+	{
+		if (Auth::check()) {
+			$encuesta = Encuesta::find($id);
+			if ($encuesta) {
+				$preguntas = Pregunta::where('encuesta', $id)->get();
+				if ($preguntas) {
+					$preg = $preguntas->lists('id');
+					$opciones = Opcion::whereIn('pregunta', $preg)->get();
+					if ($opciones) {
+						$resultados = array();
+						$texto = array();
+						foreach ($opciones as $opcion) {
+							$respuestas = Respuesta::where('opcion', $opcion->id)->get();
+							$resultados[$opcion->id] = 0;
+							if ($opcion->descripcion != 'Texto') {
+								foreach ($respuestas as $respuesta) {
+									if ($respuesta->descripcion == $opcion->descripcion) {
+										$resultados[$opcion->id] += 1;
+									}
+								}
+							}else{
+								$texto[$opcion->id] = "";
+								foreach ($respuestas as $respuesta) {
+									$texto[$opcion->id] .= "" . $respuesta->descripcion . "\n";
+								}
+							}
+						}
+						return View::make('Admin.resultado', compact('resultados', 'texto', 'preguntas', 'opciones', 'encuesta'));
+					}
+				}
+				return Redirect::route('Resultados.todos')->with('message', 'La Encuesta no tiene Preguntas');
+			}
+			return Redirect::route('Resultados.todos')->with('message', 'Permiso Denegado!');
+		}
+		return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+	}
+
 }

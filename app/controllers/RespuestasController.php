@@ -43,6 +43,12 @@ class RespuestasController extends BaseController {
 	 */
 	public function store($id)
 	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'cliente'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
 		$input = Input::all();
 		//$opciones = Opcion::select('opciones.id', 'opciones.descripcion', 'pregunta')
 			//		->join('preguntas', 'opciones.pregunta', '=', 'preguntas.id')
@@ -105,13 +111,24 @@ class RespuestasController extends BaseController {
 							//return $x . $z;
 							if ($pregunta->id . '_' . $opcion->id == $x . $z) {
 								$respuesta['descripcion'] = $opcion->descripcion;
+								$respuesta['opcion'] = $opcion->id;
+								$respuesta['panelista'] = Auth::user()->id;
+								//$this->respuesta->create($respuesta);
+								//Guardar
 							}else{
 								if (!(array_key_exists($opcion->id, $all) && $all[$opcion->id]['descripcion'] != 'NULL')){
 									$respuesta['descripcion'] = 'NULL';
-								}else
-								$respuesta['descripcion'] = $all[$opcion->id]['descripcion'];
+									$respuesta['opcion'] = $opcion->id;
+									$respuesta['panelista'] = Auth::user()->id;
+									//$this->respuesta->create($respuesta);
+									//Guardar
+								}else{
+									$respuesta['descripcion'] = $all[$opcion->id]['descripcion'];
+									$respuesta['opcion'] = $opcion->id;
+									$respuesta['panelista'] = Auth::user()->id;
+								}
 							}
-							$respuesta['opcion'] = $opcion->id;
+							//$respuesta['opcion'] = $opcion->id;
 							$all[$opcion->id] = $respuesta;
 						}
 					}else{
@@ -122,19 +139,38 @@ class RespuestasController extends BaseController {
 							$cont = 0;
 							foreach ($opciones as $opcion) {
 								$respuesta = array();
-								if ($pregunta->tipo == 1)
+								if ($pregunta->tipo == 1){
 									$respuesta['descripcion'] = $input[$i];
+									$respuesta['opcion'] = $opcion->id;
+									$respuesta['panelista'] = Auth::user()->id;
+									//$this->respuesta->create($respuesta);
+									//Guardar
+								}
 								else {
 									if ($pregunta->tipo == 3 && $cont == $input[$i]){
 										$respuesta['descripcion'] = $opcion->descripcion;
+										$respuesta['opcion'] = $opcion->id;
+										$respuesta['panelista'] = Auth::user()->id;
+										//$this->respuesta->create($respuesta);
+										//Guardar
 									}else{
-										if ($opcion->id == $input[$i])
+										if ($opcion->id == $input[$i]){
 											$respuesta['descripcion'] = $opcion->descripcion;
-										else
+											$respuesta['opcion'] = $opcion->id;
+											$respuesta['panelista'] = Auth::user()->id;
+											//$this->respuesta->create($respuesta);
+											//Guardar
+										}
+										else{
 											$respuesta['descripcion'] = 'NULL';
+											$respuesta['opcion'] = $opcion->id;
+											$respuesta['panelista'] = Auth::user()->id;
+											//$this->respuesta->create($respuesta);
+											//Guardar
+										}
 									}
 								}
-								$respuesta['opcion'] = $opcion->id;
+								//$respuesta['opcion'] = $opcion->id;
 								$all[$opcion->id] = $respuesta;
 								$cont += 1;
 							}
@@ -143,7 +179,13 @@ class RespuestasController extends BaseController {
 				}
 			}//$x = substr($i, 6);
 		}
-		return $all;
+		//return $all;
+		foreach ($all as $val) {
+			$this->respuesta->create($val);
+		}
+		$encuesta = EncuestaPanelista::where('encuesta', $id)->where('panelista', Auth::user()->id)->first();
+		$encuesta->contestada = 1;
+		$encuesta->save();
 
 		return Redirect::route('MisEncuestas')->with('message', 'Respuestas Enviadas!');
 	}

@@ -21,10 +21,12 @@ class EncuestasController extends BaseController {
 	 */
 	public function index()
 	{
-		if (Auth::user()) {
-			$encuestas = $this->encuesta->where('usuario', Auth::user()->id)->where('activa', 1)->paginate(10);
-			
-			return View::make('Encuestas.index', compact('encuestas'));
+		if (Auth::check()) {
+			if (Auth::user()->tipo != 'panelista' ) {
+				$encuestas = $this->encuesta->where('usuario', Auth::user()->id)->where('activa', 1)->paginate(10);
+				return View::make('Encuestas.index', compact('encuestas'));
+			}
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
 		}
 		return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
 	}
@@ -71,6 +73,12 @@ class EncuestasController extends BaseController {
 	 */
 	public function show($id)
 	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
 		$encuesta = $this->encuesta->findOrFail($id);
 
 		return View::make('Encuestas.show', compact('encuesta'));
@@ -84,6 +92,12 @@ class EncuestasController extends BaseController {
 	 */
 	public function edit($id)
 	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
 		$encuesta = $this->encuesta->find($id);
 
 		if (is_null($encuesta))
@@ -128,6 +142,12 @@ class EncuestasController extends BaseController {
 	 */
 	public function destroy($id)
 	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
 		$encuesta = $this->encuesta->find($id);
 		$encuesta->activa = 0;
 		$encuesta->save();
@@ -137,6 +157,12 @@ class EncuestasController extends BaseController {
 
 	public function activar($id)
 	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
 		$encuesta = $this->encuesta->find($id);
 		$encuesta->activa = 1;
 		$encuesta->save();
@@ -146,11 +172,77 @@ class EncuestasController extends BaseController {
 
 	public function desactivar($id)
 	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
 		$encuesta = $this->encuesta->find($id);
 		$encuesta->activa = 0;
 		$encuesta->save();
 
 		return Redirect::route('Configurar', $id)->with('message', 'Encuesta Desactivada!');
+	}
+
+	public function resultados()
+	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
+		$encuestas = $this->encuesta->where('usuario', Auth::user()->id)->where('activa', 1)->paginate(10);
+		return View::make('Encuestas.resultados', compact('encuestas'));
+	}
+
+	public function resultado($id)
+	{
+		if (Auth::check()) {
+			$encuesta = $this->encuesta->find($id);
+			if ($encuesta) {
+				if ($encuesta->usuario == Auth::user()->id) {
+					$preguntas = Pregunta::where('encuesta', $id)->get();
+					if ($preguntas) {
+						$preg = $preguntas->lists('id');
+						$opciones = Opcion::whereIn('pregunta', $preg)->get();
+						if ($opciones) {
+							$resultados = array();
+							$texto = array();
+							$num = 0;
+							$cont = 0;
+							foreach ($opciones as $opcion) {
+								$respuestas = Respuesta::where('opcion', $opcion->id)->get();
+								$resultados[$opcion->id] = 0;
+								if ($num == 0) {
+									$num = $opcion->id;
+								}
+								if ($num == $opcion->id) {
+									$cont += 1;
+								}
+								if ($opcion->descripcion != 'Texto') {
+									foreach ($respuestas as $respuesta) {
+										if ($respuesta->descripcion == $opcion->descripcion) {
+											$resultados[$opcion->id] += 1;
+										}
+									}
+								}else{
+									$texto[$opcion->id] = "";
+									foreach ($respuestas as $respuesta) {
+										$texto[$opcion->id] .= "" . $respuesta->descripcion . "\n";
+									}
+								}
+							}
+							return View::make('Encuestas.resultado', compact('resultados', 'texto', 'preguntas', 'opciones', 'encuesta', 'cont'));
+						}
+					}
+					return Redirect::route('Resultados')->with('message', 'La Encuesta no tiene Preguntas');
+				}
+			}
+			return Redirect::route('Resultados')->with('message', 'Permiso Denegado!');
+		}
+		return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
 	}
 
 }

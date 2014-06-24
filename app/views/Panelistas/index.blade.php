@@ -21,6 +21,13 @@
       {{ implode('', $errors->all('<li class="error">:message</li>')) }}
     </ul>  
   </div>
+@else
+  @if (Session::has('message'))
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      {{ Session::get('message') }}
+    </div>
+  @endif
 @endif
 
 @if ($Encuestas)
@@ -37,7 +44,11 @@
         <tr>
           <td>{{{ $encuesta->nombre }}}</td>
           <td>{{{ $encuesta->promopuntos }}}</td>
-          <td>{{ link_to_route('Contestar', 'Contestar', array($encuesta->id), array('class' => 'btn btn-success')) }}</td>
+          @if ($encuesta->contestada == 0)
+            <td>{{ link_to_route('Contestar', 'Contestar', array($encuesta->id), array('class' => 'btn btn-success')) }}</td>
+          @else
+            <td>{{ link_to_route('Contestar', 'Contestar', array($encuesta->id), array('class' => 'btn btn-success', 'disabled')) }}</td>
+          @endif
         </tr>
       @endforeach
     </tbody>

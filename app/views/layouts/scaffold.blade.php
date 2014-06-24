@@ -20,7 +20,7 @@
           </li>
 
           <li class="dropdown">
-            {{link_to('#', 'Información', $attributes = array(), $secure = null)}}
+            {{link_to('Informacion', 'Información', $attributes = array(), $secure = null)}}
           </li>
 
           @if (Auth::user())
@@ -29,7 +29,7 @@
             	{{link_to('Encuestas', 'Mis Encuestas', $attributes = array(), $secure = null)}}
           	</li>
             <li class="dropdown">
-              {{link_to('#', 'Resultados', $attributes = array(), $secure = null)}}
+              {{link_to('Resultados', 'Resultados', $attributes = array(), $secure = null)}}
             </li>
             @else
               @if (Auth::user()->tipo == 'panelista')
@@ -44,7 +44,7 @@
                   {{link_to_route('Encuestas.todas', 'Encuestas', $attributes = array(), $secure = null)}}
                 </li>
                 <li class="dropdown">
-                  {{link_to('#', 'Resultados', $attributes = array(), $secure = null)}}
+                  {{link_to_route('Resultados.todos', 'Resultados', $attributes = array(), $secure = null)}}
                 </li>
               @endif
             @endif
