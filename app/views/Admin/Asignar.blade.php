@@ -38,6 +38,7 @@
 				<th>Celular</th>
 				<th>Tel. Casa</th>
 				<th>Correo</th>
+				<th>Ciudad</th>
 				<th>Estado</th>
 			</tr>
 		</thead>
@@ -56,12 +57,12 @@
 					<td>{{ $Nombres[$panel->id - 3]->celular }}</td>
 					<td>{{ $Nombres[$panel->id - 3]->casa }}</td>
 					<td>{{{ $panel->correo }}}</td>
+					<td>{{{ $Nombres[$panel->id - 3]->ciudad }}}</td>
 					<td>{{{ $panel->activo == 1 ? 'Activo' : 'Inactivo' }}}</td>
 				</tr>
 			@endforeach
 		</tbody>
 	</table>
-	<div style="margin-left:-12%">{{$Panelistas->links()}}</div>
 	<div class="form-group col-md-2 col-md-push-5">
     {{ Form::submit('Terminar', array('class' => 'btn btn-primary')) }}
   </div>

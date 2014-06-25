@@ -19,11 +19,14 @@ class PagosController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($id)
 	{
-		$pagos = $this->pago->all();
-
-		return View::make('pagos.index', compact('pagos'));
+		$pagos = $this->pago->where('encuesta', $id)->paginate(10);
+		$encuesta = Encuesta::find($id);
+		if ($encuesta) {
+			return View::make('pagos.index', compact('pagos', 'encuesta'));
+		}
+		return Redirect::route('Encuestas.todas')->with('message', 'Permiso Denegado!');
 	}
 
 	/**
@@ -31,9 +34,13 @@ class PagosController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create($id)
 	{
-		return View::make('pagos.create');
+		$encuesta = Encuesta::find($id);
+		if ($encuesta) {
+			return View::make('pagos.create', compact('encuesta'));
+		}
+		return Redirect::route('Encuestas.todas')->withErrors('Permiso Denegado!');
 	}
 
 	/**
@@ -49,11 +56,16 @@ class PagosController extends BaseController {
 		if ($validation->passes())
 		{
 			$this->pago->create($input);
+			$encuesta = Encuesta::find($input['encuesta']);
+			if ($encuesta) {
+				$encuesta->pagada = 1;
+				$encuesta->save();
+			}
 
-			return Redirect::route('Encuestas/Pagos.index');
+			return Redirect::route('Configurar', $input['encuesta'])->with('message', 'Pago Realizado!');
 		}
 
-		return Redirect::route('Encuestas/Pagos.create')
+		return Redirect::route('CrearPagos', $input['encuesta'])
 			->withInput()
 			->withErrors($validation)
 			->with('message', 'There were validation errors.');
@@ -124,6 +136,20 @@ class PagosController extends BaseController {
 	public function destroy($id)
 	{
 		$this->pago->find($id)->delete();
+
+		return Redirect::route('Encuestas/Pagos.index');
+	}
+
+
+	public function finalizar($id)
+	{
+		$pago = $this->pago->find($id);
+		$encuesta = Encuesta::find($pago->encuesta);
+
+		if ($enceusta) {
+			$enceusta->pagada = 0;
+			$enceusta->save();
+		}
 
 		return Redirect::route('Encuestas/Pagos.index');
 	}

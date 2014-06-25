@@ -21,7 +21,7 @@ class AdminController extends BaseController {
 	public function Asignar($id)
 	{
 		$Encuesta = Encuesta::find($id);
-		$Panelistas = Usuario::where('tipo', 'panelista')->paginate(10);
+		$Panelistas = Usuario::where('tipo', 'panelista')->get();//->paginate(10);
 		$Usuarios = Usuario::select('username')->where('tipo', 'panelista')->get();
 		$Asignados = EncuestaPanelista::where('encuesta', $Encuesta->id)->get();
 		$usuario = array();
@@ -31,7 +31,7 @@ class AdminController extends BaseController {
 				$cont += 1;
 			}
 		$Nombres = DB::connection('info')->table('panel')
-				->select('primer_nombre as nombre', 'primer_apellido as apellido', 'telefono_celular as celular', 'telefono_casa as casa', 'ciudad', 'email', 'usuario')
+				->select('primer_nombre as nombre', 'primer_apellido as apellido', 'telefono_celular as celular', 'telefono_casa as casa', 'ciudad', 'email', 'usuario', 'ciudad')
 				->whereIn('usuario', $usuario)->orWhereIn('email', $usuario)
 				->get();
 		foreach ($Panelistas as $panel) {
@@ -143,9 +143,17 @@ class AdminController extends BaseController {
 					if ($opciones) {
 						$resultados = array();
 						$texto = array();
+						$num = 0;
+						$cont = 0;
 						foreach ($opciones as $opcion) {
 							$respuestas = Respuesta::where('opcion', $opcion->id)->get();
 							$resultados[$opcion->id] = 0;
+							if ($num == 0) {
+								$num = $opcion->id;
+							}
+							if ($num == $opcion->id) {
+								$cont += 1;
+							}
 							if ($opcion->descripcion != 'Texto') {
 								foreach ($respuestas as $respuesta) {
 									if ($respuesta->descripcion == $opcion->descripcion) {
@@ -159,7 +167,7 @@ class AdminController extends BaseController {
 								}
 							}
 						}
-						return View::make('Admin.resultado', compact('resultados', 'texto', 'preguntas', 'opciones', 'encuesta'));
+						return View::make('Admin.resultado', compact('resultados', 'texto', 'preguntas', 'opciones', 'encuesta', 'cont'));
 					}
 				}
 				return Redirect::route('Resultados.todos')->with('message', 'La Encuesta no tiene Preguntas');

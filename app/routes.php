@@ -55,6 +55,9 @@ Route::group(array('prefix' => 'Encuestas', 'before' => 'auth'), function(){
 	Route::get('AsignarPanelistas/{id}', ['as' => 'AsignarPanelistas', 'uses' =>'AdminController@asignar', 'before' => 'auth']);
 	Route::get('VerPanelistas/{id}', ['as' => 'VerPanelistas', 'uses' =>'AdminController@Ver', 'before' => 'auth']);
 	Route::post('AsignarPanelistas', ['as' => 'AgregarPanelistas.store', 'uses' =>'AdminController@store', 'before' => 'auth']);
+	Route::get('Index/{id}', array('as' => 'Pagos.Index', 'uses' =>'PagosController@index'));
+	Route::get('Pagos/{id}', ['as' => 'CrearPagos', 'uses' =>'PagosController@create', 'before' => 'auth']);
+	Route::post('FinPagos/{id}', ['as' => 'Fin.Pagos', 'uses' =>'PagosController@finalizar', 'before' => 'auth']);
 	Route::resource('Preguntas', 'PreguntasController');
 	Route::resource('Respuestas', 'RespuestasController');
 	Route::resource('Pagos', 'PagosController');

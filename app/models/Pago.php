@@ -6,10 +6,9 @@ class Pago extends Eloquent {
 	protected $table = 'pagos';
 
 	public static $rules = array(
-		'id' => 'required',
 		'monto' => 'required',
 		'fecha' => 'required',
 		'encuesta' => 'required',
-		'descripcion' => 'required'
+		'descripcion' => ''
 	);
 }
