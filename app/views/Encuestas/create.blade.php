@@ -31,34 +31,63 @@
 @endif
 
 {{ Form::open(array('route' => 'Encuestas.store', 'class' => "form-horizontal" , 'role' => 'form')) }}
-    <div class="form-group">
-    {{ Form::label('nombre', 'Nombre: *', array('class' => 'col-md-2 control-label')) }}
-      <div class="col-md-4">
-          {{ Form::text('nombre', null, array('class' => 'form-control', 'id' => 'nombre', 'placeholder'=>'Nombre de la Encuesta', 'maxlength'=>'128')) }}
-      </div>
-    </div>
-    <div class="form-group">
-      {{ Form::label('descripcion', 'Descripción:', array('class' => 'col-md-2 control-label')) }}
-      <div class="col-md-5">
-        {{ Form::textarea('descripcion',null, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder' => 'Descripción que se mostrará al inicio de la Encuesta', 'rows' => '3', 'maxlength'=>'2048')) }}
-      </div>
-    </div>
-    <div class="form-group">
-      {{ Form::label('despedida', 'Despedida:', array('class' => 'col-md-2 control-label')) }}
-      <div class="col-md-5">
-        {{ Form::textarea('despedida',null, array('class' => 'form-control', 'id' => 'despedida', 'placeholder' => 'Despedida que se mostrará al finalizar de la Encuesta', 'rows' => '3', 'maxlength'=>'2048')) }}
-      </div>
-    </div>
-    {{ Form::hidden('usuario', Auth::user()->id) }}
-    <div class="form-group" style="margin-top:5%;">
-        <div class="col-md-3 col-md-offset-2">
-            {{ Form::submit('Aceptar', array('class' => 'btn btn-primary')) }}
+    <div class="col-md-7">
+      <div class="form-group">
+      {{ Form::label('nombre', 'Nombre: *', array('class' => 'col-md-3 control-label')) }}
+        <div class="col-md-8">
+            {{ Form::text('nombre', null, array('class' => 'form-control', 'id' => 'nombre', 'placeholder'=>'Nombre de la Encuesta', 'maxlength'=>'128')) }}
         </div>
-        <div class="col-md-3">
-            <a type="button" href="{{ URL::route('Encuestas.index') }}" class="btn btn-danger">
-                Cancelar
-            </a>
+      </div>
+      <div class="form-group">
+      {{ Form::label('panelistas', 'N° Panelistas: *', array('class' => 'col-md-4 control-label')) }}
+        <div class="col-md-7">
+            {{ Form::text('panelistas', null, array('class' => 'form-control', 'id' => 'panelistas', 'placeholder'=>'Cantidad de Personas a Responder', 'maxlength'=>'10')) }}
         </div>
+      </div>
+      <div class="form-group">
+        {{ Form::label('descripcion', 'Descripción:', array('class' => 'col-md-2 control-label')) }}
+        <div class="col-md-9">
+          {{ Form::textarea('descripcion',null, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder' => 'Descripción que se mostrará al inicio de la Encuesta', 'rows' => '3', 'maxlength'=>'2048')) }}
+        </div>
+      </div>
+      <div class="form-group">
+        {{ Form::label('despedida', 'Despedida:', array('class' => 'col-md-2 control-label')) }}
+        <div class="col-md-9">
+          {{ Form::textarea('despedida',null, array('class' => 'form-control', 'id' => 'despedida', 'placeholder' => 'Despedida que se mostrará al finalizar de la Encuesta', 'rows' => '3', 'maxlength'=>'2048')) }}
+        </div>
+      </div>
+      {{ Form::hidden('usuario', Auth::user()->id) }}
+      <div class="form-group" style="margin-top:5%;">
+          <div class="col-md-4 col-md-offset-3">
+              {{ Form::submit('Aceptar', array('class' => 'btn btn-primary')) }}
+          </div>
+          <div class="col-md-4">
+              <a type="button" href="{{ URL::route('Encuestas.index') }}" class="btn btn-danger">
+                  Cancelar
+              </a>
+          </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>N° Preguntas</th>
+            <th>N° Panelistas</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @foreach ($precios as $precio)
+            <tr>
+              <td>{{{ $precio->preguntas }}}</td>
+              <td>{{{ $precio->panelistas }}}</td>
+              <td>Lps. {{{ $precio->precio }}}</td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
     </div>
 {{ Form::close() }}
 

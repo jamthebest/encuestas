@@ -38,7 +38,8 @@ class EncuestasController extends BaseController {
 	 */
 	public function create()
 	{
-		return View::make('Encuestas.create');
+		$precios = Precio::all();
+		return View::make('Encuestas.create', compact('precios'));
 	}
 
 	/**

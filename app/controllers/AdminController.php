@@ -15,7 +15,11 @@ class AdminController extends BaseController {
 	{
 		$Encuestas = Encuesta::paginate(10);
 		$Usuarios = Usuario::all();
-		return View::make('Admin.Encuestas', compact('Encuestas', 'Usuarios'));
+		$Panelistas = array();
+		foreach ($Encuestas as $encuesta) {
+			$Panelistas[$encuesta->id] = EncuestaPanelista::where('encuesta', $encuesta->id)->count();
+		}
+		return View::make('Admin.Encuestas', compact('Encuestas', 'Usuarios', 'Panelistas'));
 	}
 
 	public function Asignar($id)

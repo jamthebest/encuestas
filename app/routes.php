@@ -76,3 +76,5 @@ Route::get('Resultados', ['as' => 'Resultados', 'uses' =>'EncuestasController@re
 Route::get('VerResultados', ['as' => 'Resultados.todos', 'uses' =>'AdminController@resultados', 'before' => 'auth']);
 Route::get('Resultados/{id}', ['as' => 'Encuestas.Resultado', 'uses' =>'EncuestasController@resultado', 'before' => 'auth']);
 Route::get('VerResultados/{id}', ['as' => 'Admin.Resultado', 'uses' =>'AdminController@resultado', 'before' => 'auth']);
+
+Route::resource('precios', 'PreciosController');

@@ -8,6 +8,7 @@ class Encuesta extends Eloquent {
 	public static $rules = array(
 		'id' => '',
 		'nombre' => 'required',
+		'panelistas' => 'required|min:1|Integer',
 		'descripcion' => '',
 		'despedida' => '',
 		'promopuntos' => '',
