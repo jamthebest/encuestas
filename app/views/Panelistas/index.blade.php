@@ -45,9 +45,9 @@
           <td>{{{ $encuesta->nombre }}}</td>
           <td>{{{ $encuesta->promopuntos }}}</td>
           @if ($encuesta->contestada == 0)
-            <td>{{ link_to_route('Contestar', 'Contestar', array($encuesta->id), array('class' => 'btn btn-success')) }}</td>
+            <td>{{ link_to_route('Bienvenida', 'Contestar', array($encuesta->id), array('class' => 'btn btn-success')) }}</td>
           @else
-            <td>{{ link_to_route('Contestar', 'Contestar', array($encuesta->id), array('class' => 'btn btn-success', 'disabled')) }}</td>
+            <td>{{ link_to_route('Bienvenida', 'Contestar', array($encuesta->id), array('class' => 'btn btn-success', 'disabled')) }}</td>
           @endif
         </tr>
       @endforeach

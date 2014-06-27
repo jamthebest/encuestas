@@ -2,7 +2,12 @@
 
 @section('main')
 
-<h2 class="sub-header" style="margin-bottom:5%"><span class="glyphicon glyphicon-cog"></span> {{$Encuesta->nombre}} </h2>
+<div class="page-header clearfix">
+  <h2 class="pull-left sub-header" style="margin-bottom:5%"><span class="glyphicon glyphicon-cog"></span> {{$Encuesta->nombre}} </h2>
+  <div class="pull-right">
+    <a href="{{{ URL::to('MisEncuestas') }}}" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
+  </div>
+</div>
 
 @if ($errors->any())
   <div class="alert alert-danger fade in">

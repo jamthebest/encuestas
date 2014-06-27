@@ -46,7 +46,7 @@
     <div class="form-group">
       {{ Form::label('descripcion', 'Descripción:', array('class' => 'col-md-2 control-label')) }}
       <div class="col-md-5">
-        {{ Form::textarea('descripcion',null, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder' => 'Descripción o Comentarios sobre el Pago', 'rows' => '3', 'maxlength'=>'256')) }}
+        {{ Form::textarea('descripcion',null, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder' => 'Descripción o Comentarios sobre el Pago', 'rows' => '3', 'maxlength'=>'2048')) }}
       </div>
     </div>
     {{ Form::hidden('encuesta', $encuesta->id) }}

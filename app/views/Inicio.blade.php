@@ -9,7 +9,7 @@
 	</div>
 @endif
 
-<div class="row" style="margin-top:5%;">
+<div class="row" style="margin-top:15%;">
 	<div class="col-md-12 text-center"><img src="images/logo.png" width="400"></div>
 	<div class="col-md-12 text-center" style="margin-top:2%;">
 		

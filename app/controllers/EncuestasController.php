@@ -215,22 +215,30 @@ class EncuestasController extends BaseController {
 							foreach ($opciones as $opcion) {
 								$respuestas = Respuesta::where('opcion', $opcion->id)->get();
 								$resultados[$opcion->id] = 0;
-								if ($num == 0) {
-									$num = $opcion->id;
-								}
-								if ($num == $opcion->id) {
-									$cont += 1;
-								}
 								if ($opcion->descripcion != 'Texto') {
 									foreach ($respuestas as $respuesta) {
+										if ($num == 0) {
+											$num = $opcion->id;
+										}
+										if ($num == $opcion->id) {
+											$cont += 1;
+										}
 										if ($respuesta->descripcion == $opcion->descripcion) {
 											$resultados[$opcion->id] += 1;
 										}
 									}
 								}else{
+									$tam = sizeof($texto);
 									$texto[$opcion->id] = "";
 									foreach ($respuestas as $respuesta) {
-										$texto[$opcion->id] .= "" . $respuesta->descripcion . "\n";
+										if ($num == 0) {
+											$num = $opcion->id;
+										}
+										if ($num == $opcion->id) {
+											$cont += 1;
+										}
+										$texto[$opcion->id] .= ($tam == 0 ? "" : ", ") . $respuesta->descripcion . "\n";
+										$tam = sizeof($texto);
 									}
 								}
 							}

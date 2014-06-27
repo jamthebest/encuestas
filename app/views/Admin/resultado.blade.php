@@ -49,7 +49,7 @@
                                     @if ($pregunta->tipo != 1)
                                         <td>{{$opcion->descripcion}}</td>
                                         <td>{{$resultados[$opcion->id]}}</td>
-                                        <td>{{($resultados[$opcion->id]/$cont)*100}}%</td>
+                                        <td>{{($resultados[$opcion->id]/($cont == 0 ? 1 : $cont))*100}}%</td>
                                     @else
                                         <div class="modal fade" id="recibida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                           <div class="modal-dialog">

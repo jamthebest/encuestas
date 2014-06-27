@@ -67,6 +67,8 @@ Route::resource('Encuestas', 'EncuestasController');
 Route::resource('Usuarios', 'UsuariosController');
 
 Route::get('Contestar/{id}', ['as' => 'Contestar', 'uses' =>'PanelistasController@show', 'before' => 'auth']);
+Route::get('ContestarEncuesta/{id}', ['as' => 'Bienvenida', 'uses' =>'PanelistasController@bienvenida', 'before' => 'auth']);
+Route::get('EncuestaContestada/{id}', ['as' => 'Despedida', 'uses' =>'PanelistasController@despedida', 'before' => 'auth']);
 Route::get('MisEncuestas', ['as' => 'MisEncuestas', 'uses' =>'PanelistasController@index', 'before' => 'auth']);
 Route::post('Contestar/{id}', ['as' => 'Respuestas.store', 'uses' =>'RespuestasController@store', 'before' => 'auth']);
 

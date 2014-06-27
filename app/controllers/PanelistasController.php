@@ -57,4 +57,22 @@ class PanelistasController extends BaseController {
 		return Input::all();
 	}
 
+	public function bienvenida($id)
+	{
+		$Encuesta = Encuesta::find($id);
+		if ($Encuesta) {
+			return View::make('Panelistas.Bienvenida', compact('Encuesta'));
+		}
+		return Redirect::route('MisEncuestas')->withErrors('Permiso Denegado!');
+	}
+
+	public function despedida($id)
+	{
+		$Encuesta = Encuesta::find($id);
+		if ($Encuesta) {
+			return View::make('Panelistas.Despedida', compact('Encuesta'));
+		}
+		return Redirect::route('MisEncuestas')->withErrors('Permiso Denegado!');
+	}
+
 }

@@ -52,7 +52,7 @@
         </ul>
         @if (Auth::user())
           <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Logout', 'Salir', $attributes = array(), $secure = null)}}</p>
-          <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Usuarios/'.Auth::user()->id, Auth::user()->username, $attributes = array(), $secure = null)}}</p>
+          <p class="navbar-text navbar-right" style="margin-right: 1em;">{{Auth::user()->username}}</p>
         @else
           <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Registro', 'Registrarse', $attributes = array(), $secure = null)}}</p>
           <p class="navbar-text navbar-right" style="margin-right: 1em;">{{link_to('Login', 'Ingresar', $attributes = array(), $secure = null)}}</p>

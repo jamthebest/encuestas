@@ -40,13 +40,13 @@
     <div class="form-group">
       {{ Form::label('descripcion', 'Descripción:', array('class' => 'col-md-2 control-label')) }}
       <div class="col-md-5">
-        {{ Form::textarea('descripcion',null, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder' => 'Descripción que se mostrará al inicio de la Encuesta', 'rows' => '3', 'maxlength'=>'256')) }}
+        {{ Form::textarea('descripcion',null, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder' => 'Descripción que se mostrará al inicio de la Encuesta', 'rows' => '3', 'maxlength'=>'2048')) }}
       </div>
     </div>
     <div class="form-group">
       {{ Form::label('despedida', 'Despedida:', array('class' => 'col-md-2 control-label')) }}
       <div class="col-md-5">
-        {{ Form::textarea('despedida',null, array('class' => 'form-control', 'id' => 'despedida', 'placeholder' => 'Despedida que se mostrará al finalizar de la Encuesta', 'rows' => '3', 'maxlength'=>'256')) }}
+        {{ Form::textarea('despedida',null, array('class' => 'form-control', 'id' => 'despedida', 'placeholder' => 'Despedida que se mostrará al finalizar de la Encuesta', 'rows' => '3', 'maxlength'=>'2048')) }}
       </div>
     </div>
     {{ Form::hidden('usuario', Auth::user()->id) }}

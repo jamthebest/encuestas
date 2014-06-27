@@ -187,7 +187,7 @@ class RespuestasController extends BaseController {
 		$encuesta->contestada = 1;
 		$encuesta->save();
 
-		return Redirect::route('MisEncuestas')->with('message', 'Respuestas Enviadas!');
+		return Redirect::route('Despedida', array($id))->with('message', 'Respuestas Enviadas!');
 	}
 
 	/**
