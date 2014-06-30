@@ -2,8 +2,13 @@
 
 @section('main')
 
-<h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span> {{{$Encuesta->nombre}}} </h2>
-
+<div class="page-header clearfix">
+    <h2 class="pull-left sub-header"><span class="glyphicon glyphicon-cog"></span> {{{$Encuesta->nombre}}} </h2>
+    <div class="pull-right">
+    	{{ link_to_route('Configurar', ' Regresar', array($Encuesta->id), array('class' => 'btn btn-success glyphicon glyphicon-arrow-left')) }}
+    </div>
+</div>
+<h4 class="sub-header" style="margin-top:2%"><span class=""></span><strong>Requerimientos de Panelistas:</strong> <small>{{{$Encuesta->requerimientos}}}</small> </h4>
 @if ($errors->any())
   <div class="alert alert-danger fade in">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -25,7 +30,32 @@
 	@endif
 @endif
 
-@if ($Panelistas->count())
+{{ Form::open(array('route' => array('Asignar.Search', $Encuesta->id))) }}
+	<div class="form-group">
+    {{ Form::label('SearchLabel', 'Busqueda: ', array('class' => 'col-md-1 control-label', 'style'=>'margin-top:2%;margin-bottom:2%;')) }}
+    <div class="col-md-3" style="margin-top:2%;margin-bottom:2%;">
+      {{ Form::select('ciudad', $Ciudades, $Seleccionados[0], array('class' => 'col-md-1 form-control', 'id' => 'ciudad')) }}
+    </div>
+    <div class="col-md-3" style="margin-top:2%;margin-bottom:2%;">
+      {{ Form::select('nse', $NSE, $Seleccionados[1], array('class' => 'col-md-1 form-control', 'id' => 'nse')) }}
+    </div>
+    <div class="col-md-2" style="margin-top:2%;margin-bottom:2%;">
+      {{ Form::select('edad', $Edades, $Seleccionados[2], array('class' => 'col-md-1 form-control', 'id' => 'edad')) }}
+    </div>
+    <h4  class="col-md-1" style="margin-top:2%;margin-bottom:2%;">Hasta</h4>
+    <div class="col-md-2" style="margin-top:2%;margin-bottom:2%;">
+      {{ Form::select('hasta', $Edades, $Seleccionados[3], array('class' => 'col-md-1 form-control', 'id' => 'hasta')) }}
+    </div>
+    <div class="col-md-3 col-md-offset-4" style="margin-top:2%;margin-bottom:2%;">
+      {{ Form::select('sexo', array('Busque por Sexo','M', 'F'), $Seleccionados[4], array('class' => 'col-md-1 form-control', 'id' => 'sexo')) }}
+    </div>
+    <div class="col-md-12 text-center" style="margin-top:1%;margin-bottom:2%;">
+      {{ Form::submit('Buscar', array('class' => 'btn btn-success btn-sm' )) }}
+    </div>
+	</div>
+{{ Form::close() }}
+
+@if ($Panelistas)
 {{ Form::open(array('route' => 'AgregarPanelistas.store', 'class' => "form-horizontal", 'role' => 'form')) }}
 	{{ Form::hidden('Encuesta', $Encuesta->id) }}
 	<table class="table table-striped table-bordered" style="margin-left:-10%;">
@@ -35,11 +65,12 @@
 				<th>Usuario</th>
 				<th>Nombre</th>
 				<th>Apellido</th>
+				<th>Edad</th>
 				<th>Celular</th>
 				<th>Tel. Casa</th>
 				<th>Correo</th>
 				<th>Ciudad</th>
-				<th>Estado</th>
+				<th>Status</th>
 			</tr>
 		</thead>
 
@@ -54,11 +85,12 @@
 					<td>{{{ $panel->username }}}</td>
 					<td>{{ $Nombres[$panel->id - 3]->nombre }}</td>
 					<td>{{ $Nombres[$panel->id - 3]->apellido }}</td>
+					<td>{{ array_key_exists($Nombres[$panel->id - 3]->id_panel, $Edad) ? $Edad[$Nombres[$panel->id - 3]->id_panel] : '?' }}</td>
 					<td>{{ $Nombres[$panel->id - 3]->celular }}</td>
 					<td>{{ $Nombres[$panel->id - 3]->casa }}</td>
 					<td>{{{ $panel->correo }}}</td>
 					<td>{{{ $Nombres[$panel->id - 3]->ciudad }}}</td>
-					<td>{{{ $panel->activo == 1 ? 'Activo' : 'Inactivo' }}}</td>
+					<td>{{{ $Nombres[$panel->id - 3]->status }}}</td>
 				</tr>
 			@endforeach
 		</tbody>
@@ -71,7 +103,7 @@
   </div>
 {{ Form::close() }}
 @else
-	<div class="alert alert-danger">
+	<div class="alert alert-danger" style="margin-top:25%;">
     <strong>Oh no!</strong> No hay Panelistas Disponibles
   </div>
 @endif

@@ -45,9 +45,15 @@
         </div>
       </div>
       <div class="form-group">
+      {{ Form::label('requerimientos', 'Requerimientos de Panelistas: *', array('class' => 'col-md-3 control-label')) }}
+        <div class="col-md-8">
+          {{ Form::textarea('requerimientos', null, array('class' => 'form-control', 'id' => 'requerimientos', 'placeholder'=>'Descripción de requerimientos para seleccionar a los panelistas tales como ser: Edad, Ciudad, Nivel Socio Económico o Sexo', 'rows' => '4', 'maxlength'=>'10')) }}
+        </div>
+      </div>
+      <div class="form-group">
         {{ Form::label('descripcion', 'Descripción:', array('class' => 'col-md-2 control-label')) }}
         <div class="col-md-9">
-          {{ Form::textarea('descripcion',null, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder' => 'Descripción que se mostrará al inicio de la Encuesta', 'rows' => '3', 'maxlength'=>'2048')) }}
+          {{ Form::textarea('descripcion',null, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder' => 'Mensaje de Bienvenida o Descripción que se mostrará al inicio de la Encuesta a la persona que la responderá', 'rows' => '3', 'maxlength'=>'2048')) }}
         </div>
       </div>
       <div class="form-group">

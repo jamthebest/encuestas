@@ -53,6 +53,7 @@ Route::group(array('prefix' => 'Encuestas', 'before' => 'auth'), function(){
 	Route::post('Activar/{id}', ['as' => 'Encuestas.activar', 'uses' =>'EncuestasController@activar', 'before' => 'auth']);
 	Route::post('Desactivar/{id}', ['as' => 'Encuestas.desactivar', 'uses' =>'EncuestasController@desactivar', 'before' => 'auth']);
 	Route::get('AsignarPanelistas/{id}', ['as' => 'AsignarPanelistas', 'uses' =>'AdminController@asignar', 'before' => 'auth']);
+	Route::post('Search/{id}', ['as' => 'Asignar.Search', 'uses' =>'AdminController@search', 'before' => 'auth']);
 	Route::get('VerPanelistas/{id}', ['as' => 'VerPanelistas', 'uses' =>'AdminController@Ver', 'before' => 'auth']);
 	Route::post('AsignarPanelistas', ['as' => 'AgregarPanelistas.store', 'uses' =>'AdminController@store', 'before' => 'auth']);
 	Route::get('Index/{id}', array('as' => 'Pagos.Index', 'uses' =>'PagosController@index'));

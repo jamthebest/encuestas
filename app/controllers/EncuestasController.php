@@ -50,6 +50,9 @@ class EncuestasController extends BaseController {
 	public function store()
 	{
 		$input = Input::all();
+		if ($input['requerimientos'] == "") {
+			$input['requerimientos'] = "Ninguno";
+		}
 		$validation = Validator::make($input, Encuesta::$rules);
 		
 		if ($validation->passes())

@@ -35,9 +35,13 @@ class AdminController extends BaseController {
 				$cont += 1;
 			}
 		$Nombres = DB::connection('info')->table('panel')
-				->select('primer_nombre as nombre', 'primer_apellido as apellido', 'telefono_celular as celular', 'telefono_casa as casa', 'ciudad', 'email', 'usuario', 'ciudad')
+				->select('primer_nombre as nombre', 'primer_apellido as apellido', 'telefono_celular as celular', 'telefono_casa as casa', 'ciudad', 'email', 'usuario', 'ciudad', 'status', 'id_panel')
 				->whereIn('usuario', $usuario)->orWhereIn('email', $usuario)
 				->get();
+
+		$Edad = DB::connection('info')->table('edad_panel')
+					->lists('edad', 'id_panel');
+
 		foreach ($Panelistas as $panel) {
 			$panel['check'] = 0;
 			foreach ($Asignados as $Asig) {
@@ -46,8 +50,217 @@ class AdminController extends BaseController {
 				}	
 			}
 		}
-		//return $Panelistas;
-		return View::make('Admin.Asignar', compact('Encuesta', 'Panelistas', 'Asignados', 'Nombres'));
+		$opciones = DB::connection('info')->select('select distinct ciudad from panel where ciudad != ""');
+		$Ciudades = array();
+		$Ciudades[0] = "Busque por Ciudad";
+		$Cont = 1;
+		foreach ($opciones as $ciudad) {
+			$Ciudades[$Cont] = $ciudad->ciudad;
+			$Cont += 1;
+		}
+		$opciones = DB::connection('info')->select('select distinct status from panel where status != ""');
+		$NSE = array();
+		$NSE[0] = "Busque por NSE";
+		$Cont = 1;
+		foreach ($opciones as $nse) {
+			$NSE[$Cont] = $nse->status;
+			$Cont += 1;
+		}
+		$opciones = DB::connection('info')->select('select distinct edad from edad_panel where edad != "" order by edad ASC');
+		$Edades = array();
+		$Edades[0] = "Edad";
+		$Cont = 1;
+		foreach ($opciones as $edad) {
+			$Edades[$Cont] = $edad->edad;
+			$Cont += 1;
+		}
+		$Seleccionados = array(0,0,0,0,0);
+		//return $Seleccionados[0];
+		return View::make('Admin.Asignar', compact('Encuesta', 'Panelistas', 'Asignados', 'Nombres', 'Ciudades', 'NSE', 'Edades', 'Seleccionados', 'Edad'));
+	}
+
+	public function search($id)
+	{
+		$input = Input::all();
+		$Seleccionados[0] = $input['ciudad'];
+		$Seleccionados[1] = $input['nse'];
+		$Seleccionados[2] = $input['edad'];
+		$Seleccionados[3] = $input['hasta'];
+		$Seleccionados[4] = $input['sexo'];
+		$Ciudades = array();
+		$NSE = array();
+		$Edades = array();
+		$Encuesta = Encuesta::find($id);
+		$Consulta = 'select p.usuario from panel p';
+		$Consulta2 = 'select p.email from panel p';
+
+		
+		if ($input['edad'] != 0) {
+			$opciones = DB::connection('info')->select('select distinct edad from edad_panel where edad != "" order by edad ASC');
+			$Edades[0] = "Edad";
+			$Cont = 1;
+			foreach ($opciones as $edad) {
+				$Edades[$Cont] = $edad->edad;
+				$Cont += 1;
+			}
+			$Consulta = $Consulta . ' inner join edad_panel ep on ep.id_panel = p.id_panel';
+			$Consulta2 = $Consulta2 . ' inner join edad_panel ep on ep.id_panel = p.id_panel';
+			if ($input['hasta'] != 0) {
+				$Consulta = $Consulta . ' where ep.edad between ' . $Edades[$input['edad']] . ' and ' . $Edades[$input['hasta']];
+				$Consulta2 = $Consulta2 . ' where ep.edad between ' . $Edades[$input['edad']] . ' and ' . $Edades[$input['hasta']];
+			}else{
+				$Consulta = $Consulta . ' where ep.edad = ' . $Edades[$input['edad']];
+				$Consulta2 = $Consulta2 . ' where ep.edad = ' . $Edades[$input['edad']];
+			}
+		}elseif ($input['hasta'] != 0) {
+			$opciones = DB::connection('info')->select('select distinct edad from edad_panel where edad != "" order by edad ASC');
+			$Edades[0] = "Edad";
+			$Cont = 1;
+			foreach ($opciones as $edad) {
+				$Edades[$Cont] = $edad->edad;
+				$Cont += 1;
+			}
+			$Consulta = $Consulta . ' inner join edad_panel ep on ep.id_panel = p.id_panel';
+			$Consulta2 = $Consulta2 . ' inner join edad_panel ep on ep.id_panel = p.id_panel';
+			$Consulta = $Consulta . ' where ep.edad < ' . $Edades[$input['hasta']];
+			$Consulta2 = $Consulta2 . ' where ep.edad < ' . $Edades[$input['hasta']];
+		}
+
+		if ($input['nse'] != 0) {
+			$opciones = DB::connection('info')->select('select distinct status from panel where status != ""');
+			$NSE[0] = "Busque por NSE";
+			$Cont = 1;
+			foreach ($opciones as $nse) {
+				$NSE[$Cont] = $nse->status;
+				$Cont += 1;
+			}
+			if ($input['edad'] != 0 || $input['hasta'] != 0) {
+				$Consulta = $Consulta . ' and p.status = \'' . $NSE[$input['nse']] . '\'';
+				$Consulta2 = $Consulta2 . ' and p.status = \'' . $NSE[$input['nse']] . '\'';
+			}else{
+				$Consulta = $Consulta . ' where p.status = \'' . $NSE[$input['nse']]. '\'';
+				$Consulta2 = $Consulta2 . ' where p.status = \'' . $NSE[$input['nse']]. '\'';
+			}
+		}
+
+		if ($input['ciudad'] != 0) {
+			$opciones = DB::connection('info')->select('select distinct ciudad from panel where ciudad != ""');
+			$Ciudades[0] = "Busque por Ciudad";
+			$Cont = 1;
+			foreach ($opciones as $ciudad) {
+				$Ciudades[$Cont] = $ciudad->ciudad;
+				$Cont += 1;
+			}
+			if ($input['edad'] != 0 || $input['hasta'] != 0 || $input['nse'] != 0) {
+				$Consulta = $Consulta . ' and p.ciudad = \'' . $Ciudades[$input['ciudad']] . '\'';
+				$Consulta2 = $Consulta2 . ' and p.ciudad = \'' . $Ciudades[$input['ciudad']] . '\'';
+			}else{
+				$Consulta = $Consulta . ' where p.ciudad = \'' . $Ciudades[$input['ciudad']] . '\'';
+				$Consulta2 = $Consulta2 . ' where p.ciudad = \'' . $Ciudades[$input['ciudad']] . '\'';
+			}
+		}
+
+		if ($input['sexo'] != 0) {
+			if ($input['edad'] != 0 || $input['hasta'] != 0 || $input['nse'] != 0 || $input['ciudad'] != 0) {
+				$Consulta = $Consulta . ' and p.sexo = \'' . ($input['sexo'] == 1 ? 'M' : 'F') . '\'';
+				$Consulta2 = $Consulta2 . ' and p.sexo = \'' . ($input['sexo'] == 1 ? 'M' : 'F') . '\'';
+			}else{
+				$Consulta = $Consulta . ' where p.sexo = \'' . ($input['sexo'] == 1 ? 'M' : 'F') . '\'';
+				$Consulta2 = $Consulta2 . ' where p.sexo = \'' . ($input['sexo'] == 1 ? 'M' : 'F') . '\'';
+			}
+		}
+
+		//return $Consulta;
+		$Usuarios = array();
+		$usuario = Usuario::select('username')->where('tipo', 'panelista')->lists('username');
+		if ($input['edad'] != 0 || $input['hasta'] != 0 || $input['nse'] != 0 || $input['ciudad'] != 0 || $input['sexo'] != 0) {
+			$con1 = DB::connection('info')->select($Consulta . ' and p.usuario != \'\'');
+					//->whereIn('usuario', $usuario)
+					//->get();
+			$con2 = DB::connection('info')->select($Consulta2 . ' and p.usuario = \'\'');
+					//->whereIn('email', $usuario)
+					//->get();
+		}else{
+			$con1 = DB::connection('info')->select($Consulta . ' where p.usuario != \'\'');
+					//->whereIn('usuario', $usuario)
+					//->get();
+			$con2 = DB::connection('info')->select($Consulta2 . ' where p.usuario = \'\'');
+					//->whereIn('email', $usuario)
+					//->get();
+		}
+		$cont = 0;
+		foreach ($con1 as $con) {
+			$Usuarios[$cont] = $con->usuario;
+			$cont += 1;
+		}
+		foreach ($con2 as $con) {
+			$Usuarios[$cont] = $con->email;
+			$cont += 1;
+		}
+		//return $Usuarios;
+		
+
+		$Encuesta = Encuesta::find($id);
+		if ($Usuarios) {
+			$Panelistas = Usuario::where('tipo', 'panelista')->whereIn('username', $Usuarios)->get();//->paginate(10);
+			$Usuarios = Usuario::select('username')->where('tipo', 'panelista')->get();
+			$Asignados = EncuestaPanelista::where('encuesta', $Encuesta->id)->get();
+			$usuario = array();
+			$cont = 0;
+			foreach ($Usuarios as $user) {
+				$usuario[$cont] = $user->username;
+				$cont += 1;
+			}
+			
+			$Nombres = DB::connection('info')->table('panel')
+					->select('primer_nombre as nombre', 'primer_apellido as apellido', 'telefono_celular as celular', 'telefono_casa as casa', 'ciudad', 'email', 'usuario', 'ciudad', 'status', 'id_panel')
+					->whereIn('usuario', $usuario)->orWhereIn('email', $usuario)
+					->get();
+
+			$Edad = DB::connection('info')->table('edad_panel')
+					->lists('edad', 'id_panel');
+			
+			foreach ($Panelistas as $panel) {
+				$panel['check'] = 0;
+				foreach ($Asignados as $Asig) {
+					if ($Asig->panelista == $panel->id) {
+						$panel['check'] = 1;
+					}	
+				}
+			}
+		}else{
+			$Panelistas = array();
+			$Asignados = array();
+			$Nombres = array();
+		}
+		$opciones = DB::connection('info')->select('select distinct ciudad from panel where ciudad != ""');
+		$Ciudades = array();
+		$Ciudades[0] = "Busque por Ciudad";
+		$Cont = 1;
+		foreach ($opciones as $ciudad) {
+			$Ciudades[$Cont] = $ciudad->ciudad;
+			$Cont += 1;
+		}
+		$opciones = DB::connection('info')->select('select distinct status from panel where status != ""');
+		$NSE = array();
+		$NSE[0] = "Busque por NSE";
+		$Cont = 1;
+		foreach ($opciones as $nse) {
+			$NSE[$Cont] = $nse->status;
+			$Cont += 1;
+		}
+		$opciones = DB::connection('info')->select('select distinct edad from edad_panel where edad != "" order by edad ASC');
+		$Edades = array();
+		$Edades[0] = "Edad";
+		$Cont = 1;
+		foreach ($opciones as $edad) {
+			$Edades[$Cont] = $edad->edad;
+			$Cont += 1;
+		}
+
+		
+		return View::make('Admin.Asignar', compact('Encuesta', 'Panelistas', 'Asignados', 'Nombres', 'Ciudades', 'NSE', 'Edades', 'Seleccionados', 'Edad'));
+			//->withInput();
 	}
 
 	public function Ver($id)
