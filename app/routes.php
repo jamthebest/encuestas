@@ -52,6 +52,8 @@ Route::group(array('prefix' => 'Encuestas', 'before' => 'auth'), function(){
 	Route::get('Configurar/{id}', ['as' => 'Configurar', 'uses' =>'AdminController@Configurar', 'before' => 'auth']);
 	Route::post('Activar/{id}', ['as' => 'Encuestas.activar', 'uses' =>'EncuestasController@activar', 'before' => 'auth']);
 	Route::post('Desactivar/{id}', ['as' => 'Encuestas.desactivar', 'uses' =>'EncuestasController@desactivar', 'before' => 'auth']);
+	Route::get('Duplicar/{id}', ['as' => 'Encuestas.copiar', 'uses' =>'EncuestasController@copiar', 'before' => 'auth']);
+	Route::post('Copia/{id}', ['as' => 'Encuestas.duplicar', 'uses' =>'EncuestasController@duplicar', 'before' => 'auth']);
 	Route::get('AsignarPanelistas/{id}', ['as' => 'AsignarPanelistas', 'uses' =>'AdminController@asignar', 'before' => 'auth']);
 	Route::post('Search/{id}', ['as' => 'Asignar.Search', 'uses' =>'AdminController@search', 'before' => 'auth']);
 	Route::get('VerPanelistas/{id}', ['as' => 'VerPanelistas', 'uses' =>'AdminController@Ver', 'before' => 'auth']);

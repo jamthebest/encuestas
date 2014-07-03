@@ -189,6 +189,74 @@ class EncuestasController extends BaseController {
 		return Redirect::route('Configurar', $id)->with('message', 'Encuesta Desactivada!');
 	}
 
+	public function copiar($id)
+	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
+		$encuesta = Encuesta::find($id);
+		if ($encuesta) {
+			if ($encuesta->usuario != Auth::user()->id) {
+				return Redirect::route('Encuestas.index')->with('message','Error al duplicar encuesta!');
+			}
+		}
+		$precios = Precio::all();
+		return View::make('Encuestas.copiar', compact('encuesta', 'precios'));
+	}
+
+	public function duplicar($id)
+	{
+		if (!Auth::check()) {
+			return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
+		}else if(Auth::user()->tipo == 'panelista'){
+			return Redirect::to('Inicio')->with('message','Permiso Denegado!');
+		}
+
+		$encuesta = Encuesta::find($id);
+		if ($encuesta) {
+			if ($encuesta->usuario != Auth::user()->id) {
+				return Redirect::route('Encuestas.index')->with('message','Error al duplicar encuesta!');
+			}
+		}
+
+		$input = Input::all();
+		if ($input['requerimientos'] == "") {
+			$input['requerimientos'] = "Ninguno";
+		}
+		$validation = Validator::make($input, Encuesta::$rules);
+		
+		if ($validation->passes())
+		{
+			$this->encuesta->create($input);
+			$encuesta = Encuesta::where('id', '<>', '0')->orderBy('id', 'DESC')->first();
+			$preguntas = Pregunta::where('encuesta', $id)->get();
+			foreach ($preguntas as $pregunta) {
+				$opciones = Opcion::where('pregunta', $pregunta->id)->get();
+				$new = array();
+				$new['descripcion'] = $pregunta['descripcion'];
+				$new['tipo'] = $pregunta['tipo'];
+				$new['encuesta'] = $encuesta->id;
+				Pregunta::create($new);
+				$preg = Pregunta::where('id', '<>', '0')->orderBy('id', 'DESC')->first();
+				foreach ($opciones as $opcion) {
+					$new = array();
+					$new['descripcion'] = $opcion['descripcion'];
+					$new['pregunta'] = $preg->id;
+					Opcion::create($new);
+				}
+			}
+			return Redirect::route('Encuestas.index');
+		}
+
+		return Redirect::route('Encuestas.copiar', $id)
+			->withInput()
+			->withErrors($validation)
+			->with('message', 'There were validation errors.');
+	}
+
 	public function resultados()
 	{
 		if (!Auth::check()) {
