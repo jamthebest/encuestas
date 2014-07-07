@@ -186,6 +186,18 @@ class RespuestasController extends BaseController {
 		$encuesta = EncuestaPanelista::where('encuesta', $id)->where('panelista', Auth::user()->id)->first();
 		$encuesta->contestada = 1;
 		$encuesta->save();
+		
+		$Panel = DB::connection('info')->table('panel')->select('id_panel')->where('usuario', Auth::user()->username)->orWhere('email', Auth::user()->username)->first();
+		$Encuesta = Encuesta::find($id);
+		$puntos = array();
+		$puntos['id_panel'] = $Panel->id_panel;
+		$puntos['fecha'] = date("Y-m-d");;
+		$puntos['hora'] = date("H:i:s");;
+		$puntos['puntos'] = $Encuesta->promopuntos;
+		$puntos['estado'] = 0;
+		$puntos['recomendacion'] = 0;
+		$puntos['id_recomendada'] = '';
+		$promopuntos = DB::connection('info')->table('prom_puntos')->insert($puntos);
 
 		return Redirect::route('Despedida', array($id))->with('message', 'Respuestas Enviadas!');
 	}

@@ -28,17 +28,17 @@
 @if ($preguntas || $texto)
     @foreach ($preguntas as $pregunta)
         <div class="form-group">
-            <h2 class="col-md-12" style="margin-top:5%">{{$pregunta->descripcion}}</h2>
+            <h2 class="col-md-12" style="margin-top:5%;font-family: georgia, serif;font-size: 25px;font-weight: bold;font-style: italic;text-transform: uppercase;word-spacing: 2pt;color:#3104B4">¿ {{$pregunta->descripcion}} ?</h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             @if ($pregunta->tipo != 1)
-                                <th>Respuesta</th>
-                                <th>Cantidad</th>
-                                <th>Porcentaje</th>
+                                <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">Respuesta</th>
+                                <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">Cantidad</th>
+                                <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">Porcentaje</th>
                             @else
-                                <th>Respuestas</th>
+                                <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">Respuestas</th>
                             @endif
                         </tr>
                     </thead>
