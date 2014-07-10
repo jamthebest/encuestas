@@ -67,13 +67,49 @@
                   @endif
                 @endforeach
               @else
-                @foreach ($Opciones as $opcion)
-                  @if ($opcion->pregunta == $pregunta->id)
-                    <div style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">
-                    {{ $opcion->descripcion }} {{ Form::checkbox('opcion' . $pregunta->id . '.' . $opcion->id, $opcion->id) }} <br>
-                    </div>
+                @if($pregunta->tipo == 5)
+                  @foreach ($Opciones as $opcion)
+                    @if ($opcion->pregunta == $pregunta->id)
+                      <div style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">
+                      {{ $opcion->descripcion }} {{ Form::checkbox('opcion' . $pregunta->id . '.' . $opcion->id, $opcion->id) }} <br>
+                      </div>
+                    @endif
+                  @endforeach
+                @else
+                  @if($pregunta->tipo == 6)
+                    @foreach ($Opciones as $opcion)
+                      @if ($opcion->pregunta == $pregunta->id)
+                        @if ($opcion->descripcion == 'Otro')
+                          <div style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">
+                          {{ $opcion->descripcion }} {{ Form::radio('opcion' . $pregunta->id, $opcion->id) }} <br>
+                          {{ Form::text('opcion' . $pregunta->id . 'otro', null, array('class' => 'form-control', 'id' => 'nombre', 'placeholder'=>'Respuesta', 'maxlength'=>'128', 'style' => 'font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08')) }} <br>
+                          </div>
+                        @else
+                          <div style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">
+                          {{ $opcion->descripcion }} {{ Form::radio('opcion' . $pregunta->id, $opcion->id) }} <br>
+                          </div>
+                        @endif
+                      @endif
+                    @endforeach
+                  @else
+                    @if($pregunta->tipo == 7)
+                      @foreach ($Opciones as $opcion)
+                        @if ($opcion->pregunta == $pregunta->id)
+                          @if ($opcion->descripcion == 'Otro')
+                            <div style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">
+                            {{ $opcion->descripcion }} {{ Form::checkbox('opcion' . $pregunta->id . '.' . $opcion->id, $opcion->id) }}
+                            {{ Form::text('opcion' . $pregunta->id . '.' . $opcion->id . 'otro', null, array('class' => 'form-control', 'id' => 'nombre', 'placeholder'=>'Respuesta', 'maxlength'=>'128', 'style' => 'font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08')) }} <br>
+                            </div>
+                          @else
+                            <div style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">
+                            {{ $opcion->descripcion }} {{ Form::checkbox('opcion' . $pregunta->id . '.' . $opcion->id, $opcion->id) }} <br>
+                            </div>
+                          @endif
+                        @endif
+                      @endforeach
+                    @endif
                   @endif
-                @endforeach
+                @endif
               @endif
             @endif
           @endif
@@ -85,7 +121,7 @@
     </div>
   @endforeach
   <div class="text-center">
-    {{ Form::submit('Enviar Respuestas', array('class' => 'btn btn-primary', 'style' => 'margin-top:3%; margin-bottom: 5%')) }}
+  {{ Form::submit('Enviar Respuestas', array('class' => 'btn btn-primary', 'style' => 'margin-top:3%; margin-bottom: 5%')) }}
   </div>
 {{ Form::close() }}
 @else

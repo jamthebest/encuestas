@@ -80,7 +80,12 @@ class PreguntasController extends BaseController {
 				$opcion['pregunta'] = $id;
 				Opcion::create($opcion);
 				return Redirect::route('Encuestas.Preguntas.Index', $input['encuesta']);
+			}elseif ($input['tipo'] == 6 || $input['tipo'] == 7){
+				$opcion['descripcion'] = 'Otro';
+				$opcion['pregunta'] = $id;
+				Opcion::create($opcion);
 			}
+
 			return Redirect::route('Encuestas.Preguntas.Opciones.Agregar', $id);
 		}
 

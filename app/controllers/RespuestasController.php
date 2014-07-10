@@ -63,12 +63,14 @@ class RespuestasController extends BaseController {
 										->get();
 			$pasa = false;
 			//return $preguntas;
-			if ($pregunta->tipo != 5)
+			if ($pregunta->tipo != 5 && $pregunta->tipo != 7)
 				$x = 'opcion' . $pregunta->id;
 			foreach ($opciones as $opcion) {
 				//return $input;
 				if ($pregunta->tipo == 5){
 					$x = 'opcion' . $pregunta->id . '_' . $opcion->id;
+				}else if ($pregunta->tipo == 7){
+					$x = 'opcion' . $pregunta->id . '_' . $opcion->id . 'otro';
 				}
 
 				if ( array_key_exists($x, $input)) {
@@ -131,6 +133,38 @@ class RespuestasController extends BaseController {
 							//$respuesta['opcion'] = $opcion->id;
 							$all[$opcion->id] = $respuesta;
 						}
+					}else if ($pregunta->tipo == 7){
+						$opciones = Opcion::select('opciones.id', 'opciones.descripcion', 'pregunta')
+											->where('pregunta', $pregunta->id)
+											->get();
+						foreach ($opciones as $opcion) {
+							$respuesta = array();
+							//return $x . $z;
+							if ($pregunta->id . '_' . $opcion->id == $x . $z) {
+								if ($opcion->descripcion == 'Otro')
+									$respuesta['descripcion'] = $input['opcion' . $x . $z . 'otro'];
+								else
+									$respuesta['descripcion'] = $opcion->descripcion;
+								$respuesta['opcion'] = $opcion->id;
+								$respuesta['panelista'] = Auth::user()->id;
+								//$this->respuesta->create($respuesta);
+								//Guardar
+							}else{
+								if (!(array_key_exists($opcion->id, $all) && $all[$opcion->id]['descripcion'] != 'NULL')){
+									$respuesta['descripcion'] = 'NULL';
+									$respuesta['opcion'] = $opcion->id;
+									$respuesta['panelista'] = Auth::user()->id;
+									//$this->respuesta->create($respuesta);
+									//Guardar
+								}else{
+									$respuesta['descripcion'] = $all[$opcion->id]['descripcion'];
+									$respuesta['opcion'] = $opcion->id;
+									$respuesta['panelista'] = Auth::user()->id;
+								}
+							}
+							//$respuesta['opcion'] = $opcion->id;
+							$all[$opcion->id] = $respuesta;
+						}
 					}else{
 						if ($pregunta->id == $x) {
 							$opciones = Opcion::select('opciones.id', 'opciones.descripcion', 'pregunta')
@@ -154,19 +188,28 @@ class RespuestasController extends BaseController {
 										//$this->respuesta->create($respuesta);
 										//Guardar
 									}else{
-										if ($opcion->id == $input[$i]){
-											$respuesta['descripcion'] = $opcion->descripcion;
+										if ($pregunta->tipo == 6 && $cont == $input[$i]){
+											if ( $opcion->descripcion == 'Otro')
+												$respuesta['descripcion'] = $input['opcion' . $pregunta->id . 'otro'];
+											else
+												$respuesta['descripcion'] = $opcion->descripcion;
 											$respuesta['opcion'] = $opcion->id;
 											$respuesta['panelista'] = Auth::user()->id;
-											//$this->respuesta->create($respuesta);
-											//Guardar
-										}
-										else{
-											$respuesta['descripcion'] = 'NULL';
-											$respuesta['opcion'] = $opcion->id;
-											$respuesta['panelista'] = Auth::user()->id;
-											//$this->respuesta->create($respuesta);
-											//Guardar
+										}else{
+											if ($opcion->id == $input[$i]){
+												$respuesta['descripcion'] = $opcion->descripcion;
+												$respuesta['opcion'] = $opcion->id;
+												$respuesta['panelista'] = Auth::user()->id;
+												//$this->respuesta->create($respuesta);
+												//Guardar
+											}
+											else{
+												$respuesta['descripcion'] = 'NULL';
+												$respuesta['opcion'] = $opcion->id;
+												$respuesta['panelista'] = Auth::user()->id;
+												//$this->respuesta->create($respuesta);
+												//Guardar
+											}
 										}
 									}
 								}
