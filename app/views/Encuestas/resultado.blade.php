@@ -37,6 +37,9 @@
                                 <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">Respuesta</th>
                                 <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">Cantidad</th>
                                 <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">Porcentaje</th>
+                                @if ($pregunta->tipo == 6 || $pregunta->tipo == 7)
+                                    <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">Ver Respuestas</th>
+                                @endif
                             @else
                                 <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;color:#088A08">Respuestas</th>
                             @endif
@@ -50,8 +53,33 @@
                                         <td>{{$opcion->descripcion}}</td>
                                         <td>{{$resultados[$opcion->id]}}</td>
                                         <td>{{($resultados[$opcion->id]/($cont == 0 ? 1 : $cont))*100}}%</td>
+                                        @if (($pregunta->tipo == 6 || $pregunta->tipo == 7) && ($opcion->descripcion == 'Otro'))
+                                            <div class="modal fade" id="{{$opcion->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                              <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title text-center" id="myModalLabel">Respuestas</h4>
+                                                  </div>
+                                                  <div class="modal-body text-center">
+                                                    {{ $texto[$opcion->id] }}
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <td>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{$opcion->id}}">
+                                                  Ver Respuestas
+                                                </button>
+                                            </td>
+                                        @else
+                                            <td></td>
+                                        @endif
                                     @else
-                                        <div class="modal fade" id="recibida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="{{$opcion->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                           <div class="modal-dialog">
                                             <div class="modal-content">
                                               <div class="modal-header">
@@ -68,7 +96,7 @@
                                           </div>
                                         </div>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#recibida">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{$opcion->id}}">
                                               Ver Respuestas
                                             </button>
                                         </td>

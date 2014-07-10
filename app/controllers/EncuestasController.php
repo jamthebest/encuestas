@@ -287,7 +287,7 @@ class EncuestasController extends BaseController {
 							foreach ($opciones as $opcion) {
 								$respuestas = Respuesta::where('opcion', $opcion->id)->get();
 								$resultados[$opcion->id] = 0;
-								if ($opcion->descripcion != 'Texto') {
+								if ($opcion->descripcion != 'Texto' && $opcion->descripcion != 'Otro') {
 									foreach ($respuestas as $respuesta) {
 										if ($num == 0) {
 											$num = $opcion->id;
@@ -300,8 +300,21 @@ class EncuestasController extends BaseController {
 										}
 									}
 								}else{
-									$tam = sizeof($texto);
+									if ($opcion->descripcion == 'Otro') {
+										foreach ($respuestas as $respuesta) {
+											if ($num == 0) {
+												$num = $opcion->id;
+											}
+											if ($num == $opcion->id) {
+												$cont += 1;
+											}
+											if ($respuesta->descripcion) {
+												$resultados[$opcion->id] += 1;
+											}
+										}
+									}
 									$texto[$opcion->id] = "";
+									$tam = 0;
 									foreach ($respuestas as $respuesta) {
 										if ($num == 0) {
 											$num = $opcion->id;
@@ -310,10 +323,11 @@ class EncuestasController extends BaseController {
 											$cont += 1;
 										}
 										$texto[$opcion->id] .= ($tam == 0 ? "" : ", ") . $respuesta->descripcion . "\n";
-										$tam = sizeof($texto);
+										$tam += 1;
 									}
 								}
 							}
+							//return $texto;
 							return View::make('Encuestas.resultado', compact('resultados', 'texto', 'preguntas', 'opciones', 'encuesta', 'cont'));
 						}
 					}
