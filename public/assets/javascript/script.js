@@ -15,6 +15,12 @@
     }else if (sel.value=="2") {
       ocultar();
       $(".sino-example").show();
+    }else if (sel.value=="6") {
+      ocultar();
+      $(".radio-otro-example").show();
+    }else if (sel.value=="7") {
+      ocultar();
+      $(".check-otro-example").show();
     }
   }
 
@@ -24,5 +30,7 @@
     $(".option-example").hide();
     $(".check-example").hide();
     $(".sino-example").hide();
+    $(".radio-otro-example").hide();
+    $(".check-otro-example").hide();
   }
 

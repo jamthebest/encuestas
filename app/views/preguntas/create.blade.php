@@ -152,6 +152,66 @@
                 </div>
               </div>
             </div>
+            <div style="display:none;margin-left:39%" class="radio-otro-example form-group">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" value="option1" checked>
+                      Opción 1
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" value="option2">
+                      Opción 2
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" value="option2">
+                      Opción 3
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" value="option2">
+                      <input type="text" value="Otro">
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="display:none;margin-left:39%" class="check-otro-example form-group">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="">
+                      Opción 1
+                    </label>
+                  </div>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="">
+                      Opción 2
+                    </label>
+                  </div>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="">
+                      Opción 3
+                    </label>
+                  </div>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="">
+                      <input type="text" value="Otro">
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
             
           </div>
           <div class="modal-footer">
