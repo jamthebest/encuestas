@@ -82,7 +82,7 @@ class RespuestasController extends BaseController {
 			}
 			$pasan[$pregunta->id] = $pasa;
 		}
-
+		//return $pasan;
 		foreach ($pasan as $pass) {
 			if (!$pass){
 				return Redirect::route('Contestar', $id)

@@ -33,7 +33,7 @@
 
 @if ($Usuarios->count())
 	<div class="table-responsive">
-	<table class="table table-striped" style="margin-left:-10%;">
+	<table class="table table-condensed">
 		<thead>
 			<tr>
 				<th>ID</th>

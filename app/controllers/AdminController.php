@@ -50,7 +50,7 @@ class AdminController extends BaseController {
 				}	
 			}
 		}
-		$opciones = DB::connection('info')->select('select distinct ciudad from panel where ciudad != ""');
+		$opciones = DB::connection('info')->select('select distinct ciudad from panel where ciudad != "" order by ciudad asc');
 		$Ciudades = array();
 		$Ciudades[0] = "Busque por Ciudad";
 		$Cont = 1;
@@ -144,7 +144,7 @@ class AdminController extends BaseController {
 		}
 
 		if ($input['ciudad'] != 0) {
-			$opciones = DB::connection('info')->select('select distinct ciudad from panel where ciudad != ""');
+			$opciones = DB::connection('info')->select('select distinct ciudad from panel where ciudad != "" order by ciudad asc');
 			$Ciudades[0] = "Busque por Ciudad";
 			$Cont = 1;
 			foreach ($opciones as $ciudad) {
@@ -233,7 +233,7 @@ class AdminController extends BaseController {
 			$Asignados = array();
 			$Nombres = array();
 		}
-		$opciones = DB::connection('info')->select('select distinct ciudad from panel where ciudad != ""');
+		$opciones = DB::connection('info')->select('select distinct ciudad from panel where ciudad != "" order by ciudad asc');
 		$Ciudades = array();
 		$Ciudades[0] = "Busque por Ciudad";
 		$Cont = 1;

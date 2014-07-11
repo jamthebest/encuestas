@@ -35,7 +35,7 @@
     <div class="form-group">
     {{ Form::label('descripcion', 'Pregunta: *', array('class' => 'col-md-2 control-label')) }}
       <div class="col-md-6">
-          {{ Form::textarea('descripcion', null, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder'=>'Descripción de la Pregunta', 'rows' => '3', 'maxlength'=>'256')) }}
+          {{ Form::textarea('descripcion', null, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder'=>'Descripción de la Pregunta', 'rows' => '3', 'maxlength'=>'256', 'autofocus')) }}
       </div>
     </div>
     <div class="form-group previsualizar">

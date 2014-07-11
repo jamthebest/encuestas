@@ -42,7 +42,7 @@
 				<tr>
 					<td>{{{ $encuesta->nombre }}}</td>
 					<td>{{{ $Usuarios[$encuesta->usuario - 1]->username }}}</td>
-					<td>{{{ $encuesta->activa == 1 ? 'Activa' : 'Inactiva' }}}</td>
+					<td>{{{ ($encuesta->activa == 1 ? 'Activa' : 'Inactiva') . ($encuesta->pagada == 1 ? '/Pagada' : '/No Pagada') }}}</td>
 					<td>{{{ $encuesta->panelistas }}}</td>
 					<td>{{{ $Panelistas[$encuesta->id] }}}</td>
 					<td>{{ link_to_route('Configurar', 'Configuración', array($encuesta->id), array('class' => 'btn btn-warning')) }}</td>

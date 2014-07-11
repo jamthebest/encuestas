@@ -2,7 +2,7 @@
 
 @section('main')
 
-<h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span>{{ $encuesta->nombre }}</h2>
+<h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span>{{ $encuesta->nombre }} <small>Total de Respuestas: <strong> {{ $cont }} </strong> </small> </h2>
 
 @if ($errors->any())
   <div class="alert alert-danger fade in">
