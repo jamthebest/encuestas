@@ -67,16 +67,34 @@ class RespuestasController extends BaseController {
 				$x = 'opcion' . $pregunta->id;
 			foreach ($opciones as $opcion) {
 				//return $input;
-				if ($pregunta->tipo == 5){
+				if ($pregunta->tipo == 5 || $pregunta->tipo == 7){
 					$x = 'opcion' . $pregunta->id . '_' . $opcion->id;
-				}else if ($pregunta->tipo == 7){
-					$x = 'opcion' . $pregunta->id . '_' . $opcion->id . 'otro';
 				}
 
 				if ( array_key_exists($x, $input)) {
 					$op = $input[$x];
-					if ($op != NULL && $op != "") {
-						$pasa = true;
+					if ($pregunta->tipo == 6 || $pregunta->tipo == 7) {
+						if ($opcion->descripcion == 'Otro') {
+							if ( array_key_exists($x . 'otro', $input)) {
+								if ($input[$x . 'otro'] != NULL && $input[$x . 'otro'] != "") {
+									$pasa = true;
+								}else{
+									$pasa = false;
+									break;
+								}
+							}else{
+								$pasa = false;
+								break;
+							}
+						}else{
+							if ($op != NULL && $op != "") {
+								$pasa = true;
+							}
+						}
+					}else{
+						if ($op != NULL && $op != "") {
+							$pasa = true;
+						}
 					}
 				}
 			}

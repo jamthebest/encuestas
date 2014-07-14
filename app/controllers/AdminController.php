@@ -400,8 +400,10 @@ class AdminController extends BaseController {
 									if ($num == $opcion->id) {
 										$cont += 1;
 									}
-									$texto[$opcion->id] .= ($tam == 0 ? "" : ", ") . $respuesta->descripcion . "\n";
-									$tam += 1;
+									if ($respuesta->descripcion != 'NULL'){
+										$texto[$opcion->id] .= ($tam == 0 ? "" : ", ") . $respuesta->descripcion . "\n";
+										$tam += 1;
+									}
 								}
 							}
 						}
