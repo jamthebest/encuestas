@@ -417,4 +417,16 @@ class AdminController extends BaseController {
 		return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
 	}
 
+	public function Promopuntos($id)
+	{
+		$input = Input::all();
+		$encuesta = Encuesta::find($id);
+		if ($encuesta) {
+			$encuesta->promopuntos = $input['promopuntos'];
+			$encuesta->save();
+			return Redirect::route('Configurar', $id)->with('message', 'Promopuntos Asignados Correctamente!');
+		}
+		return Redirect::route('Configurar', $id)->withErrors('Error al Asignar Promopuntos!');
+	}
+
 }

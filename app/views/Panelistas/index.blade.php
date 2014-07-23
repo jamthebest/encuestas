@@ -35,7 +35,7 @@
     <thead>
       <tr>
         <th>Nombre</th>
-        <th>Promopuntos</th>
+        <!--<th>Promopuntos</th>-->
       </tr>
     </thead>
 
@@ -43,7 +43,8 @@
       @foreach ($Encuestas as $encuesta)
         <tr>
           <td>{{{ $encuesta->nombre }}}</td>
-          <td>{{{ $encuesta->promopuntos }}}</td>
+          <th>Al Contestar Participará en la rifa de Grandes Premios</th>
+          <!--<td>{{{ $encuesta->promopuntos }}}</td>-->
           @if ($encuesta->contestada == 0)
             <td>{{ link_to_route('Bienvenida', 'Contestar', array($encuesta->id), array('class' => 'btn btn-success')) }}</td>
           @else

@@ -61,6 +61,7 @@ Route::group(array('prefix' => 'Encuestas', 'before' => 'auth'), function(){
 	Route::get('Index/{id}', array('as' => 'Pagos.Index', 'uses' =>'PagosController@index'));
 	Route::get('Pagos/{id}', ['as' => 'CrearPagos', 'uses' =>'PagosController@create', 'before' => 'auth']);
 	Route::post('FinPagos/{id}', ['as' => 'Fin.Pagos', 'uses' =>'PagosController@finalizar', 'before' => 'auth']);
+	Route::post('Promopuntos/{id}', ['as' => 'Promopuntos', 'uses' =>'AdminController@Promopuntos', 'before' => 'auth']);
 	Route::resource('Preguntas', 'PreguntasController');
 	Route::resource('Respuestas', 'RespuestasController');
 	Route::resource('Pagos', 'PagosController');
