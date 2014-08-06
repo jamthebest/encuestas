@@ -62,8 +62,8 @@
 	<div style="margin-left:-8%">{{$encuestas->links()}}</div>
 @else
 	<div class="alert alert-danger">
-    <strong>Oh no!</strong> No hay Encuestas Disponibles
-  </div>
+	  <strong>Oh no!</strong> No hay Encuestas Disponibles
+	</div>
 @endif
 
 @stop

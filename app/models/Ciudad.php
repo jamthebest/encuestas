@@ -1,13 +1,14 @@
 <?php
 
-class Tipo extends Eloquent {
+class Ciudad extends Eloquent {
 	protected $guarded = array();
 
-	protected $table = 'tipos';
+	protected $table = 'ciudades';
 
 	public static $rules = array(
 		'id' => '',
 		'nombre' => 'required',
-		'descripcion' => 'required'
+		'descripcion' => '',
+		'activo' => 'required'
 	);
 }

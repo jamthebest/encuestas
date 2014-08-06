@@ -81,4 +81,18 @@ Route::get('VerResultados', ['as' => 'Resultados.todos', 'uses' =>'AdminControll
 Route::get('Resultados/{id}', ['as' => 'Encuestas.Resultado', 'uses' =>'EncuestasController@resultado', 'before' => 'auth']);
 Route::get('VerResultados/{id}', ['as' => 'Admin.Resultado', 'uses' =>'AdminController@resultado', 'before' => 'auth']);
 
-Route::resource('precios', 'PreciosController');
+Route::resource('Precios', 'PreciosController');
+
+Route::resource('Ciudades', 'CiudadesController');
+
+Route::resource('NivelSocioEconomicos', 'NivelSocioEconomicosController');
+
+Route::resource('EdadesRangos', 'EdadesrangosController');
+
+Route::resource('requerimientociudads', 'RequerimientociudadsController');
+
+Route::resource('requerimientoedads', 'RequerimientoedadsController');
+
+Route::resource('requerimientonses', 'RequerimientonsesController');
+
+Route::resource('requerimientosexos', 'RequerimientosexosController');

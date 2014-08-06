@@ -6,7 +6,7 @@ class Respuesta extends Eloquent {
 	protected $table = 'respuestas';
 
 	public static $rules = array(
-		'id' => 'required',
+		'id' => '',
 		'descripcion' => 'required',
 		'opcion' => 'required'
 	);

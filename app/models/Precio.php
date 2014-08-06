@@ -3,8 +3,10 @@
 class Precio extends Eloquent {
 	protected $guarded = array();
 
+	protected $table = 'precios';
+
 	public static $rules = array(
-		'id' => 'required',
+		'id' => '',
 		'preguntas' => 'required',
 		'panelistas' => 'required',
 		'precio' => 'required'
