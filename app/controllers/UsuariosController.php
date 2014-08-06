@@ -69,4 +69,36 @@ class UsuariosController extends BaseController {
 		return View::make('Usuarios.index', compact('Usuarios'));
 	}
 
+	public function requerimientos($id)
+	{
+		$Encuesta = Encuesta::find($id);
+		$Cont = 0;
+		if ($Encuesta) {
+			$Ciudades = Ciudad::all();
+			$Edades = EdadesRango::all();
+			$NSE = NivelSocioEconomico::all();
+			$ReqCiudades = RequerimientoCiudad::where('encuesta', $id)->get();
+			$ReqEdades = RequerimientoEdad::where('encuesta', $id)->get();
+			$ReqNSE = RequerimientoNse::where('encuesta', $id)->get();
+			$Sexo = RequerimientoSexo::where('encuesta', $id)->get();
+			if ($ReqCiudades->count()) {
+				$Cont += 1;
+			}
+			if ($ReqEdade->count()s) {
+				$Cont += 1;
+			}
+			if ($ReqNSE->count()) {
+				$Cont += 1;
+			}
+			if ($Sexo->count()) {
+				$Cont += 1;
+			}
+			//return $ReqCiudades;
+
+			return View::make('Usuarios.requerimientos', compact('Encuesta', 'Ciudades', 'Edades', 'NSE', 'Sexo', 'ReqCiudades', 'ReqEdades', 'ReqNSE', 'Cont'));
+		}
+
+		return Redirect::route('Inicio')->withErrors('Error Desconocido');
+	}
+
 }

@@ -4,7 +4,7 @@
 
 <h1>Create RequerimientoSexo</h1>
 
-{{ Form::open(array('route' => 'RequerimientoSexos.store')) }}
+{{ Form::open(array('route' => 'RequerimientoSexo.store')) }}
 	<ul>
         <li>
             {{ Form::label('id', 'Id:') }}

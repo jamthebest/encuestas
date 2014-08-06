@@ -3,7 +3,7 @@
 @section('main')
 
 <h1>Edit RequerimientoCiudad</h1>
-{{ Form::model($RequerimientoCiudad, array('method' => 'PATCH', 'route' => array('RequerimientoCiudads.update', $RequerimientoCiudad->id))) }}
+{{ Form::model($RequerimientoCiudad, array('method' => 'PATCH', 'route' => array('RequerimientoCiudad.update', $RequerimientoCiudad->id))) }}
 	<ul>
         <li>
             {{ Form::label('id', 'Id:') }}
@@ -22,7 +22,7 @@
 
 		<li>
 			{{ Form::submit('Update', array('class' => 'btn btn-info')) }}
-			{{ link_to_route('RequerimientoCiudads.show', 'Cancel', $RequerimientoCiudad->id, array('class' => 'btn')) }}
+			{{ link_to_route('RequerimientoCiudad.show', 'Cancel', $RequerimientoCiudad->id, array('class' => 'btn')) }}
 		</li>
 	</ul>
 {{ Form::close() }}

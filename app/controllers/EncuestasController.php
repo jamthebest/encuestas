@@ -50,9 +50,6 @@ class EncuestasController extends BaseController {
 	public function store()
 	{
 		$input = Input::all();
-		if ($input['requerimientos'] == "") {
-			$input['requerimientos'] = "Ninguno";
-		}
 		$validation = Validator::make($input, Encuesta::$rules);
 		
 		if ($validation->passes())
@@ -60,7 +57,8 @@ class EncuestasController extends BaseController {
 			$this->encuesta->create($input);
 			$encuesta = Encuesta::where('id', '<>', '0')->orderBy('id', 'DESC')->get();
 			$id = $encuesta[0]->id;
-			return Redirect::route('Encuestas.Preguntas.Agregar', $id);
+			return Redirect::route('Requerimientos', $id);
+			//return Redirect::route('Encuestas.Preguntas.Agregar', $id);
 		}
 
 		return Redirect::route('Encuestas.create')

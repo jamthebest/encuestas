@@ -9,7 +9,6 @@ class Encuesta extends Eloquent {
 		'id' => '',
 		'nombre' => 'required',
 		'panelistas' => 'required|min:1|Integer',
-		'requerimientos' => '',
 		'descripcion' => '',
 		'despedida' => '',
 		'promopuntos' => '',

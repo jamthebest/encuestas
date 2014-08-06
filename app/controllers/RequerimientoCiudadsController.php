@@ -50,10 +50,10 @@ class RequerimientoCiudadsController extends BaseController {
 		{
 			$this->RequerimientoCiudad->create($input);
 
-			return Redirect::route('RequerimientoCiudads.index');
+			return Redirect::route('Requerimientos', $input['encuesta']);
 		}
 
-		return Redirect::route('RequerimientoCiudads.create')
+		return Redirect::route('RequerimientoCiudad.nuevo', $input['encuesta'])
 			->withInput()
 			->withErrors($validation)
 			->with('message', 'There were validation errors.');
@@ -123,9 +123,21 @@ class RequerimientoCiudadsController extends BaseController {
 	 */
 	public function destroy($id)
 	{
+		$encuesta = $this->RequerimientoCiudad->find($id)->encuesta;
 		$this->RequerimientoCiudad->find($id)->delete();
 
-		return Redirect::route('RequerimientoCiudads.index');
+		return Redirect::route('Requerimientos', $encuesta);
+	}
+
+	public function nuevo($id)
+	{
+		$req = RequerimientoCiudad::where('encuesta', $id)->lists('ciudad');
+		if ($req) {
+			$Ciudades = Ciudad::whereNotIn('id', $req)->lists('nombre', 'id');
+		}else{
+			$Ciudades = Ciudad::lists('nombre', 'id');
+		}
+		return View::make('RequerimientoCiudads.create', compact('id', 'Ciudades'));
 	}
 
 }

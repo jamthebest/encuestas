@@ -2,11 +2,11 @@
 
 @section('main')
 
-<h1>All RequerimientoCiudads</h1>
+<h1>All RequerimientoCiudad</h1>
 
-<p>{{ link_to_route('RequerimientoCiudads.create', 'Add new RequerimientoCiudad') }}</p>
+<p>{{ link_to_route('RequerimientoCiudad.create', 'Add new RequerimientoCiudad') }}</p>
 
-@if ($RequerimientoCiudads->count())
+@if ($RequerimientoCiudad->count())
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
@@ -17,14 +17,14 @@
 		</thead>
 
 		<tbody>
-			@foreach ($RequerimientoCiudads as $RequerimientoCiudad)
+			@foreach ($RequerimientoCiudad as $RequerimientoCiudad)
 				<tr>
 					<td>{{{ $RequerimientoCiudad->id }}}</td>
 					<td>{{{ $RequerimientoCiudad->encuesta }}}</td>
 					<td>{{{ $RequerimientoCiudad->ciudad }}}</td>
-                    <td>{{ link_to_route('RequerimientoCiudads.edit', 'Edit', array($RequerimientoCiudad->id), array('class' => 'btn btn-info')) }}</td>
+                    <td>{{ link_to_route('RequerimientoCiudad.edit', 'Edit', array($RequerimientoCiudad->id), array('class' => 'btn btn-info')) }}</td>
                     <td>
-                        {{ Form::open(array('method' => 'DELETE', 'route' => array('RequerimientoCiudads.destroy', $RequerimientoCiudad->id))) }}
+                        {{ Form::open(array('method' => 'DELETE', 'route' => array('RequerimientoCiudad.destroy', $RequerimientoCiudad->id))) }}
                             {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
                         {{ Form::close() }}
                     </td>
@@ -33,7 +33,7 @@
 		</tbody>
 	</table>
 @else
-	There are no RequerimientoCiudads
+	There are no RequerimientoCiudad
 @endif
 
 @stop
