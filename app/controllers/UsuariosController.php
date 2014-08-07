@@ -82,21 +82,36 @@ class UsuariosController extends BaseController {
 			$ReqEdades = RequerimientoEdad::where('encuesta', $id)->get();
 			$ReqNSE = RequerimientoNse::where('encuesta', $id)->get();
 			$ReqSexo = RequerimientoSexo::where('encuesta', $id)->get();
+			$texto = array();
+			//return $ReqCiudades;
 			if ($ReqCiudades->count()) {
-				$Cont += 1;
+				foreach ($ReqCiudades as $req) {
+					$texto = $texto + array($Cont => array($req->id, 'Las Personas que vivan en esta Ciudad: ' . $Ciudades[$req->ciudad - 1]->nombre . '.', 'Ciudad'));
+					$Cont += 1;
+				}
 			}
 			if ($ReqEdades->count()) {
-				$Cont += 1;
+				foreach ($ReqEdades as $req) {
+					$texto = $texto + array($Cont => array($req->id, 'Las Personas con edad entre ' . $Edades[$req->rango - 1]->edad_inicio . ' y ' . $Edades[$req->rango - 1]->edad_final . ' años.', 'Edad'));
+					$Cont += 1;
+				}
 			}
 			if ($ReqNSE->count()) {
-				$Cont += 1;
+				foreach ($ReqNSE as $req) {
+					$texto = $texto + array($Cont => array($req->id, 'Las Personas que tengan un nivel socio económico ' . $NSE[$req->nse - 1]->nombre, 'NSE'));
+					$Cont += 1;
+				}
 			}
-			if ($Sexo->count()) {
-				$Cont += 1;
+			if ($ReqSexo->count()) {
+				foreach ($ReqSexo as $req) {
+					$texto = $texto + array($Cont => array($req->id, 'Las Personas que sean del sexo: ' . $Sexo[$req->sexo - 1]->nombre, 'Sexo'));
+					$Cont += 1;
+				}
 			}
-			//return $ReqCiudades;
+			//$texto = array();
+			//return $texto[0][0];
 
-			return View::make('Usuarios.requerimientos', compact('Encuesta', 'Ciudades', 'Edades', 'NSE', 'Sexo', 'ReqCiudades', 'ReqEdades', 'ReqNSE', 'ReqSexo', 'Cont'));
+			return View::make('Usuarios.requerimientos', compact('Encuesta', 'Ciudades', 'Edades', 'NSE', 'Sexo', 'ReqCiudades', 'ReqEdades', 'ReqNSE', 'ReqSexo', 'Cont', 'texto'));
 		}
 
 		return Redirect::route('Inicio')->withErrors('Error Desconocido');

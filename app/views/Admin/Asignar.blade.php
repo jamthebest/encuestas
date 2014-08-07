@@ -8,7 +8,55 @@
     	{{ link_to_route('Configurar', ' Regresar', array($Encuesta->id), array('class' => 'btn btn-success glyphicon glyphicon-arrow-left')) }}
     </div>
 </div>
-<h4 class="sub-header" style="margin-top:2%"><span class=""></span><strong>Requerimientos de Panelistas:</strong> <small>{{{$Encuesta->requerimientos}}}</small> </h4>
+
+<!--<div class="alert alert-success fade in">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+-->
+	<h4 class="sub-header col-md-4"><span class=""></span><strong>Cantidad de Panelistas:</strong> <h3 style="margin-top:3%"> {{{$Encuesta->panelistas}}} </h3> </h4>
+	<h4 class="sub-header col-md-12"><span class=""></span><strong>Requerimientos de Panelistas:</strong> </h4>
+	@if ($texto)
+		<div class="table-responsive">
+		<table class="table table-condensed table-bordered">
+			<thead>
+				<tr>
+					<th>N°</th>
+					<th>Requerimiento</th>
+				</tr>
+			</thead>
+
+			<tbody>
+			{{ Form::hidden($Cont = 1) }}
+				@foreach ($texto as $text)
+					<tr>
+						<td>{{{ $Cont }}}</td>
+						<td>{{{ $text[1] }}}</td>
+					</tr>
+					{{ Form::hidden($Cont += 1) }}
+				@endforeach
+			</tbody>
+		</table>
+		</div>
+	@else
+		<div class="table-responsive">
+		<table class="table table-condensed">
+			<thead>
+				<tr>
+					<th>N°</th>
+					<th>Requerimiento</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td>{{{ 1 }}}</td>
+					<td>{{{ 'Esta Encuesta no tiene requerimientos por lo tanto cualquier persona asignada la puede responder' }}}</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	@endif
+<!--</div>-->
+
 @if ($errors->any())
   <div class="alert alert-danger fade in">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -24,8 +72,8 @@
 @else
 	@if (Session::has('message'))
 		<div class="alert alert-success fade in">
-  		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-  		{{ Session::get('message') }}
+	  		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	  		{{ Session::get('message') }}
 		</div>
 	@endif
 @endif

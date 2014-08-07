@@ -2,7 +2,7 @@
 
 @section('main')
 
-<h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span> Requerimientos </h2>
+<h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span> Requerimientos > <small>{{{$Encuesta->nombre}}}</small> </h2>
 
 <div class="btn-agregar col-md-5 col-md-offset-1">
 	<a type="button" href="{{ URL::route('RequerimientoCiudad.nuevo', $Encuesta->id) }}" class="btn btn-success">
@@ -46,129 +46,69 @@
 	@endif
 @endif
 
-@if ($ReqCiudades->count())
-	@if ($ReqEdades->count())
-		<h4 class="sub-header col-md-6"> Ciudades </h4>
-		<h4 class="sub-header col-md-6"> Edades </h4>
-	@else
-		<h4 class="sub-header col-md-7"> Ciudades </h4>
-	@endif
-	<div class="table-responsive col-md-6">
+<h4 class="sub-header col-md-12" style="margin-top:4%; margin-bottom:5%"> Esta encuesta podrá ser contestada por los panelistas que cumplan con los siguientes requerimientos: </h4>
+
+@if ($texto)
+	<div class="table-responsive">
 	<table class="table table-condensed">
 		<thead>
 			<tr>
-				<th>Nombre</th>
-				<th>Descripción</th>
+				<th>N°</th>
+				<th>Requerimiento</th>
 			</tr>
 		</thead>
 
 		<tbody>
-			@foreach ($ReqCiudades as $ciudad)
+		{{ Form::hidden($Cont = 1) }}
+			@foreach ($texto as $text)
 				<tr>
-					<td>{{{ $Ciudades[$ciudad->ciudad - 1]->nombre }}}</td>
-					<td>{{{ $Ciudades[$ciudad->ciudad - 1]->descripcion }}}</td>
+					<td>{{{ $Cont }}}</td>
+					<td>{{{ $text[1] }}}</td>
 			          <td>
-			              {{ Form::open(array('method' => 'DELETE', 'route' => array('RequerimientoCiudad.destroy', $ciudad->id))) }}
+			          	@if($text[2] == 'Ciudad')
+			              {{ Form::open(array('method' => 'DELETE', 'route' => array('RequerimientoCiudad.destroy', $text[0]))) }}
 			                  {{ Form::submit('Eliminar', array('class' => 'btn btn-danger')) }}
 			              {{ Form::close() }}
+			            @elseif($text[2] == 'Edad')
+			              {{ Form::open(array('method' => 'DELETE', 'route' => array('RequerimientoEdad.destroy', $text[0]))) }}
+			                {{ Form::submit('Eliminar', array('class' => 'btn btn-danger')) }}
+			              {{ Form::close() }}
+			            @elseif($text[2] == 'NSE')
+			              {{ Form::open(array('method' => 'DELETE', 'route' => array('RequerimientoNse.destroy', $text[0]))) }}
+			                {{ Form::submit('Eliminar', array('class' => 'btn btn-danger')) }}
+			              {{ Form::close() }}
+			            @else
+			              {{ Form::open(array('method' => 'DELETE', 'route' => array('RequerimientoSexo.destroy', $text[0]))) }}
+			                {{ Form::submit('Eliminar', array('class' => 'btn btn-danger')) }}
+			              {{ Form::close() }}
+			            @endif
 			          </td>
 				</tr>
+				{{ Form::hidden($Cont += 1) }}
 			@endforeach
 		</tbody>
 	</table>
 	</div>
-@endif
-
-@if ($ReqEdades->count())
-	@if ($ReqCiudades->count() == 0)
-		<h4 class="sub-header col-md-7"> Edades </h4>
-	@endif
-	<div class="table-responsive col-md-6">
+@else
+	<div class="table-responsive">
 	<table class="table table-condensed">
 		<thead>
 			<tr>
-				<th>Rango de Edad</th>
+				<th>N°</th>
+				<th>Requerimiento</th>
 			</tr>
 		</thead>
 
 		<tbody>
-			@foreach ($ReqEdades as $edad)
-				<tr>
-					<td>{{{ $Edades[$edad->rango - 1]->edad_inicio }}} - {{{ $Edades[$edad->rango - 1]->edad_final }}}</td>
-			          <td>
-			              {{ Form::open(array('method' => 'DELETE', 'route' => array('RequerimientoEdad.destroy', $edad->id))) }}
-			                  {{ Form::submit('Eliminar', array('class' => 'btn btn-danger')) }}
-			              {{ Form::close() }}
-			          </td>
-				</tr>
-			@endforeach
-		</tbody>
-	</table>
-	</div>
-@endif
-
-@if ($ReqNSE->count())
-	@if ($ReqSexo->count())
-		<h4 class="sub-header col-md-6"> Nivel Socio Económico </h4>
-		<h4 class="sub-header col-md-6"> Sexo </h4>
-	@else
-		<h4 class="sub-header col-md-7"> Nivel Socio Económico </h4>
-	@endif
-	<div class="table-responsive col-md-6">
-	<table class="table table-condensed">
-		<thead>
 			<tr>
-				<th>Código</th>
-				<th>Nombre</th>
-				<th>Descripción</th>
+				<td>{{{ 1 }}}</td>
+				<td>{{{ 'Esta Encuesta no tiene requerimientos por lo tanto cualquier persona asignada la puede responder' }}}</td>
 			</tr>
-		</thead>
-
-		<tbody>
-			@foreach ($ReqNSE as $nse)
-				<tr>
-					<td>{{{ $NSE[$nse->nse - 1]->codigo }}}</td>
-					<td>{{{ $NSE[$nse->nse - 1]->nombre }}}</td>
-					<td>{{{ $NSE[$nse->nse - 1]->descripcion }}}</td>
-			          <td>
-			              {{ Form::open(array('method' => 'DELETE', 'route' => array('RequerimientoNse.destroy', $nse->id))) }}
-			                  {{ Form::submit('Eliminar', array('class' => 'btn btn-danger')) }}
-			              {{ Form::close() }}
-			          </td>
-				</tr>
-			@endforeach
 		</tbody>
 	</table>
 	</div>
 @endif
 
-@if ($ReqSexo->count())
-	@if ($ReqNSE->count() == 0)
-		<h4 class="sub-header col-md-7"> Sexo </h4>
-	@endif
-	<div class="table-responsive col-md-6">
-	<table class="table table-condensed">
-		<thead>
-			<tr>
-				<th>Sexo</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			@foreach ($ReqSexo as $sexo)
-				<tr>
-					<td>{{{ $Sexo[$sexo->sexo - 1]->nombre }}}</td>
-					  <td>
-			              {{ Form::open(array('method' => 'DELETE', 'route' => array('RequerimientoSexo.destroy', $sexo->id))) }}
-			                  {{ Form::submit('Eliminar', array('class' => 'btn btn-danger')) }}
-			              {{ Form::close() }}
-			          </td>
-				</tr>
-			@endforeach
-		</tbody>
-	</table>
-	</div>
-@endif
 
 @if(!($ReqCiudades->count() || $ReqEdades->count() || $ReqNSE->count() || $ReqSexo->count()))
 	<div class="alert alert-danger">
@@ -178,9 +118,15 @@
 
 <div class="form-group col-md-12 text-center">
   <div class="col-md-4 col-md-offset-4">
-    <a type="button" href="{{ URL::route('Encuestas.Preguntas.Agregar', $Encuesta->id) }}" class="btn btn-primary">
-      Terminar
-  	</a>
+  	@if(Pregunta::where('encuesta', $Encuesta->id)->get())
+  	  <a type="button" href="{{ URL::route('Encuestas.index') }}" class="btn btn-primary">
+	    Terminar
+	  </a>
+  	@else
+	  <a type="button" href="{{ URL::route('Encuestas.Preguntas.Agregar', $Encuesta->id) }}" class="btn btn-primary">
+	    Terminar
+	  </a>
+	@endif
   </div>
 </div>
 

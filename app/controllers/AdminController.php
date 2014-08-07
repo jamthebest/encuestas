@@ -25,6 +25,43 @@ class AdminController extends BaseController {
 	public function Asignar($id)
 	{
 		$Encuesta = Encuesta::find($id);
+
+		$Cont = 0;
+		$Ciudades = Ciudad::all();
+		$Edades = EdadesRango::all();
+		$NSE = NivelSocioEconomico::all();
+		$Sexo = Sexo::all();
+		$ReqCiudades = RequerimientoCiudad::where('encuesta', $id)->get();
+		$ReqEdades = RequerimientoEdad::where('encuesta', $id)->get();
+		$ReqNSE = RequerimientoNse::where('encuesta', $id)->get();
+		$ReqSexo = RequerimientoSexo::where('encuesta', $id)->get();
+		$texto = array();
+		//return $ReqCiudades;
+		if ($ReqCiudades->count()) {
+			foreach ($ReqCiudades as $req) {
+				$texto = $texto + array($Cont => array($req->id, 'Las Personas que vivan en esta Ciudad: ' . $Ciudades[$req->ciudad - 1]->nombre . '.', 'Ciudad'));
+				$Cont += 1;
+			}
+		}
+		if ($ReqEdades->count()) {
+			foreach ($ReqEdades as $req) {
+				$texto = $texto + array($Cont => array($req->id, 'Las Personas con edad entre ' . $Edades[$req->rango - 1]->edad_inicio . ' y ' . $Edades[$req->rango - 1]->edad_final . ' años.', 'Edad'));
+				$Cont += 1;
+			}
+		}
+		if ($ReqNSE->count()) {
+			foreach ($ReqNSE as $req) {
+				$texto = $texto + array($Cont => array($req->id, 'Las Personas que tengan un nivel socio económico ' . $NSE[$req->nse - 1]->nombre, 'NSE'));
+				$Cont += 1;
+			}
+		}
+		if ($ReqSexo->count()) {
+			foreach ($ReqSexo as $req) {
+				$texto = $texto + array($Cont => array($req->id, 'Las Personas que sean del sexo: ' . $Sexo[$req->sexo - 1]->nombre, 'Sexo'));
+				$Cont += 1;
+			}
+		}
+
 		$Panelistas = Usuario::where('tipo', 'panelista')->get();//->paginate(10);
 		$Usuarios = Usuario::select('username')->where('tipo', 'panelista')->get();
 		$Asignados = EncuestaPanelista::where('encuesta', $Encuesta->id)->get();
@@ -76,12 +113,49 @@ class AdminController extends BaseController {
 		}
 		$Seleccionados = array(0,0,0,0,0);
 		//return $Seleccionados[0];
-		return View::make('Admin.Asignar', compact('Encuesta', 'Panelistas', 'Asignados', 'Nombres', 'Ciudades', 'NSE', 'Edades', 'Seleccionados', 'Edad'));
+		return View::make('Admin.Asignar', compact('Encuesta', 'Panelistas', 'Asignados', 'Nombres', 'Ciudades', 'NSE', 'Edades', 'Seleccionados', 'Edad', 'texto'));
 	}
 
 	public function search($id)
 	{
 		$input = Input::all();
+
+		$Cont = 0;
+		$Ciudades = Ciudad::all();
+		$Edades = EdadesRango::all();
+		$NSE = NivelSocioEconomico::all();
+		$Sexo = Sexo::all();
+		$ReqCiudades = RequerimientoCiudad::where('encuesta', $id)->get();
+		$ReqEdades = RequerimientoEdad::where('encuesta', $id)->get();
+		$ReqNSE = RequerimientoNse::where('encuesta', $id)->get();
+		$ReqSexo = RequerimientoSexo::where('encuesta', $id)->get();
+		$texto = array();
+		//return $ReqCiudades;
+		if ($ReqCiudades->count()) {
+			foreach ($ReqCiudades as $req) {
+				$texto = $texto + array($Cont => array($req->id, 'Las Personas que vivan en esta Ciudad: ' . $Ciudades[$req->ciudad - 1]->nombre . '.', 'Ciudad'));
+				$Cont += 1;
+			}
+		}
+		if ($ReqEdades->count()) {
+			foreach ($ReqEdades as $req) {
+				$texto = $texto + array($Cont => array($req->id, 'Las Personas con edad entre ' . $Edades[$req->rango - 1]->edad_inicio . ' y ' . $Edades[$req->rango - 1]->edad_final . ' años.', 'Edad'));
+				$Cont += 1;
+			}
+		}
+		if ($ReqNSE->count()) {
+			foreach ($ReqNSE as $req) {
+				$texto = $texto + array($Cont => array($req->id, 'Las Personas que tengan un nivel socio económico ' . $NSE[$req->nse - 1]->nombre, 'NSE'));
+				$Cont += 1;
+			}
+		}
+		if ($ReqSexo->count()) {
+			foreach ($ReqSexo as $req) {
+				$texto = $texto + array($Cont => array($req->id, 'Las Personas que sean del sexo: ' . $Sexo[$req->sexo - 1]->nombre, 'Sexo'));
+				$Cont += 1;
+			}
+		}
+
 		$Seleccionados[0] = $input['ciudad'];
 		$Seleccionados[1] = $input['nse'];
 		$Seleccionados[2] = $input['edad'];
@@ -259,7 +333,7 @@ class AdminController extends BaseController {
 		}
 
 		
-		return View::make('Admin.Asignar', compact('Encuesta', 'Panelistas', 'Asignados', 'Nombres', 'Ciudades', 'NSE', 'Edades', 'Seleccionados', 'Edad'));
+		return View::make('Admin.Asignar', compact('Encuesta', 'Panelistas', 'Asignados', 'Nombres', 'Ciudades', 'NSE', 'Edades', 'Seleccionados', 'Edad', 'texto'));
 			//->withInput();
 	}
 

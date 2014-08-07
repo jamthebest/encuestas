@@ -47,14 +47,15 @@
 					<td>{{{ $encuesta->nombre }}}</td>
 					<td>{{{ $encuesta->descripcion }}}</td>
 					<td>{{{ $encuesta->despedida }}}</td>
+					<td>{{ link_to_route('Requerimientos', 'Requerimientos', array($encuesta->id), array('class' => 'btn btn-warning')) }}</td>
 					<td>{{ link_to_route('Encuestas.Preguntas.Index', 'Ver Preguntas', array($encuesta->id), array('class' => 'btn btn-success')) }}</td>
-          <td>{{ link_to_route('Encuestas.edit', 'Editar', array($encuesta->id), array('class' => 'btn btn-info')) }}</td>
-          <td>{{ link_to_route('Encuestas.copiar', 'Duplicar', array($encuesta->id), array('class' => 'btn btn-primary')) }}</td>
-          <td>
-              {{ Form::open(array('method' => 'DELETE', 'route' => array('Encuestas.destroy', $encuesta->id))) }}
-                  {{ Form::submit('Eliminar', array('class' => 'btn btn-danger')) }}
-              {{ Form::close() }}
-          </td>
+			        <td>{{ link_to_route('Encuestas.edit', 'Editar', array($encuesta->id), array('class' => 'btn btn-info')) }}</td>
+			        <td>{{ link_to_route('Encuestas.copiar', 'Duplicar', array($encuesta->id), array('class' => 'btn btn-primary')) }}</td>
+			        <td>
+			          {{ Form::open(array('method' => 'DELETE', 'route' => array('Encuestas.destroy', $encuesta->id))) }}
+			            {{ Form::submit('Eliminar', array('class' => 'btn btn-danger')) }}
+			          {{ Form::close() }}
+			        </td>
 				</tr>
 			@endforeach
 		</tbody>
