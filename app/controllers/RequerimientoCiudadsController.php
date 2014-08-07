@@ -133,9 +133,9 @@ class RequerimientoCiudadsController extends BaseController {
 	{
 		$req = RequerimientoCiudad::where('encuesta', $id)->lists('ciudad');
 		if ($req) {
-			$Ciudades = Ciudad::whereNotIn('id', $req)->lists('nombre', 'id');
+			$Ciudades = Ciudad::whereNotIn('id', $req)->where('activo', '1')->lists('nombre', 'id');
 		}else{
-			$Ciudades = Ciudad::lists('nombre', 'id');
+			$Ciudades = Ciudad::where('activo', '1')->lists('nombre', 'id');
 		}
 		return View::make('RequerimientoCiudads.create', compact('id', 'Ciudades'));
 	}

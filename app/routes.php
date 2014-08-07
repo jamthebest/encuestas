@@ -69,6 +69,9 @@ Route::group(array('prefix' => 'Encuestas', 'before' => 'auth'), function(){
 	Route::get('{id}/Requerimientos', ['as' => 'Requerimientos', 'uses' =>'UsuariosController@requerimientos', 'before' => 'auth']);
 
 	Route::get('{id}/RequerimientoCiudad', ['as' => 'RequerimientoCiudad.nuevo', 'uses' =>'RequerimientociudadsController@nuevo', 'before' => 'auth']);
+	Route::get('{id}/RequerimientoEdad', ['as' => 'RequerimientoEdad.nuevo', 'uses' =>'RequerimientoedadsController@nuevo', 'before' => 'auth']);
+	Route::get('{id}/RequerimientoNse', ['as' => 'RequerimientoNse.nuevo', 'uses' =>'RequerimientonsesController@nuevo', 'before' => 'auth']);
+	Route::get('{id}/RequerimientoSexo', ['as' => 'RequerimientoSexo.nuevo', 'uses' =>'RequerimientosexosController@nuevo', 'before' => 'auth']);
 
 });
 
@@ -101,3 +104,5 @@ Route::resource('RequerimientoEdad', 'RequerimientoedadsController');
 Route::resource('RequerimientoNse', 'RequerimientonsesController');
 
 Route::resource('RequerimientoSexo', 'RequerimientosexosController');
+
+Route::resource('sexos', 'SexosController');

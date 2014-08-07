@@ -50,10 +50,10 @@ class RequerimientoNsesController extends BaseController {
 		{
 			$this->RequerimientoNse->create($input);
 
-			return Redirect::route('RequerimientoNses.index');
+			return Redirect::route('Requerimientos', $input['encuesta']);
 		}
 
-		return Redirect::route('RequerimientoNses.create')
+		return Redirect::route('RequerimientoNse.nuevo', $input['encuesta'])
 			->withInput()
 			->withErrors($validation)
 			->with('message', 'There were validation errors.');
@@ -84,7 +84,7 @@ class RequerimientoNsesController extends BaseController {
 
 		if (is_null($RequerimientoNse))
 		{
-			return Redirect::route('RequerimientoNses.index');
+			return Redirect::route('RequerimientoNse.index');
 		}
 
 		return View::make('RequerimientoNses.edit', compact('RequerimientoNse'));
@@ -106,10 +106,10 @@ class RequerimientoNsesController extends BaseController {
 			$RequerimientoNse = $this->RequerimientoNse->find($id);
 			$RequerimientoNse->update($input);
 
-			return Redirect::route('RequerimientoNses.show', $id);
+			return Redirect::route('RequerimientoNse.show', $id);
 		}
 
-		return Redirect::route('RequerimientoNses.edit', $id)
+		return Redirect::route('RequerimientoNse.edit', $id)
 			->withInput()
 			->withErrors($validation)
 			->with('message', 'There were validation errors.');
@@ -123,9 +123,21 @@ class RequerimientoNsesController extends BaseController {
 	 */
 	public function destroy($id)
 	{
+		$encuesta = $this->RequerimientoNse->find($id)->encuesta;
 		$this->RequerimientoNse->find($id)->delete();
 
-		return Redirect::route('RequerimientoNses.index');
+		return Redirect::route('Requerimientos', $encuesta);
+	}
+
+	public function nuevo($id)
+	{
+		$req = RequerimientoNse::where('encuesta', $id)->lists('nse');
+		if ($req) {
+			$NSE = NivelSocioEconomico::whereNotIn('id', $req)->where('activo', '1')->lists('nombre', 'id');
+		}else{
+			$NSE = NivelSocioEconomico::where('activo', '1')->lists('nombre', 'id');
+		}
+		return View::make('RequerimientoNses.create', compact('id', 'NSE'));
 	}
 
 }

@@ -4,23 +4,23 @@
 
 <h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span> Requerimientos </h2>
 
-<div class="btn-agregar">
+<div class="btn-agregar col-md-5 col-md-offset-1">
 	<a type="button" href="{{ URL::route('RequerimientoCiudad.nuevo', $Encuesta->id) }}" class="btn btn-success">
 	  <span class="glyphicon glyphicon-file"></span> Nuevo Requerimiento Ciudad
 	</a>
 </div>
-<div class="btn-agregar">
-	<a type="button" href="{{ URL::route('RequerimientoEdad.create') }}" class="btn btn-success">
+<div class="btn-agregar col-md-4">
+	<a type="button" href="{{ URL::route('RequerimientoEdad.nuevo', $Encuesta->id) }}" class="btn btn-success">
 	  <span class="glyphicon glyphicon-file"></span> Nuevo Requerimiento Edad
 	</a>
 </div>
-<div class="btn-agregar">
-	<a type="button" href="{{ URL::route('RequerimientoNse.create') }}" class="btn btn-success">
+<div class="btn-agregar col-md-5 col-md-offset-1">
+	<a type="button" href="{{ URL::route('RequerimientoNse.nuevo', $Encuesta->id) }}" class="btn btn-success">
 	  <span class="glyphicon glyphicon-file"></span> Nuevo Requerimiento Nivel Socio Económico
 	</a>
 </div>
-<div class="btn-agregar">
-	<a type="button" href="{{ URL::route('RequerimientoSexo.create') }}" class="btn btn-success">
+<div class="btn-agregar col-md-3">
+	<a type="button" href="{{ URL::route('RequerimientoSexo.nuevo', $Encuesta->id) }}" class="btn btn-success">
 	  <span class="glyphicon glyphicon-file"></span> Nuevo Requerimiento Sexo
 	</a>
 </div>
@@ -51,7 +51,7 @@
 		<h4 class="sub-header col-md-6"> Ciudades </h4>
 		<h4 class="sub-header col-md-6"> Edades </h4>
 	@else
-		<h4 class="sub-header col-md-6"> Ciudades </h4>
+		<h4 class="sub-header col-md-7"> Ciudades </h4>
 	@endif
 	<div class="table-responsive col-md-6">
 	<table class="table table-condensed">
@@ -80,6 +80,9 @@
 @endif
 
 @if ($ReqEdades->count())
+	@if ($ReqCiudades->count() == 0)
+		<h4 class="sub-header col-md-7"> Edades </h4>
+	@endif
 	<div class="table-responsive col-md-6">
 	<table class="table table-condensed">
 		<thead>
@@ -91,7 +94,7 @@
 		<tbody>
 			@foreach ($ReqEdades as $edad)
 				<tr>
-					<td>{{{ $Edades[$edad->rango - 1]->edad_inicio }}} - {{{ $Edades[$edad->rango]->edad_final }}}</td>
+					<td>{{{ $Edades[$edad->rango - 1]->edad_inicio }}} - {{{ $Edades[$edad->rango - 1]->edad_final }}}</td>
 			          <td>
 			              {{ Form::open(array('method' => 'DELETE', 'route' => array('RequerimientoEdad.destroy', $edad->id))) }}
 			                  {{ Form::submit('Eliminar', array('class' => 'btn btn-danger')) }}
@@ -105,13 +108,13 @@
 @endif
 
 @if ($ReqNSE->count())
-	@if ($ReqEdades->count())
+	@if ($ReqSexo->count())
 		<h4 class="sub-header col-md-6"> Nivel Socio Económico </h4>
 		<h4 class="sub-header col-md-6"> Sexo </h4>
 	@else
-		<h4 class="sub-header col-md-6"> Nivel Socio Económico </h4>
+		<h4 class="sub-header col-md-7"> Nivel Socio Económico </h4>
 	@endif
-	<div class="table-responsive cold-md-6">
+	<div class="table-responsive col-md-6">
 	<table class="table table-condensed">
 		<thead>
 			<tr>
@@ -139,8 +142,11 @@
 	</div>
 @endif
 
-@if ($Sexo->count())
-	<div class="table-responsive cold-md-6">
+@if ($ReqSexo->count())
+	@if ($ReqNSE->count() == 0)
+		<h4 class="sub-header col-md-7"> Sexo </h4>
+	@endif
+	<div class="table-responsive col-md-6">
 	<table class="table table-condensed">
 		<thead>
 			<tr>
@@ -149,10 +155,10 @@
 		</thead>
 
 		<tbody>
-			@foreach ($Sexo as $sexo)
+			@foreach ($ReqSexo as $sexo)
 				<tr>
-					<td>{{{ $sexo->sexo == 1 ? 'Hombres' : ($sexo->sexo == 0 ? 'Mujeres' : 'Ambos') }}}</td>
-			          <td>
+					<td>{{{ $Sexo[$sexo->sexo - 1]->nombre }}}</td>
+					  <td>
 			              {{ Form::open(array('method' => 'DELETE', 'route' => array('RequerimientoSexo.destroy', $sexo->id))) }}
 			                  {{ Form::submit('Eliminar', array('class' => 'btn btn-danger')) }}
 			              {{ Form::close() }}
@@ -164,7 +170,7 @@
 	</div>
 @endif
 
-@if(!($ReqCiudades->count() || $ReqEdades->count() || $ReqNSE->count() || $Sexo->count()))
+@if(!($ReqCiudades->count() || $ReqEdades->count() || $ReqNSE->count() || $ReqSexo->count()))
 	<div class="alert alert-danger">
 		<strong>Oh no!</strong> No hay Usuarios Disponibles
 	</div>

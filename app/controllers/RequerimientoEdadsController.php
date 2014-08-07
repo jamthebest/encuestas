@@ -50,10 +50,10 @@ class RequerimientoEdadsController extends BaseController {
 		{
 			$this->RequerimientoEdad->create($input);
 
-			return Redirect::route('RequerimientoEdads.index');
+			return Redirect::route('Requerimientos', $input['encuesta']);
 		}
 
-		return Redirect::route('RequerimientoEdads.create')
+		return Redirect::route('RequerimientoEdad.nuevo', $input['encuesta'])
 			->withInput()
 			->withErrors($validation)
 			->with('message', 'There were validation errors.');
@@ -84,7 +84,7 @@ class RequerimientoEdadsController extends BaseController {
 
 		if (is_null($RequerimientoEdad))
 		{
-			return Redirect::route('RequerimientoEdads.index');
+			return Redirect::route('RequerimientoEdad.index');
 		}
 
 		return View::make('RequerimientoEdads.edit', compact('RequerimientoEdad'));
@@ -106,10 +106,10 @@ class RequerimientoEdadsController extends BaseController {
 			$RequerimientoEdad = $this->RequerimientoEdad->find($id);
 			$RequerimientoEdad->update($input);
 
-			return Redirect::route('RequerimientoEdads.show', $id);
+			return Redirect::route('RequerimientoEdad.show', $id);
 		}
 
-		return Redirect::route('RequerimientoEdads.edit', $id)
+		return Redirect::route('RequerimientoEdad.edit', $id)
 			->withInput()
 			->withErrors($validation)
 			->with('message', 'There were validation errors.');
@@ -123,9 +123,25 @@ class RequerimientoEdadsController extends BaseController {
 	 */
 	public function destroy($id)
 	{
+		$encuesta = $this->RequerimientoEdad->find($id)->encuesta;
 		$this->RequerimientoEdad->find($id)->delete();
 
-		return Redirect::route('RequerimientoEdads.index');
+		return Redirect::route('Requerimientos', $encuesta);
+	}
+
+	public function nuevo($id)
+	{
+		$req = RequerimientoEdad::where('encuesta', $id)->lists('rango');
+		if ($req) {
+			$Edad = EdadesRango::whereNotIn('id', $req)->where('activo', '1')->get();
+		}else{
+			$Edad = EdadesRango::where('activo', '1')->get();
+		}
+		$Rango = array();
+		foreach ($Edad as $edad) {
+			$Rango = $Rango + array($edad->id => $edad->edad_inicio . " Años - " . $edad->edad_final . " Años");
+		}
+		return View::make('RequerimientoEdads.create', compact('id', 'Edad', 'Rango'));
 	}
 
 }

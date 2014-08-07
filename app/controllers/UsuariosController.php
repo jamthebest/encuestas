@@ -77,14 +77,15 @@ class UsuariosController extends BaseController {
 			$Ciudades = Ciudad::all();
 			$Edades = EdadesRango::all();
 			$NSE = NivelSocioEconomico::all();
+			$Sexo = Sexo::all();
 			$ReqCiudades = RequerimientoCiudad::where('encuesta', $id)->get();
 			$ReqEdades = RequerimientoEdad::where('encuesta', $id)->get();
 			$ReqNSE = RequerimientoNse::where('encuesta', $id)->get();
-			$Sexo = RequerimientoSexo::where('encuesta', $id)->get();
+			$ReqSexo = RequerimientoSexo::where('encuesta', $id)->get();
 			if ($ReqCiudades->count()) {
 				$Cont += 1;
 			}
-			if ($ReqEdade->count()s) {
+			if ($ReqEdades->count()) {
 				$Cont += 1;
 			}
 			if ($ReqNSE->count()) {
@@ -95,7 +96,7 @@ class UsuariosController extends BaseController {
 			}
 			//return $ReqCiudades;
 
-			return View::make('Usuarios.requerimientos', compact('Encuesta', 'Ciudades', 'Edades', 'NSE', 'Sexo', 'ReqCiudades', 'ReqEdades', 'ReqNSE', 'Cont'));
+			return View::make('Usuarios.requerimientos', compact('Encuesta', 'Ciudades', 'Edades', 'NSE', 'Sexo', 'ReqCiudades', 'ReqEdades', 'ReqNSE', 'ReqSexo', 'Cont'));
 		}
 
 		return Redirect::route('Inicio')->withErrors('Error Desconocido');
