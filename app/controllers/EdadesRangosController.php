@@ -21,7 +21,7 @@ class EdadesRangosController extends BaseController {
 	 */
 	public function index()
 	{
-		$EdadesRangos = $this->EdadesRango->all();
+		$EdadesRangos = $this->EdadesRango->paginate(10);
 
 		return View::make('EdadesRangos.index', compact('EdadesRangos'));
 	}
@@ -106,7 +106,7 @@ class EdadesRangosController extends BaseController {
 			$EdadesRango = $this->EdadesRango->find($id);
 			$EdadesRango->update($input);
 
-			return Redirect::route('EdadesRangos.show', $id);
+			return Redirect::route('EdadesRangos.index');
 		}
 
 		return Redirect::route('EdadesRangos.edit', $id)
@@ -123,9 +123,20 @@ class EdadesRangosController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		$this->EdadesRango->find($id)->delete();
+		$EdadesRango = $this->EdadesRango->find($id);
+		$EdadesRango->activo = 0;
+		$EdadesRango->save();
 
-		return Redirect::route('EdadesRangos.index');
+		return Redirect::route('EdadesRangos.index')->with('message', 'Rango de Edad Desactivado Correctamente');
+	}
+
+	public function activar($id)
+	{
+		$EdadesRango = $this->EdadesRango->find($id);
+		$EdadesRango->activo = 1;
+		$EdadesRango->save();
+
+		return Redirect::route('EdadesRangos.index')->with('message', 'Rango de Edad Activado Correctamente');
 	}
 
 }

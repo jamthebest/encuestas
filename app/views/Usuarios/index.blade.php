@@ -5,7 +5,7 @@
 <h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span> Usuarios </h2>
 
 <div class="btn-agregar">
-	<a type="button" href="{{ URL::to('Inicio') }}" class="btn btn-primary">
+	<a type="button" href="{{ URL::to('Inicio') }}" class="btn btn-primary pull-right">
 	  <span class="glyphicon glyphicon-home"></span> Inicio
 	</a>
 </div>
@@ -67,7 +67,7 @@
 		</tbody>
 	</table>
 	</div>
-	<div style="margin-left:-12%">{{$Usuarios->links()}}</div>
+	<div class="text-center" style="margin-left:-5%">{{$Usuarios->links()}}</div>
 @else
 	<div class="alert alert-danger">
     <strong>Oh no!</strong> No hay Usuarios Disponibles

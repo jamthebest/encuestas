@@ -21,7 +21,7 @@ class CiudadesController extends BaseController {
 	 */
 	public function index()
 	{
-		$Ciudades = $this->Ciudad->all();
+		$Ciudades = $this->Ciudad->paginate(10);
 
 		return View::make('Ciudades.index', compact('Ciudades'));
 	}
@@ -106,7 +106,7 @@ class CiudadesController extends BaseController {
 			$Ciudad = $this->Ciudad->find($id);
 			$Ciudad->update($input);
 
-			return Redirect::route('Ciudades.show', $id);
+			return Redirect::route('Ciudades.index');
 		}
 
 		return Redirect::route('Ciudades.edit', $id)
@@ -123,9 +123,20 @@ class CiudadesController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		$this->Ciudad->find($id)->delete();
+		$Ciudad = $this->Ciudad->find($id);
+		$Ciudad->activo = 0;
+		$Ciudad->save();
 
-		return Redirect::route('Ciudades.index');
+		return Redirect::route('Ciudades.index')->with('message', 'Ciudad Desactivada Correctamente');
+	}
+
+	public function activar($id)
+	{
+		$Ciudad = $this->Ciudad->find($id);
+		$Ciudad->activo = 1;
+		$Ciudad->save();
+
+		return Redirect::route('Ciudades.index')->with('message', 'Ciudad Activada Correctamente');
 	}
 
 }

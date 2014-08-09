@@ -7,8 +7,8 @@ class EdadesRango extends Eloquent {
 
 	public static $rules = array(
 		'id' => '',
-		'edad_inicio' => 'required',
-		'edad_final' => 'required',
+		'edad_inicio' => 'required|integer',
+		'edad_final' => 'required|integer',
 		'activo' => 'required'
 	);
 }

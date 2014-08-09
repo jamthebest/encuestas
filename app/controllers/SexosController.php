@@ -21,7 +21,7 @@ class SexosController extends BaseController {
 	 */
 	public function index()
 	{
-		$Sexos = $this->Sexo->all();
+		$Sexos = $this->Sexo->paginate(10);
 
 		return View::make('Sexos.index', compact('Sexos'));
 	}
@@ -106,7 +106,7 @@ class SexosController extends BaseController {
 			$Sexo = $this->Sexo->find($id);
 			$Sexo->update($input);
 
-			return Redirect::route('Sexos.show', $id);
+			return Redirect::route('Sexos.index');
 		}
 
 		return Redirect::route('Sexos.edit', $id)
@@ -123,9 +123,20 @@ class SexosController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		$this->Sexo->find($id)->delete();
+		$Sexo = $this->Sexo->find($id);
+		$Sexo->activo = 0;
+		$Sexo->save();
 
-		return Redirect::route('Sexos.index');
+		return Redirect::route('Sexos.index')->with('message', 'Sexo Desactivado Correctamente');
+	}
+
+	public function activar($id)
+	{
+		$Sexo = $this->Sexo->find($id);
+		$Sexo->activo = 1;
+		$Sexo->save();
+
+		return Redirect::route('Sexos.index')->with('message', 'Sexo Activado Correctamente');
 	}
 
 }

@@ -21,7 +21,7 @@ class NivelSocioEconomicosController extends BaseController {
 	 */
 	public function index()
 	{
-		$NivelSocioEconomicos = $this->NivelSocioEconomico->all();
+		$NivelSocioEconomicos = $this->NivelSocioEconomico->paginate(10);
 
 		return View::make('NivelSocioEconomicos.index', compact('NivelSocioEconomicos'));
 	}
@@ -106,7 +106,7 @@ class NivelSocioEconomicosController extends BaseController {
 			$NivelSocioEconomico = $this->NivelSocioEconomico->find($id);
 			$NivelSocioEconomico->update($input);
 
-			return Redirect::route('NivelSocioEconomicos.show', $id);
+			return Redirect::route('NivelSocioEconomicos.index');
 		}
 
 		return Redirect::route('NivelSocioEconomicos.edit', $id)
@@ -123,9 +123,20 @@ class NivelSocioEconomicosController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		$this->NivelSocioEconomico->find($id)->delete();
+		$NivelSocioEconomico = $this->NivelSocioEconomico->find($id);
+		$NivelSocioEconomico->activo = 0;
+		$NivelSocioEconomico->save();
 
-		return Redirect::route('NivelSocioEconomicos.index');
+		return Redirect::route('NivelSocioEconomicos.index')->with('message', 'Nivel Socio Económico Desactivado Correctamente');
+	}
+
+	public function activar($id)
+	{
+		$NivelSocioEconomico = $this->NivelSocioEconomico->find($id);
+		$NivelSocioEconomico->activo = 1;
+		$NivelSocioEconomico->save();
+
+		return Redirect::route('NivelSocioEconomicos.index')->with('message', 'Nivel Socio Económico Activado Correctamente');
 	}
 
 }

@@ -68,7 +68,7 @@
         {{ Form::submit('Desactivar', array('class' => 'btn btn-danger', 'style'=>'width:160px; height:160px')) }}
       {{ Form::close() }}
     @else
-      {{ Form::open(array('method' => 'POST', 'route' => array('Encuestas.activar', $Encuesta->id), 'class' => 'col-md-3 center-text', 'style'=>'; margin-top:18%; padding-top: 2%')) }}
+      {{ Form::open(array('method' => 'POST', 'route' => array('Encuestas.activar', $Encuesta->id), 'class' => 'col-md-3 center-text', 'style'=>'; margin-top:20%; padding-top: 2%')) }}
         {{ Form::submit('Activar', array('class' => 'btn btn-success', 'style'=>'width:160px; height:160px;')) }}
       {{ Form::close() }}
     @endif

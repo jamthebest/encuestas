@@ -75,6 +75,8 @@ Route::group(array('prefix' => 'Encuestas', 'before' => 'auth'), function(){
 
 });
 
+Route::get('Configuracion', ['as' => 'Configuracion', 'uses' =>'AdminController@Configuracion', 'before' => 'auth']);
+
 Route::resource('Encuestas', 'EncuestasController');
 Route::resource('Usuarios', 'UsuariosController');
 
@@ -90,12 +92,19 @@ Route::get('Resultados/{id}', ['as' => 'Encuestas.Resultado', 'uses' =>'Encuesta
 Route::get('VerResultados/{id}', ['as' => 'Admin.Resultado', 'uses' =>'AdminController@resultado', 'before' => 'auth']);
 
 Route::resource('Precios', 'PreciosController');
+Route::post('Precios/Activar/{id}', ['as' => 'Precios.activar', 'uses' =>'PreciosController@activar', 'before' => 'auth']);
 
 Route::resource('Ciudades', 'CiudadesController');
+Route::post('Ciudades/Activar/{id}', ['as' => 'Ciudades.activar', 'uses' =>'CiudadesController@activar', 'before' => 'auth']);
 
 Route::resource('NivelSocioEconomicos', 'NivelSocioEconomicosController');
+Route::post('NSE/Activar/{id}', ['as' => 'NivelSocioEconomicos.activar', 'uses' =>'NivelSocioEconomicosController@activar', 'before' => 'auth']);
 
 Route::resource('EdadesRangos', 'EdadesrangosController');
+Route::post('EdadRango/Activar/{id}', ['as' => 'EdadesRangos.activar', 'uses' =>'EdadesRangosController@activar', 'before' => 'auth']);
+
+Route::resource('Sexos', 'SexosController');
+Route::post('Sexo/Activar/{id}', ['as' => 'Sexos.activar', 'uses' =>'SexosController@activar', 'before' => 'auth']);
 
 Route::resource('RequerimientoCiudad', 'RequerimientociudadsController');
 	
@@ -104,5 +113,3 @@ Route::resource('RequerimientoEdad', 'RequerimientoedadsController');
 Route::resource('RequerimientoNse', 'RequerimientonsesController');
 
 Route::resource('RequerimientoSexo', 'RequerimientosexosController');
-
-Route::resource('sexos', 'SexosController');

@@ -503,4 +503,9 @@ class AdminController extends BaseController {
 		return Redirect::route('Configurar', $id)->withErrors('Error al Asignar Promopuntos!');
 	}
 
+	public function Configuracion()
+	{
+		return View::make('Admin.Configuracion');
+	}
+
 }

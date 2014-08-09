@@ -21,7 +21,7 @@ class PreciosController extends BaseController {
 	 */
 	public function index()
 	{
-		$Precios = $this->Precio->all();
+		$Precios = $this->Precio->paginate(10);
 
 		return View::make('Precios.index', compact('Precios'));
 	}
@@ -106,7 +106,7 @@ class PreciosController extends BaseController {
 			$Precio = $this->Precio->find($id);
 			$Precio->update($input);
 
-			return Redirect::route('Precios.show', $id);
+			return Redirect::route('Precios.index');
 		}
 
 		return Redirect::route('Precios.edit', $id)
@@ -123,9 +123,20 @@ class PreciosController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		$this->Precio->find($id)->delete();
+		$Precio = $this->Precio->find($id);
+		$Precio->activo = 0;
+		$Precio->save();
 
-		return Redirect::route('Precios.index');
+		return Redirect::route('Precios.index')->with('message', 'Precio Desactivado Correctamente');
+	}
+
+	public function activar($id)
+	{
+		$Precio = $this->Precio->find($id);
+		$Precio->activo = 1;
+		$Precio->save();
+
+		return Redirect::route('Precios.index')->with('message', 'Precio Activado Correctamente');
 	}
 
 }

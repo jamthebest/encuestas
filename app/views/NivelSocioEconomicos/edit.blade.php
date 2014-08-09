@@ -2,45 +2,62 @@
 
 @section('main')
 
-<h1>Edit NivelSocioEconomico</h1>
-{{ Form::model($NivelSocioEconomico, array('method' => 'PATCH', 'route' => array('NivelSocioEconomicos.update', $NivelSocioEconomico->id))) }}
-	<ul>
-        <li>
-            {{ Form::label('id', 'Id:') }}
-            {{ Form::text('id') }}
-        </li>
-
-        <li>
-            {{ Form::label('codigo', 'Codigo:') }}
-            {{ Form::text('codigo') }}
-        </li>
-
-        <li>
-            {{ Form::label('nombre', 'Nombre:') }}
-            {{ Form::text('nombre') }}
-        </li>
-
-        <li>
-            {{ Form::label('descripcion', 'Descripcion:') }}
-            {{ Form::text('descripcion') }}
-        </li>
-
-        <li>
-            {{ Form::label('activo', 'Activo:') }}
-            {{ Form::text('activo') }}
-        </li>
-
-		<li>
-			{{ Form::submit('Update', array('class' => 'btn btn-info')) }}
-			{{ link_to_route('NivelSocioEconomicos.show', 'Cancel', $NivelSocioEconomico->id, array('class' => 'btn')) }}
-		</li>
-	</ul>
-{{ Form::close() }}
+<div class="page-header clearfix">
+    <h3 class="pull-left">Niveles Socio Económicos <small> &gt; Editar Nivel Socio Económico</small></h3>
+    <div class="pull-right">
+        <a href="{{{ URL::previous() }}}" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
+    </div>
+</div>
 
 @if ($errors->any())
-	<ul>
-		{{ implode('', $errors->all('<li class="error">:message</li>')) }}
-	</ul>
+  <div class="alert alert-danger fade in">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    @if($errors->count() > 1)
+      <h4>Oh no! Se encontraron errores!</h4>
+    @else
+      <h4>Oh no! Se encontró un error!</h4>
+    @endif
+    <ul>
+      {{ implode('', $errors->all('<li class="error">:message</li>')) }}
+    </ul>  
+  </div>
+@else
+  @if (Session::has('message'))
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      {{ Session::get('message') }}
+    </div>
+  @endif
 @endif
+
+{{ Form::model($NivelSocioEconomico, array('method' => 'PATCH', 'route' => array('NivelSocioEconomicos.update', $NivelSocioEconomico->id), 'class' => "form-horizontal" , 'role' => 'form')) }}
+	<div class="form-group">
+    {{ Form::label('codigo', 'Código: *', array('class' => 'col-md-2 control-label')) }}
+      <div class="col-md-5">
+          {{ Form::text('codigo', null, array('class' => 'form-control', 'id' => 'codigo', 'placeholder'=>'Código del Nivel Socio Económico', 'autofocus')) }}
+      </div>
+    </div>
+    <div class="form-group">
+    {{ Form::label('nombre', 'Nombre: *', array('class' => 'col-md-2 control-label')) }}
+      <div class="col-md-5">
+          {{ Form::text('nombre', null, array('class' => 'form-control', 'id' => 'nombre', 'placeholder'=>'Nombre a mostrar del Nivel Socio Económico')) }}
+      </div>
+    </div>
+    <div class="form-group">
+    {{ Form::label('descripcion', 'Descripción:', array('class' => 'col-md-2 control-label')) }}
+      <div class="col-md-5">
+          {{ Form::textarea('descripcion', null, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder'=>'Descripción del Nivel Socio Económico', 'rows' => '3')) }}
+      </div>
+    </div>
+    {{ Form::hidden('activo', 1) }}
+    <div class="form-group" style="margin-top:5%;">
+        <div class="col-md-2 col-md-offset-2">
+            {{ Form::submit('Aceptar', array('class' => 'btn btn-primary')) }}
+        </div>
+        <div class="col-md-3">
+            {{ link_to_route('NivelSocioEconomicos.index', 'Cancelar', null, array('class' => 'btn btn-danger')) }}
+        </div>
+    </div>
+{{ Form::close() }}
 
 @stop
