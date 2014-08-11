@@ -38,7 +38,7 @@ class EncuestasController extends BaseController {
 	 */
 	public function create()
 	{
-		$precios = Precio::all();
+		$precios = Precio::where('activo', 1)->get();
 		return View::make('Encuestas.create', compact('precios'));
 	}
 
@@ -338,5 +338,12 @@ class EncuestasController extends BaseController {
 		}
 		return Redirect::to('Login')->with('message','Debe Autenticarse Primero!');
 	}
+
+	public function Configurar($id)
+	{
+		$encuesta = Encuesta::find($id);
+		return View::make('Encuestas.configurar', compact('encuesta'));
+	}
+
 
 }

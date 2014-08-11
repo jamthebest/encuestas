@@ -12,8 +12,8 @@
 <div class="row" style="margin-top:15%;">
 	<div class="col-md-12 text-center"><img src="images/image.png" width="400"></div>
 	<div class="col-md-12 text-left" style="margin-top:2%;">
-		<img src="images/slogan.gif">
-		<!--<h2>El poder instantaneo del conocimiento del consumidor</h2>-->
+		<!--<img src="images/slogan.gif">-->
+		<h2 class="text-center" style="color:blue;">The power of instant consumer knowledge</h2>
 	</div>
 </div>
 

@@ -110,12 +110,6 @@
 @endif
 
 
-@if(!($ReqCiudades->count() || $ReqEdades->count() || $ReqNSE->count() || $ReqSexo->count()))
-	<div class="alert alert-danger">
-		<strong>Oh no!</strong> No hay Usuarios Disponibles
-	</div>
-@endif
-
 <div class="form-group col-md-12 text-center">
   <div class="col-md-4 col-md-offset-4">
   	@if(Pregunta::where('encuesta', $Encuesta->id)->get())

@@ -14,10 +14,10 @@
 	<div class="col-md-6" style="margin-top:2%;">
 		
 		<h2 style="font-family: 'palatino linotype', palatino, serif;font-size: 30px;text-align: justify;color:#0B614B">
-		Esta es una página con la cual puede realizar encuastas a un público específico y obtener
+		Esta es una página con la cual puede realizar encuestas a un público específico y obtener
 		estadísticas para su negocio<br><br>
 		Info Factory le brinda la oportunidad de poder efectuar sus investigaciones de mercado a través
-		de una red de panelisatas que contestarán sus preguntas.</h2>
+		de una red de panelistas que contestarán sus preguntas.</h2>
 	</div>
 </div>
 

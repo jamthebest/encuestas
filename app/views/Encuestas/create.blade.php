@@ -72,9 +72,9 @@
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th>N° Preguntas</th>
-            <th>N° Panelistas</th>
-            <th>Precio</th>
+            <th>N° Máximo de Preguntas</th>
+            <th>N° Máximo de Panelistas</th>
+            <th>Precio por Panelista</th>
           </tr>
         </thead>
 
@@ -83,7 +83,7 @@
             <tr>
               <td>{{{ $precio->preguntas }}}</td>
               <td>{{{ $precio->panelistas }}}</td>
-              <td>Lps. {{{ $precio->precio }}}</td>
+              <td>$ {{{ $precio->precio }}}</td>
             </tr>
           @endforeach
         </tbody>

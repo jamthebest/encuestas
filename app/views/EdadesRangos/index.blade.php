@@ -43,7 +43,7 @@
 				<th>ID</th>
 				<th>Edad Inicial</th>
 				<th>Edad Final</th>
-				<th>Activo</th>
+				<th>Estado</th>
 			</tr>
 		</thead>
 
