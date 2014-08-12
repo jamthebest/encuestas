@@ -7,8 +7,8 @@ class Precio extends Eloquent {
 
 	public static $rules = array(
 		'id' => '',
-		'preguntas' => 'required|integer',
-		'panelistas' => 'required|integer',
+		'preguntas' => 'required',
+		'panelistas' => 'required',
 		'precio' => 'required|numeric'
 	);
 }

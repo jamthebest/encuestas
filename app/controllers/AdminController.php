@@ -428,10 +428,10 @@ class AdminController extends BaseController {
 			$encuesta = Encuesta::find($id);
 			if ($encuesta) {
 				$preguntas = Pregunta::where('encuesta', $id)->get();
-				if ($preguntas) {
+				if ($preguntas->count()) {
 					$preg = $preguntas->lists('id');
 					$opciones = Opcion::whereIn('pregunta', $preg)->get();
-					if ($opciones) {
+					if ($opciones->count()) {
 						$resultados = array();
 						$texto = array();
 						$num = 0;
@@ -483,6 +483,7 @@ class AdminController extends BaseController {
 						}
 						return View::make('Admin.resultado', compact('resultados', 'texto', 'preguntas', 'opciones', 'encuesta', 'cont'));
 					}
+					return Redirect::route('Resultados.todos')->with('message', 'Una pregunta de la Encuesta no tiene ninguna Opción de respuesta');
 				}
 				return Redirect::route('Resultados.todos')->with('message', 'La Encuesta no tiene Preguntas');
 			}

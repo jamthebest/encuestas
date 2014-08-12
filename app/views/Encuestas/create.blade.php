@@ -72,8 +72,8 @@
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th>N° Máximo de Preguntas</th>
-            <th>N° Máximo de Panelistas</th>
+            <th>N° de Preguntas</th>
+            <th>N° de Panelistas</th>
             <th>Precio por Panelista</th>
           </tr>
         </thead>

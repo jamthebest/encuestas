@@ -34,13 +34,13 @@
 	<div class="form-group">
     {{ Form::label('preguntas', 'Preguntas: *', array('class' => 'col-md-2 control-label')) }}
       <div class="col-md-5">
-          {{ Form::text('preguntas', null, array('class' => 'form-control', 'id' => 'preguntas', 'placeholder'=>'Número máximo de preguntas', 'autofocus')) }}
+          {{ Form::text('preguntas', null, array('class' => 'form-control', 'id' => 'preguntas', 'placeholder'=>'Rango de preguntas', 'autofocus')) }}
       </div>
     </div>
     <div class="form-group">
     {{ Form::label('panelistas', 'Panelistas: *', array('class' => 'col-md-2 control-label')) }}
       <div class="col-md-5">
-          {{ Form::text('panelistas', null, array('class' => 'form-control', 'id' => 'panelistas', 'placeholder'=>'Número máximo de panelistas')) }}
+          {{ Form::text('panelistas', null, array('class' => 'form-control', 'id' => 'panelistas', 'placeholder'=>'Rango de panelistas')) }}
       </div>
     </div>
     <div class="form-group">

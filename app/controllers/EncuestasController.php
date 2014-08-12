@@ -274,10 +274,10 @@ class EncuestasController extends BaseController {
 			if ($encuesta) {
 				if ($encuesta->usuario == Auth::user()->id) {
 					$preguntas = Pregunta::where('encuesta', $id)->get();
-					if ($preguntas) {
+					if ($preguntas->count()) {
 						$preg = $preguntas->lists('id');
 						$opciones = Opcion::whereIn('pregunta', $preg)->get();
-						if ($opciones) {
+						if ($opciones->count()) {
 							$resultados = array();
 							$texto = array();
 							$num = 0;
@@ -330,6 +330,7 @@ class EncuestasController extends BaseController {
 							//return $texto;
 							return View::make('Encuestas.resultado', compact('resultados', 'texto', 'preguntas', 'opciones', 'encuesta', 'cont'));
 						}
+						return Redirect::route('Resultados')->with('message', 'Una pregunta de la Encuesta no tiene ninguna Opción de respuesta');
 					}
 					return Redirect::route('Resultados')->with('message', 'La Encuesta no tiene Preguntas');
 				}
