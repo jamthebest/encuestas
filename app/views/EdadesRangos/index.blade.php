@@ -43,6 +43,7 @@
 				<th>ID</th>
 				<th>Edad Inicial</th>
 				<th>Edad Final</th>
+				<th>Porcentaje</th>
 				<th>Estado</th>
 			</tr>
 		</thead>
@@ -53,6 +54,7 @@
 					<td>{{{ $EdadesRango->id }}}</td>
 					<td>{{{ $EdadesRango->edad_inicio }}}</td>
 					<td>{{{ $EdadesRango->edad_final }}}</td>
+					<td>{{{ $EdadesRango->porcentaje }}}</td>
 					<td>{{{ $EdadesRango->activo == 1 ? 'Activo' : 'Inactivo' }}}</td>
                     <td>{{ link_to_route('EdadesRangos.edit', 'Editar', array($EdadesRango->id), array('class' => 'btn btn-info')) }}</td>
                     <td>

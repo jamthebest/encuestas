@@ -9,6 +9,7 @@ class EdadesRango extends Eloquent {
 		'id' => '',
 		'edad_inicio' => 'required|integer',
 		'edad_final' => 'required|integer',
+		'porcentaje' => 'required|numeric',
 		'activo' => 'required'
 	);
 }

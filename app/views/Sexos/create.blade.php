@@ -43,6 +43,12 @@
           {{ Form::textarea('descripcion', null, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder'=>'Descripción del tipo de sexo', 'rows' => '3')) }}
       </div>
     </div>
+    <div class="form-group">
+    {{ Form::label('porcentaje', 'Porcentaje Poblacional: *', array('class' => 'col-md-2 control-label')) }}
+      <div class="col-md-5">
+          {{ Form::text('porcentaje', null, array('class' => 'form-control', 'id' => 'porcentaje', 'placeholder'=>'Porcentaje de personas de este sexo que miran TV')) }}
+      </div>
+    </div>
     {{ Form::hidden('activo', 1) }}
     <div class="form-group" style="margin-top:5%;">
         <div class="col-md-2 col-md-offset-2">

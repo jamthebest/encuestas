@@ -44,6 +44,7 @@
 				<th>Codigo</th>
 				<th>Nombre</th>
 				<th>Descripción</th>
+				<th>Porcentaje</th>
 				<th>Estado</th>
 			</tr>
 		</thead>
@@ -55,6 +56,7 @@
 					<td>{{{ $NivelSocioEconomico->codigo }}}</td>
 					<td>{{{ $NivelSocioEconomico->nombre }}}</td>
 					<td>{{{ $NivelSocioEconomico->descripcion }}}</td>
+					<td>{{{ $NivelSocioEconomico->porcentaje }}}</td>
 					<td>{{{ $NivelSocioEconomico->activo == 1 ? 'Activo' : 'Inactivo' }}}</td>
                     <td>{{ link_to_route('NivelSocioEconomicos.edit', 'Editar', array($NivelSocioEconomico->id), array('class' => 'btn btn-info')) }}</td>
                     <td>

@@ -43,6 +43,7 @@
 				<th>Id</th>
 				<th>Nombre</th>
 				<th>Descripción</th>
+				<th>Porcentaje</th>
 				<th>Activo</th>
 			</tr>
 		</thead>
@@ -53,6 +54,7 @@
 					<td>{{{ $Sexo->id }}}</td>
 					<td>{{{ $Sexo->nombre }}}</td>
 					<td>{{{ $Sexo->descripcion }}}</td>
+					<td>{{{ $Sexo->porcentaje }}}</td>
 					<td>{{{ $Sexo->activo == 1 ? 'Activo' : 'Inactivo' }}}</td>
                     <td>{{ link_to_route('Sexos.edit', 'Editar', array($Sexo->id), array('class' => 'btn btn-info')) }}</td>
                     <td>

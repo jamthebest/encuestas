@@ -44,7 +44,12 @@
       </div>
     </div>
     <div class="form-group">
-    {{ Form::hidden('activo', 1) }}
+    {{ Form::label('porcentaje', 'Porcentaje Poblacional: *', array('class' => 'col-md-2 control-label')) }}
+      <div class="col-md-5">
+          {{ Form::text('porcentaje', null, array('class' => 'form-control', 'id' => 'porcentaje', 'placeholder'=>'Porcentaje de personas de esta edad que miran TV')) }}
+      </div>
+    </div>
+    {{ Form::hidden('activo', null) }}
     <div class="form-group" style="margin-top:5%;">
         <div class="col-md-2 col-md-offset-2">
             {{ Form::submit('Aceptar', array('class' => 'btn btn-primary')) }}

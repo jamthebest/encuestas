@@ -109,6 +109,71 @@
 	</div>
 @endif
 
+<div class="text-center" style="margin-top:5%;margin-bottom:5%">
+	<h3>Estadísticas de Audiencia de TV Honduras</h3>
+	<div class="col-md-4">
+		<table class="table table-condensed" border="2" align="center" bordercolor="#000000" bgcolor="#0099CC">
+			<thead>
+				<tr align="center" bgcolor="#0099CC">
+					<th>Edades</td>
+					<th bgcolor="#66CC99">Porcentaje</th>
+				</tr>
+			</thead>
+				@foreach ($PromEdad as $edad)
+					<tr>
+						<td bgcolor="#66CC99"> {{{ $edad->edad_inicio }}} - {{{ $edad->edad_final }}} </td>
+						<td bgcolor="#0099CC"> {{{ round(($edad->porcentaje / $contEdad) * 10000) / 100 }}} % </td>
+					</tr>
+				@endforeach
+			<tbody>
+				
+			</tbody>
+		</table>
+	</div>
+
+	
+	<div class="col-md-4">
+		<table class="table table-condensed" border="2" align="center" bordercolor="#000000" bgcolor="#0099CC">
+			<thead>
+				<tr align="center" bgcolor="#0099CC">
+					<th>NSE</th>
+					<th bgcolor="#66CC99">Nombre</th>
+					<th>Porcentaje</th>
+				</tr>
+			</thead>
+				@foreach ($PromNSE as $nse)
+					<tr>
+						<td bgcolor="#66CC99"> {{{ $nse->codigo }}} </td>
+						<td bgcolor="#0099CC"> {{{ $nse->nombre }}} </td>
+						<td bgcolor="#66CC99"> {{{ round(($nse->porcentaje / $contNSE) * 10000) / 100 }}} % </td>
+					</tr>
+				@endforeach
+			<tbody>
+				
+			</tbody>
+		</table>
+	</div>
+
+	<div class="col-md-4">
+		<table class="table table-condensed" border="2" align="center" bordercolor="#000000" bgcolor="#0099CC">
+			<thead>
+				<tr align="center" bgcolor="#0099CC">
+					<th>Sexo</th>
+					<th bgcolor="#66CC99">Porcentaje</th>
+				</tr>
+			</thead>
+				@foreach ($PromSexo as $sexo)
+					<tr>
+						<td bgcolor="#66CC99"> {{{ $sexo->nombre }}} </td>
+						<td bgcolor="#0099CC"> {{{ round(($sexo->porcentaje / $contSexo) * 10000) / 100 }}} % </td>
+					</tr>
+				@endforeach
+			<tbody>
+				
+			</tbody>
+		</table>
+	</div>
+</div>
 
 <div class="form-group col-md-12 text-center">
   <div class="col-md-4 col-md-offset-4">

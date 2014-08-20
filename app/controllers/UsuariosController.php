@@ -84,34 +84,66 @@ class UsuariosController extends BaseController {
 			$ReqSexo = RequerimientoSexo::where('encuesta', $id)->get();
 			$texto = array();
 			//return $ReqCiudades;
+			
 			if ($ReqCiudades->count()) {
 				foreach ($ReqCiudades as $req) {
 					$texto = $texto + array($Cont => array($req->id, 'Las Personas que vivan en esta Ciudad: ' . $Ciudades[$req->ciudad - 1]->nombre . '.', 'Ciudad'));
 					$Cont += 1;
 				}
-			}
+				//$x = $ReqCiudades->lists('ciudad');
+				//$PromCiudad = Ciudad::whereIn('id', $x)->get();
+			}//else{
+				//$PromCiudad = $Ciudades;
+			//}return $PromCiudad;
+
 			if ($ReqEdades->count()) {
 				foreach ($ReqEdades as $req) {
 					$texto = $texto + array($Cont => array($req->id, 'Las Personas con edad entre ' . $Edades[$req->rango - 1]->edad_inicio . ' y ' . $Edades[$req->rango - 1]->edad_final . ' años.', 'Edad'));
 					$Cont += 1;
 				}
+				$x = $ReqEdades->lists('rango');
+				$PromEdad = EdadesRango::whereIn('id', $x)->get();
+			}else{
+				$PromEdad = $Edades;
 			}
+
 			if ($ReqNSE->count()) {
 				foreach ($ReqNSE as $req) {
 					$texto = $texto + array($Cont => array($req->id, 'Las Personas que tengan un nivel socio económico ' . $NSE[$req->nse - 1]->nombre, 'NSE'));
 					$Cont += 1;
 				}
+				$x = $ReqNSE->lists('nse');
+				$PromNSE = NivelSocioEconomico::whereIn('id', $x)->get();
+			}else{
+				$PromNSE = $NSE;
 			}
+
 			if ($ReqSexo->count()) {
 				foreach ($ReqSexo as $req) {
 					$texto = $texto + array($Cont => array($req->id, 'Las Personas que sean del sexo: ' . $Sexo[$req->sexo - 1]->nombre, 'Sexo'));
 					$Cont += 1;
 				}
+				$x = $ReqSexo->lists('sexo');
+				$PromSexo = Sexo::whereIn('id', $x)->get();
+			}else{
+				$PromSexo = $Sexo;
 			}
-			//$texto = array();
-			//return $texto[0][0];
 
-			return View::make('Usuarios.requerimientos', compact('Encuesta', 'Ciudades', 'Edades', 'NSE', 'Sexo', 'ReqCiudades', 'ReqEdades', 'ReqNSE', 'ReqSexo', 'Cont', 'texto'));
+			$contNSE = 0;
+			$contSexo = 0;
+			$contEdad = 0;
+			foreach ($PromNSE as $prom) {
+				$contNSE = $contNSE + $prom->porcentaje;
+			}
+			foreach ($PromSexo as $prom) {
+				$contSexo = $contSexo + $prom->porcentaje;
+			}
+			foreach ($PromEdad as $prom) {
+				$contEdad = $contEdad + $prom->porcentaje;
+			}
+			//return $PromEdad;
+
+			return View::make('Usuarios.requerimientos', compact('Encuesta', 'Ciudades', 'Edades', 'NSE', 'Sexo', 'ReqCiudades', 'ReqEdades', 'ReqNSE', 'ReqSexo', 'Cont', 'texto', 'PromNSE', 'PromSexo', 'PromEdad', 'contNSE', 'contEdad', 'contSexo'));
 		}
 
 		return Redirect::route('Inicio')->withErrors('Error Desconocido');

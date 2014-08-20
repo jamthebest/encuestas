@@ -9,6 +9,7 @@ class Sexo extends Eloquent {
 		'id' => '',
 		'nombre' => 'required',
 		'descripcion' => '',
+		'porcentaje' => 'required|numeric',
 		'activo' => 'required'
 	);
 }

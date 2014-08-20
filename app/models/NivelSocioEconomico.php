@@ -10,6 +10,7 @@ class NivelSocioEconomico extends Eloquent {
 		'codigo' => 'required',
 		'nombre' => 'required',
 		'descripcion' => '',
+		'porcentaje' => 'required|numeric',
 		'activo' => 'required'
 	);
 }
