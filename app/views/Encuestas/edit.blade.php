@@ -32,34 +32,40 @@
 
 {{ Form::model($encuesta, array('method' => 'PATCH', 'route' => array('Encuestas.update', $encuesta->id), 'class' => 'form-horizontal', 'role' => 'form')) }}
 	<div class="form-group">
-    {{ Form::label('nombre', 'Nombre: *', array('class' => 'col-md-2 control-label')) }}
-      <div class="col-md-4">
-          {{ Form::text('nombre', $encuesta->nombre, array('class' => 'form-control', 'id' => 'nombre', 'placeholder'=>'Nombre de la Encuesta', 'maxlength'=>'128')) }}
+  {{ Form::label('nombre', 'Nombre: *', array('class' => 'col-md-2 control-label')) }}
+    <div class="col-md-4">
+        {{ Form::text('nombre', $encuesta->nombre, array('class' => 'form-control', 'id' => 'nombre', 'placeholder'=>'Nombre de la Encuesta', 'maxlength'=>'128')) }}
+    </div>
+  </div>
+  <div class="form-group">
+    {{ Form::label('panelistas', 'N° Panelistas: *', array('class' => 'col-md-2 control-label')) }}
+    <div class="col-md-5">
+      {{ Form::text('panelistas', null, array('class' => 'form-control', 'id' => 'panelistas', 'placeholder'=>'Cantidad de Personas a Responder', 'maxlength'=>'10')) }}
+    </div>
+  </div>
+  <div class="form-group">
+    {{ Form::label('descripcion', 'Descripción:', array('class' => 'col-md-2 control-label')) }}
+    <div class="col-md-5">
+      {{ Form::textarea('descripcion',$encuesta->descripcion, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder' => 'Descripción que se mostrará al inicio de la Encuesta', 'rows' => '3', 'maxlength'=>'2048')) }}
+    </div>
+  </div>
+  <div class="form-group">
+    {{ Form::label('despedida', 'Despedida:', array('class' => 'col-md-2 control-label')) }}
+    <div class="col-md-5">
+      {{ Form::textarea('despedida',$encuesta->despedida, array('class' => 'form-control', 'id' => 'despedida', 'placeholder' => 'Despedida que se mostrará al finalizar de la Encuesta', 'rows' => '3', 'maxlength'=>'2048')) }}
+    </div>
+  </div>
+  {{ Form::hidden('usuario', Auth::user()->id) }}
+  <div class="form-group" style="margin-top:5%;">
+      <div class="col-md-3 col-md-offset-2">
+          {{ Form::submit('Aceptar', array('class' => 'btn btn-primary')) }}
       </div>
-    </div>
-    <div class="form-group">
-      {{ Form::label('descripcion', 'Descripción:', array('class' => 'col-md-2 control-label')) }}
-      <div class="col-md-5">
-        {{ Form::textarea('descripcion',$encuesta->descripcion, array('class' => 'form-control', 'id' => 'descripcion', 'placeholder' => 'Descripción que se mostrará al inicio de la Encuesta', 'rows' => '3', 'maxlength'=>'2048')) }}
+      <div class="col-md-3">
+          <a type="button" href="{{ URL::route('Encuestas.index') }}" class="btn btn-danger">
+              Cancelar
+          </a>
       </div>
-    </div>
-    <div class="form-group">
-      {{ Form::label('despedida', 'Despedida:', array('class' => 'col-md-2 control-label')) }}
-      <div class="col-md-5">
-        {{ Form::textarea('despedida',$encuesta->despedida, array('class' => 'form-control', 'id' => 'despedida', 'placeholder' => 'Despedida que se mostrará al finalizar de la Encuesta', 'rows' => '3', 'maxlength'=>'2048')) }}
-      </div>
-    </div>
-    {{ Form::hidden('usuario', '1') }}
-    <div class="form-group" style="margin-top:5%;">
-        <div class="col-md-3 col-md-offset-2">
-            {{ Form::submit('Aceptar', array('class' => 'btn btn-primary')) }}
-        </div>
-        <div class="col-md-3">
-            <a type="button" href="{{ URL::route('Encuestas.index') }}" class="btn btn-danger">
-                Cancelar
-            </a>
-        </div>
-    </div>
+  </div>
 {{ Form::close() }}
 
 @stop

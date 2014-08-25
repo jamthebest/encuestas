@@ -49,7 +49,7 @@ class UsuariosController extends BaseController {
 
 			$username = $input['username'];
 			$password = $input['password'];
-			if (Auth::attempt(['username' => $username, 'password' => $password]))
+			if (Auth::attempt(array('username' => $username, 'password' => $password)))
 			{
 				return Redirect::to('Inicio')
 					->with('message', 'Usuario Creado Exitosamente!');

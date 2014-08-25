@@ -70,7 +70,7 @@
 			@endforeach
 		</tbody>
 	</table>
-	<div style="margin-left:-8%">{{$Ciudades->links()}}</div>
+	<div class="text-center" style="margin-left:-8%">{{$Ciudades->links()}}</div>
 @else
 	<div class="alert alert-danger">
 	  <strong>Oh no!</strong> No hay Ciudades Disponibles

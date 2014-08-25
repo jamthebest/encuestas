@@ -14,7 +14,7 @@ class AuthController extends BaseController {
 		$password = Input::get('password');
 		
 		// Realizamos la autenticación
-		if (Auth::attempt(['username' => $user, 'password' => $password]))
+		if (Auth::attempt(array('username' => $user, 'password' => $password)))
 		{
 			// Aquí también pueden devolver una llamada a otro controlador o
 			// devolver una vista

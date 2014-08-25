@@ -177,7 +177,7 @@
 
 <div class="form-group col-md-12 text-center">
   <div class="col-md-4 col-md-offset-4">
-  	@if(Pregunta::where('encuesta', $Encuesta->id)->get())
+  	@if(Pregunta::where('encuesta', $Encuesta->id)->count())
   	  <a type="button" href="{{ URL::route('Encuestas.index') }}" class="btn btn-primary">
 	    Terminar
 	  </a>
