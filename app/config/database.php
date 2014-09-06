@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => isset($_SERVER['DB1_HOST']) ? 'tunnel.pagodabox.com:3306' : 'localhost',
-			'database'  => isset($_SERVER['DB1_NAME']) ? 'reda' : 'encuestas',
-			'username'  => isset($_SERVER['DB1_USER']) ? 'aurelia' : 'root',
-			'password'  => isset($_SERVER['DB1_PASS']) ? 'AfxkqQbu' : 'root',
+			'host'      => 'localhost',
+			'database'  => 'infofact_encuestas',
+			'username'  => 'infofact',
+			'password'  => 'Inf66Fact#',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

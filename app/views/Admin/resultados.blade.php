@@ -26,7 +26,7 @@
 @endif
 
 @if ($encuestas->count())
-	<table class="table table-striped table-bordered">
+	<table class="table table-striped table-bordered col-md-12">
 		<thead>
 			<tr>
 				<th>Nombre</th>

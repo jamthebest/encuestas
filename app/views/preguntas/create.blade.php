@@ -91,13 +91,13 @@
                   </div>
                   <div class="radio">
                     <label>
-                      <input type="radio" value="option2">
+                      <input type="radio" value="option3">
                       Opción 3
                     </label>
                   </div>
                   <div class="radio">
                     <label>
-                      <input type="radio" value="option2">
+                      <input type="radio" value="option4">
                       Opción 4
                     </label>
                   </div>

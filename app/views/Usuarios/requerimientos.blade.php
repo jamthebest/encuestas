@@ -1,26 +1,28 @@
 @extends('layouts.scaffold')
-
+<style type="text/css">
+	#table {color: "#000000"; font-family: vinegar}
+</style>
 @section('main')
 
 <h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span> Requerimientos > <small>{{{$Encuesta->nombre}}}</small> </h2>
 
 <div class="btn-agregar col-md-5 col-md-offset-1">
-	<a type="button" href="{{ URL::route('RequerimientoCiudad.nuevo', $Encuesta->id) }}" class="btn btn-success">
+	<a type="button" href="{{ URL::route('RequerimientoCiudad.nuevo', $Encuesta->id) }}" class="btn btn-danger">
 	  <span class="glyphicon glyphicon-file"></span> Nuevo Requerimiento Ciudad
 	</a>
 </div>
 <div class="btn-agregar col-md-4">
-	<a type="button" href="{{ URL::route('RequerimientoEdad.nuevo', $Encuesta->id) }}" class="btn btn-success">
+	<a type="button" href="{{ URL::route('RequerimientoEdad.nuevo', $Encuesta->id) }}" class="btn btn-danger">
 	  <span class="glyphicon glyphicon-file"></span> Nuevo Requerimiento Edad
 	</a>
 </div>
 <div class="btn-agregar col-md-5 col-md-offset-1">
-	<a type="button" href="{{ URL::route('RequerimientoNse.nuevo', $Encuesta->id) }}" class="btn btn-success">
+	<a type="button" href="{{ URL::route('RequerimientoNse.nuevo', $Encuesta->id) }}" class="btn btn-danger">
 	  <span class="glyphicon glyphicon-file"></span> Nuevo Requerimiento Nivel Socio Económico
 	</a>
 </div>
 <div class="btn-agregar col-md-3">
-	<a type="button" href="{{ URL::route('RequerimientoSexo.nuevo', $Encuesta->id) }}" class="btn btn-success">
+	<a type="button" href="{{ URL::route('RequerimientoSexo.nuevo', $Encuesta->id) }}" class="btn btn-danger">
 	  <span class="glyphicon glyphicon-file"></span> Nuevo Requerimiento Sexo
 	</a>
 </div>
@@ -49,7 +51,7 @@
 <h4 class="sub-header col-md-12" style="margin-top:4%; margin-bottom:5%"> Esta encuesta podrá ser contestada por los panelistas que cumplan con los siguientes requerimientos: </h4>
 
 @if ($texto)
-	<div class="table-responsive">
+	<div class="table-responsive col-md-12">
 	<table class="table table-condensed">
 		<thead>
 			<tr>
@@ -90,7 +92,7 @@
 	</table>
 	</div>
 @else
-	<div class="table-responsive">
+	<div class="table-responsive col-md-12">
 	<table class="table table-condensed">
 		<thead>
 			<tr>
@@ -109,20 +111,20 @@
 	</div>
 @endif
 
-<div class="text-center" style="margin-top:5%;margin-bottom:5%">
-	<h3>Estadísticas de Audiencia de TV Honduras para esta Encuesta</h3>
+<div class="text-center col-md-12" style="margin-top:5%;margin-bottom:5%">
+	<h3></h3>
 	<div class="col-md-4">
 		<table class="table table-condensed" align="center">
 			<thead>
-				<tr align="center" bgcolor="#0099CC">
-					<th>Edades</td>
-					<th bgcolor="#0099CC">Porcentaje</th>
+				<tr align="center" bgcolor="#ed1c24" style="color: #ffffff; font-family: vinegar">
+					<th >Edades</td>
+					<th bgcolor="#ed1c24">Porcentaje</th>
 				</tr>
 			</thead>
 				@foreach ($PromEdad as $edad)
-					<tr>
-						<td bgcolor="#66CC99"> {{{ $edad->edad_inicio }}} - {{{ $edad->edad_final }}} </td>
-						<td bgcolor="#66CC99"> {{{ round(($edad->porcentaje / $contEdad) * 10000) / 100 }}} % </td>
+					<tr style="font-family: vinegar">
+						<td bgcolor="#bfbfbf" > {{{ $edad->edad_inicio }}} - {{{ $edad->edad_final }}} </td>
+						<td bgcolor="#bfbfbf" > {{{ round(($edad->porcentaje / $contEdad) * 10000) / 100 }}} % </td>
 					</tr>
 				@endforeach
 			<tbody>
@@ -135,17 +137,17 @@
 	<div class="col-md-4">
 		<table class="table table-condensed" align="center">
 			<thead>
-				<tr align="center" bgcolor="#0099CC">
+				<tr align="center" bgcolor="#ed1c24" style="color: #ffffff; font-family: vinegar">
 					<th>NSE</th>
-					<th bgcolor="#0099CC">Nombre</th>
+					<th bgcolor="#ed1c24">Nombre</th>
 					<th>Porcentaje</th>
 				</tr>
 			</thead>
 				@foreach ($PromNSE as $nse)
-					<tr>
-						<td bgcolor="#66CC99"> {{{ $nse->codigo }}} </td>
-						<td bgcolor="#66CC99"> {{{ $nse->nombre }}} </td>
-						<td bgcolor="#66CC99"> {{{ round(($nse->porcentaje / $contNSE) * 10000) / 100 }}} % </td>
+					<tr style="font-family: vinegar">
+						<td bgcolor="#bfbfbf" > {{{ $nse->codigo }}} </td>
+						<td bgcolor="#bfbfbf" > {{{ $nse->nombre }}} </td>
+						<td bgcolor="#bfbfbf" > {{{ round(($nse->porcentaje / $contNSE) * 10000) / 100 }}} % </td>
 					</tr>
 				@endforeach
 			<tbody>
@@ -157,15 +159,15 @@
 	<div class="col-md-4">
 		<table class="table table-condensed" align="center">
 			<thead>
-				<tr align="center" bgcolor="#0099CC">
+				<tr align="center" bgcolor="#ed1c24" style="color: #ffffff; font-family: vinegar">
 					<th>Sexo</th>
-					<th bgcolor="#0099CC">Porcentaje</th>
+					<th bgcolor="#ed1c24">Porcentaje</th>
 				</tr>
 			</thead>
 				@foreach ($PromSexo as $sexo)
-					<tr>
-						<td bgcolor="#66CC99"> {{{ $sexo->nombre }}} </td>
-						<td bgcolor="#66CC99"> {{{ round(($sexo->porcentaje / $contSexo) * 10000) / 100 }}} % </td>
+					<tr style="font-family: vinegar">
+						<td bgcolor="#bfbfbf" > {{{ $sexo->nombre }}} </td>
+						<td bgcolor="#bfbfbf" > {{{ round(($sexo->porcentaje / $contSexo) * 10000) / 100 }}} % </td>
 					</tr>
 				@endforeach
 			<tbody>

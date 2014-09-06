@@ -15,7 +15,7 @@
 	<h4 class="sub-header col-md-4"><span class=""></span><strong>Cantidad de Panelistas:</strong> <h3 style="margin-top:3%"> {{{$Encuesta->panelistas}}} </h3> </h4>
 	<h4 class="sub-header col-md-12"><span class=""></span><strong>Requerimientos de Panelistas:</strong> </h4>
 	@if ($texto)
-		<div class="table-responsive">
+		<div class="table-responsive col-md-12">
 		<table class="table table-condensed table-bordered">
 			<thead>
 				<tr>
@@ -37,7 +37,7 @@
 		</table>
 		</div>
 	@else
-		<div class="table-responsive">
+		<div class="table-responsive col-md-12">
 		<table class="table table-condensed">
 			<thead>
 				<tr>
@@ -78,7 +78,7 @@
 	@endif
 @endif
 
-{{ Form::open(array('route' => array('Asignar.Search', $Encuesta->id))) }}
+{{ Form::open(array('route' => array('Asignar.Search', $Encuesta->id), 'class' => "form-horizontal" , 'role' => 'form')) }}
 	<div class="form-group">
     {{ Form::label('SearchLabel', 'Busqueda: ', array('class' => 'col-md-1 control-label', 'style'=>'margin-top:2%;margin-bottom:2%;')) }}
     <div class="col-md-3" style="margin-top:2%;margin-bottom:2%;">
@@ -104,7 +104,7 @@
 {{ Form::close() }}
 
 @if ($Panelistas)
-{{ Form::open(array('route' => 'AgregarPanelistas.store', 'class' => "form-horizontal", 'role' => 'form')) }}
+{{ Form::open(array('route' => 'AgregarPanelistas.store', 'class' => "form-horizontal", 'role' => 'form', 'style' => 'margin-left:-10%; width:1300px')) }}
 	{{ Form::hidden('Encuesta', $Encuesta->id) }}
 	<table class="table table-striped table-bordered" style="margin-left:-10%;">
 		<thead>

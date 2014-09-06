@@ -29,7 +29,7 @@
     @foreach ($preguntas as $pregunta)
       <div class="form-group">
           <h1 class="col-md-12" style="margin-top:5%;font-family: vinegar, georgia, serif;font-size: 20px;font-weight: bold;text-transform: uppercase;word-spacing: 2pt;color:#D62B2B">¿ {{$pregunta->descripcion}} ?</h1>
-          <div class="table-responsive">
+          <div class="table-responsive col-md-12">
               <table class="table table-striped">
                   <thead>
                       <tr>

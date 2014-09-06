@@ -13,7 +13,7 @@
 <body style="margin-top: 25px">
   <header>
       <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-        <a class="navbar-brand" href="Inicio"><div style="margin-top:-9%;">{{HTML::image('/images/logo.png');}}</div></a>
+        <a class="navbar-brand" href="Inicio"><div style="margin-top:-9%;">{{HTML::image('/images/logo2.png');}}</div></a>
         <ul class="nav navbar-nav navbar-left">
           <li class="dropdown">
             {{link_to('Inicio', 'Inicio', $attributes = array(), $secure = null)}}
