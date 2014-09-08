@@ -1,7 +1,5 @@
 @extends('layouts.scaffold')
-<style type="text/css">
-	#table {color: "#000000"; font-family: vinegar}
-</style>
+
 @section('main')
 
 <h2 class="sub-header"><span class="glyphicon glyphicon-cog"></span> Requerimientos > <small>{{{$Encuesta->nombre}}}</small> </h2>
@@ -118,13 +116,13 @@
 			<thead>
 				<tr align="center" bgcolor="#ed1c24" style="color: #ffffff; font-family: vinegar">
 					<th >Edades</td>
-					<th bgcolor="#ed1c24">Porcentaje</th>
+					<th >Porcentaje</th>
 				</tr>
 			</thead>
 				@foreach ($PromEdad as $edad)
-					<tr style="font-family: vinegar">
-						<td bgcolor="#bfbfbf" > {{{ $edad->edad_inicio }}} - {{{ $edad->edad_final }}} </td>
-						<td bgcolor="#bfbfbf" > {{{ round(($edad->porcentaje / $contEdad) * 10000) / 100 }}} % </td>
+					<tr bgcolor="#bfbfbf" style="font-family: vinegar">
+						<td > {{{ $edad->edad_inicio }}} - {{{ $edad->edad_final }}} </td>
+						<td > {{{ round(($edad->porcentaje / $contEdad) * 10000) / 100 }}} % </td>
 					</tr>
 				@endforeach
 			<tbody>
@@ -139,15 +137,15 @@
 			<thead>
 				<tr align="center" bgcolor="#ed1c24" style="color: #ffffff; font-family: vinegar">
 					<th>NSE</th>
-					<th bgcolor="#ed1c24">Nombre</th>
+					<th>Nombre</th>
 					<th>Porcentaje</th>
 				</tr>
 			</thead>
 				@foreach ($PromNSE as $nse)
-					<tr style="font-family: vinegar">
-						<td bgcolor="#bfbfbf" > {{{ $nse->codigo }}} </td>
-						<td bgcolor="#bfbfbf" > {{{ $nse->nombre }}} </td>
-						<td bgcolor="#bfbfbf" > {{{ round(($nse->porcentaje / $contNSE) * 10000) / 100 }}} % </td>
+					<tr style="font-family: vinegar" bgcolor="#bfbfbf" align="center" >
+						<td > {{{ $nse->codigo }}} </td>
+						<td > {{{ $nse->nombre }}} </td>
+						<td > {{{ round(($nse->porcentaje / $contNSE) * 10000) / 100 }}} % </td>
 					</tr>
 				@endforeach
 			<tbody>
@@ -161,13 +159,13 @@
 			<thead>
 				<tr align="center" bgcolor="#ed1c24" style="color: #ffffff; font-family: vinegar">
 					<th>Sexo</th>
-					<th bgcolor="#ed1c24">Porcentaje</th>
+					<th>Porcentaje</th>
 				</tr>
 			</thead>
 				@foreach ($PromSexo as $sexo)
-					<tr style="font-family: vinegar">
-						<td bgcolor="#bfbfbf" > {{{ $sexo->nombre }}} </td>
-						<td bgcolor="#bfbfbf" > {{{ round(($sexo->porcentaje / $contSexo) * 10000) / 100 }}} % </td>
+					<tr bgcolor="#bfbfbf" style="font-family: vinegar">
+						<td> {{{ $sexo->nombre }}} </td>
+						<td> {{{ round(($sexo->porcentaje / $contSexo) * 10000) / 100 }}} % </td>
 					</tr>
 				@endforeach
 			<tbody>

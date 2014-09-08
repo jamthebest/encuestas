@@ -28,20 +28,20 @@
 @if ($preguntas || $texto)
     @foreach ($preguntas as $pregunta)
       <div class="form-group">
-          <h1 class="col-md-12" style="margin-top:5%;font-family: vinegar, georgia, serif;font-size: 20px;font-weight: bold;text-transform: uppercase;word-spacing: 2pt;color:#D62B2B">¿ {{$pregunta->descripcion}} ?</h1>
+          <h1 class="col-md-12" style="margin-top:5%;font-family: vinegar, georgia, serif;font-size: 16px;font-weight: bold;text-transform: uppercase;word-spacing: 2pt;color:#D62B2B">¿ {{$pregunta->descripcion}} ?</h1>
           <div class="table-responsive col-md-12">
               <table class="table table-striped">
                   <thead>
                       <tr>
                           @if ($pregunta->tipo != 1)
-                              <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold">Respuesta</th>
-                              <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold">Cantidad</th>
-                              <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold">Porcentaje</th>
+                              <th style="font-family: helvetica, sans-serif;font-size: 13px;font-weight: bold">Respuesta</th>
+                              <th style="font-family: helvetica, sans-serif;font-size: 13px;font-weight: bold">Cantidad</th>
+                              <th style="font-family: helvetica, sans-serif;font-size: 13px;font-weight: bold">Porcentaje</th>
                               @if ($pregunta->tipo == 6 || $pregunta->tipo == 7)
-                                  <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;">Ver Respuestas</th>
+                                  <th style="font-family: helvetica, sans-serif;font-size: 13px;font-weight: bold;">Ver Respuestas</th>
                               @endif
                           @else
-                              <th style="font-family: helvetica, sans-serif;font-size: 15px;font-weight: bold;">Respuestas</th>
+                              <th style="font-family: helvetica, sans-serif;font-size: 13px;font-weight: bold;">Respuestas</th>
                           @endif
                       </tr>
                   </thead>
